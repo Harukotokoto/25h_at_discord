@@ -57,6 +57,19 @@ export default new Command({
         },
       ],
     },
+    {
+      name: 'remove-member',
+      description: 'チケットからメンバーを削除します',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        {
+          name: 'member',
+          description: '追加するメンバー',
+          type: ApplicationCommandOptionType.User,
+          required: true,
+        },
+      ],
+    },
   ],
   requiredPermissions: ['ManageGuild'],
   execute: {
