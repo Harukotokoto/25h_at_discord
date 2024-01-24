@@ -1,6 +1,7 @@
 import { Command } from '../../lib/modules/Command';
 import { ApplicationCommandOptionType, ChannelType } from 'discord.js';
 import { setup_ticket } from './ticket/setup_ticket';
+import { add_member } from './ticket/add-member_ticket';
 
 export default new Command({
   name: 'ticket',
@@ -43,6 +44,19 @@ export default new Command({
         },
       ],
     },
+    {
+      name: 'add-member',
+      description: 'チケットにメンバーを追加します',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        {
+          name: 'member',
+          description: '追加するメンバー',
+          type: ApplicationCommandOptionType.User,
+          required: true,
+        },
+      ],
+    },
   ],
   requiredPermissions: ['ManageGuild'],
   execute: {
@@ -50,6 +64,8 @@ export default new Command({
       const cmd = interaction.options.getSubcommand();
 
       if (cmd === 'setup') await setup_ticket({ interaction });
+
+      if (cmd === 'add-member') await add_member({ interaction });
     },
   },
 });
