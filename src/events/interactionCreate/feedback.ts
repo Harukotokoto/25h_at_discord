@@ -49,7 +49,7 @@ export default new Event('interactionCreate', async (interaction) => {
         embeds: [
           {
             title: '✅ 受諾済みのフィードバック',
-            description: `<t:${moment().toDate().getTime() / 1000}>`,
+            description: `<t:${Math.round(moment().toDate().getTime() / 1000)}>`,
             fields: interaction.message.embeds[0].fields,
             color: Colors.Aqua,
             footer: footer()
