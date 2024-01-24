@@ -3,7 +3,7 @@ import { client } from '../../index';
 import { CommandError, ErrorTypes } from '../../lib/utils/CommandError';
 import { Events } from 'discord.js';
 
-export default new Event(Events.MessageCreate, async (message) => {
+export default new Event('messageCreate', async (message) => {
   const prefix = '.';
 
   const Error = new CommandError(message);

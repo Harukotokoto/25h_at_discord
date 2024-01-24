@@ -21,4 +21,14 @@ export class Logger {
       }ERROR${Reset}  | ${C.Red}${message.toString()}${Reset}`
     );
   }
+
+  public debug(message: any) {
+    const now = moment().format('YYYY/MM/DD hh:mm:ss');
+
+    console.log(
+      `${C.Yellow}[${Reset}${now}${C.Yellow}] ${BC.Magenta}${
+        C.Default
+      }DEBUG${Reset}  | ${C.Green}${message.toString()}${Reset}`
+    );
+  }
 }
