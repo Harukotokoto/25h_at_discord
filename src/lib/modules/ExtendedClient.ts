@@ -1,9 +1,10 @@
 import {
-  ApplicationCommandDataResolvable,
   Client,
   ClientEvents,
   ClientOptions,
   Collection,
+  Message,
+  PartialMessage,
 } from 'discord.js';
 import { promisify } from 'util';
 import glob from 'glob';
@@ -12,14 +13,33 @@ import { CommandType } from '../interfaces/Command';
 import { Logger } from '../utils';
 import mongoose from 'mongoose';
 import process from 'process';
+import moment from 'moment';
 
 const globPromise = promisify(glob);
 
 export class ExtendedClient extends Client {
+  public snipes: Collection<string, Message<boolean> | PartialMessage> =
+    new Collection<string, Message<boolean> | PartialMessage>();
+  public edit_snipes: Collection<
+    string,
+    {
+      oldMessage: Message<boolean> | PartialMessage;
+      newMessage: Message<boolean> | PartialMessage;
+    }
+  > = new Collection<
+    string,
+    {
+      oldMessage: Message<boolean> | PartialMessage;
+      newMessage: Message<boolean> | PartialMessage;
+    }
+  >();
+
   public commands: Collection<string, CommandType> = new Collection<
     string,
     CommandType
   >();
+
+  public start_time = moment();
 
   public Logger = new Logger();
 
