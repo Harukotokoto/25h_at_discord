@@ -41,7 +41,7 @@ export default new Command({
                 label: 'フィードバックを送信',
                 style: ButtonStyle.Secondary,
                 customId: 'feedback-send',
-                emoji: "📩"
+                emoji: '📩',
               },
             ],
           },
