@@ -8,6 +8,7 @@ import {
 } from 'discord.js';
 import { client } from '../../index';
 import { footer } from '../../lib/utils/Embed';
+import moment from 'moment';
 
 export default new Event('interactionCreate', async (interaction) => {
   if (interaction.isButton()) {
@@ -35,6 +36,12 @@ export default new Event('interactionCreate', async (interaction) => {
     }
 
     if (interaction.customId === 'feedback-accept') {
+      await interaction.reply('フィードバックを受諾しました').then((msg) => {
+        setTimeout(async () => {
+          await msg.delete();
+          await interaction.message.delete();
+        }, 5000);
+      });
       const channel = client.channels.cache.get('1199654282195128401');
       if (!channel || channel.type !== ChannelType.GuildText) return;
 
@@ -42,23 +49,10 @@ export default new Event('interactionCreate', async (interaction) => {
         embeds: [
           {
             title: '✅ 受諾済みのフィードバック',
-            description: `[詳細を確認](${interaction.message.url})`,
+            description: `<t:${moment().toDate().getTime()}>(<t:${moment().toDate().getTime()}:R>)`,
+            fields: interaction.message.embeds[0].fields,
             color: Colors.Aqua,
-            footer: footer(),
-          },
-        ],
-        components: [
-          {
-            type: ComponentType.ActionRow,
-            components: [
-              {
-                type: ComponentType.Button,
-                customId: 'feedback-accept',
-                label: 'フィードバックを受諾',
-                style: ButtonStyle.Success,
-                emoji: '✅',
-              },
-            ],
+            footer: footer()
           },
         ],
       });
@@ -75,6 +69,8 @@ export default new Event('interactionCreate', async (interaction) => {
               'Botの改善にご協力いただきありがとうございます！' +
               '\n' +
               '貴重な意見をありがとうございました！',
+            color: Colors.Gold,
+            footer: footer()
           },
         ],
         ephemeral: true,
