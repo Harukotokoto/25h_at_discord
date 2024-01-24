@@ -3,9 +3,6 @@ import { ExtendedClient } from './lib/modules/ExtendedClient';
 
 export const client = new ExtendedClient({
   intents: ['Guilds', 'GuildMessages', 'GuildMembers', 'MessageContent'],
-  allowedMentions: {
-    parse: []
-  },
 });
 
 console.clear()
