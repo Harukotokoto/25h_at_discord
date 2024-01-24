@@ -49,7 +49,7 @@ export default new Event('interactionCreate', async (interaction) => {
         embeds: [
           {
             title: '✅ 受諾済みのフィードバック',
-            description: `<t:${moment().toDate().getTime()}>(<t:${moment().toDate().getTime()}:R>)`,
+            description: `<t:${moment().toDate().getTime() / 1000}>`,
             fields: interaction.message.embeds[0].fields,
             color: Colors.Aqua,
             footer: footer()
@@ -80,7 +80,7 @@ export default new Event('interactionCreate', async (interaction) => {
       if (!channel || channel.type !== ChannelType.GuildText) return;
 
       channel.send({
-        content: '<@&1193603575608254616>',
+        content: '<@&1193603575608254616> <@!1004365048887660655>',
         embeds: [
           {
             title: '📩 フィードバックを受け取りました',
