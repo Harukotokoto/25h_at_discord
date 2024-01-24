@@ -14,7 +14,7 @@ export default new Event('ready', () => {
     const takkun_guild = client.guilds.cache.get('1176812762110885908');
     if (!takkun_guild) return;
 
-    const ktrnds_guild = client.guilds.cache.get('1176812762110885908');
+    const ktrnds_guild = client.guilds.cache.get('1149350818747781120');
     if (!ktrnds_guild) return;
 
     const takkun_memberCounter = takkun_guild.channels.cache.get(

@@ -2,7 +2,7 @@ require('dotenv').config();
 import { ExtendedClient } from './lib/modules/ExtendedClient';
 
 export const client = new ExtendedClient({
-  intents: ['Guilds', 'GuildMessages', 'GuildMembers'],
+  intents: ['Guilds', 'GuildMessages', 'GuildMembers', 'MessageContent'],
   allowedMentions: {
     parse: []
   },
