@@ -8,12 +8,13 @@ export default new Event('interactionCreate', async (interaction) => {
   if (!interaction.guild) return;
   if (!interaction.isButton()) return;
   if (!interaction.message) return;
+  if (!interaction.channel) return;
 
   let data = await vote_model.findOne({ GuildID: interaction.guild.id });
-  if (!data) return;
-  const msg = interaction.channel?.messages.cache.get(data.MessageID as string);
+  if (!data) return console.log('データが存在しません');
+  const msg = await interaction.channel.messages.fetch(data.MessageID);
 
-  if (!msg) return;
+  if (!msg) return console.log('メッセージが存在しません');
 
   if (interaction.customId === 'up') {
     if (data.UpMembers.includes(interaction.user.id)) {
@@ -24,25 +25,24 @@ export default new Event('interactionCreate', async (interaction) => {
       });
     }
 
-    if (!data.Downvote || !data.Upvote) return;
     if (data.DownMembers.includes(interaction.user.id)) {
-      data.Downvote = data.Downvote - 1;
+      data.Downvote = (data.Downvote || 0) - 1;
     }
 
     const newEmbed = EmbedBuilder.from(msg.embeds[0]).setFields([
       {
-        name: '賛成',
-        value: `> ${data.Upvote + 1}票`,
+        name: '✅ 賛成',
+        value: `> ${(data.Upvote || 0) + 1}票`,
         inline: true,
       },
       {
-        name: '反対',
+        name: '❌ 反対',
         value: `> ${data.Downvote}票`,
         inline: true,
       },
       {
         name: '投票作成者',
-        value: `> ${interaction.user}`,
+        value: `> <@!${data.Owner}>`,
         inline: true,
       },
     ]);
@@ -76,10 +76,10 @@ export default new Event('interactionCreate', async (interaction) => {
       ],
     });
 
-    data.Upvote++;
+    data.Upvote ? data.Upvote++ : (data.Upvote = 1);
 
     if (data.DownMembers.includes(interaction.user.id)) {
-      data.Downvote = data.Downvote - 1;
+      data.Downvote = (data.Downvote || 0) - 1;
     }
 
     data.UpMembers.push(interaction.user.id);
@@ -98,9 +98,8 @@ export default new Event('interactionCreate', async (interaction) => {
       });
     }
 
-    if (!data.Downvote || !data.Upvote) return;
     if (data.UpMembers.includes(interaction.user.id)) {
-      data.Upvote = data.Upvote - 1;
+      data.Upvote = (data.Upvote || 0) - 1;
     }
 
     const newEmbed = EmbedBuilder.from(msg.embeds[0]).setFields([
@@ -111,12 +110,12 @@ export default new Event('interactionCreate', async (interaction) => {
       },
       {
         name: '❌ 反対',
-        value: `> ${data.Downvote + 1}票`,
+        value: `> ${(data.Downvote || 0) + 1}票`,
         inline: true,
       },
       {
         name: '投票作成者',
-        value: `> ${interaction.user}`,
+        value: `> <@!${data.Owner}>`,
         inline: true,
       },
     ]);
@@ -150,10 +149,10 @@ export default new Event('interactionCreate', async (interaction) => {
       ],
     });
 
-    data.Downvote++;
+    data.Downvote ? data.Downvote++ : (data.Downvote = 1);
 
     if (data.UpMembers.includes(interaction.user.id)) {
-      data.Upvote = data.Upvote - 1;
+      data.Upvote = (data.Upvote || 0) - 1;
     }
 
     data.DownMembers.push(interaction.user.id);
@@ -164,15 +163,11 @@ export default new Event('interactionCreate', async (interaction) => {
   }
 
   if (interaction.customId === 'votes') {
-    let upvoters = [];
-    for (const member of data.DownMembers) {
-      upvoters.push(`<@!${member}>`);
-    }
+    let upvoters: string[] = [];
+    data.UpMembers.forEach((member) => upvoters.push(`<@!${member}>`));
 
-    let downvoters = [];
-    for (const member of data.DownMembers) {
-      downvoters.push(`<@!${member}>`);
-    }
+    let downvoters: string[] = [];
+    data.DownMembers.forEach((member) => downvoters.push(`<@!${member}>`));
 
     interaction.reply({
       embeds: [
@@ -182,12 +177,10 @@ export default new Event('interactionCreate', async (interaction) => {
             {
               name: `✅ 賛成(${upvoters.length})`,
               value: `> ${upvoters.join(' ').slice(0, 1020) || '**投票なし**'}`,
-              inline: true,
             },
             {
               name: `❌ 反対(${downvoters.length})`,
               value: `> ${downvoters.join(' ').slice(0, 1020) || '**投票なし**'}`,
-              inline: true,
             },
           ],
           footer: footer(),

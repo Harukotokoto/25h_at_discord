@@ -25,7 +25,7 @@ export default new Command({
     interaction: async ({ client, interaction }) => {
       const topic = interaction.options.getString('topic', true);
 
-      interaction.deleteReply();
+      await interaction.deleteReply();
 
       const msg = await interaction.channel?.send({
         embeds: [
