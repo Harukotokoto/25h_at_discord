@@ -10,12 +10,8 @@ export default new Event('voiceStateUpdate', async (oldState, newState) => {
       const allowedMembers = [
         '1004365048887660655',
         '1081819299594915840',
-        '411916947773587456',
-        '412347257233604609',
-        '412347553141751808',
-        '412347780841865216',
       ];
-      if (!allowedMembers.includes(newState.member?.id)) {
+      if (!allowedMembers.includes(newState.member?.id) && !member.user.bot) {
         await newState.setChannel("1200404387462398002")
       }
     }
