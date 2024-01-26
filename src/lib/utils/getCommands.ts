@@ -70,11 +70,11 @@ export const getCommands = async () => {
     const usage = commandOptions
       ? commandOptions?.map((option) => option?.type === 'withSubCommand')
         ? commandOptions
-          ?.map((option) => command.name + ' ' + option?.value)
-          .join('\n')
+            ?.map((option) => command.name + ' ' + option?.value)
+            .join('\n')
         : command.name +
-        ' ' +
-        commandOptions?.map((option) => option?.value).join(' ')
+          ' ' +
+          commandOptions?.map((option) => option?.value).join(' ')
       : null;
 
     commands.push({

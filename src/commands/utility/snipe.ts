@@ -103,8 +103,9 @@ export default new Command({
           embeds: [
             {
               author: {
-                name: `${snipe.newMessage.author?.displayName || ''}(${snipe
-                  .newMessage.author?.tag})`,
+                name: `${snipe.newMessage.author?.displayName || ''}(${
+                  snipe.newMessage.author?.tag
+                })`,
                 icon_url:
                   snipe.newMessage.author?.avatarURL()?.toString() || '',
               },
@@ -194,8 +195,9 @@ export default new Command({
           embeds: [
             {
               author: {
-                name: `${snipe.newMessage.author?.displayName || ''}(${snipe
-                  .newMessage.author?.tag})`,
+                name: `${snipe.newMessage.author?.displayName || ''}(${
+                  snipe.newMessage.author?.tag
+                })`,
                 icon_url:
                   snipe.newMessage.author?.avatarURL()?.toString() || '',
               },

@@ -62,7 +62,7 @@ export class StatusUpdater {
     if (
       ws_status_channel &&
       ws_status_channel.type ===
-      (ChannelType.GuildText || ChannelType.GuildVoice)
+        (ChannelType.GuildText || ChannelType.GuildVoice)
     ) {
       ws_status_channel.setName(
         this.format.replace('[state]', `WebSocket: ${client.ws.ping}`)
@@ -72,7 +72,7 @@ export class StatusUpdater {
     if (
       uptime_status_channel &&
       uptime_status_channel.type ===
-      (ChannelType.GuildText || ChannelType.GuildVoice)
+        (ChannelType.GuildText || ChannelType.GuildVoice)
     ) {
       const start_time = client.start_time;
       const now = moment();
@@ -92,7 +92,7 @@ export class StatusUpdater {
     if (
       ram_status_channel &&
       ram_status_channel.type ===
-      (ChannelType.GuildText || ChannelType.GuildVoice)
+        (ChannelType.GuildText || ChannelType.GuildVoice)
     ) {
       const memUsage = (await osu.mem.info()).usedMemPercentage;
       const memInteger = Math.round(memUsage);
@@ -105,7 +105,7 @@ export class StatusUpdater {
     if (
       cpu_status_channel &&
       cpu_status_channel.type ===
-      (ChannelType.GuildText || ChannelType.GuildVoice)
+        (ChannelType.GuildText || ChannelType.GuildVoice)
     ) {
       const cpuUsage = await osu.cpu.usage();
       const cpuInteger = Math.round(cpuUsage);
@@ -118,7 +118,7 @@ export class StatusUpdater {
     if (
       version_status_channel &&
       version_status_channel.type ===
-      (ChannelType.GuildText || ChannelType.GuildVoice)
+        (ChannelType.GuildText || ChannelType.GuildVoice)
     ) {
       const version = process.version;
 

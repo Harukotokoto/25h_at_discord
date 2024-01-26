@@ -20,24 +20,38 @@ export default new Command({
         },
       ],
     },
+    {
+      name: 'publish',
+      description: 'お知らせのメッセージを自動で公開します',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        {
+          name: 'channel',
+          description: '自動公開するチャンネル',
+          type: ApplicationCommandOptionType.Channel,
+          channel_types: [ChannelType.GuildAnnouncement],
+        },
+      ],
+    },
   ],
   execute: {
     interaction: async ({ client, interaction }) => {
       const cmd = interaction.options.getSubcommand();
+      const channel = interaction.options.getChannel('channel');
+      const config = await config_model.findOne({
+        GuildID: interaction.guild?.id,
+      });
 
       switch (cmd) {
         case 'report':
-          const channel = interaction.options.getChannel('channel');
           if (!channel) {
             await config_model.findOneAndUpdate(
               {
                 GuildID: interaction.guild?.id,
               },
               {
-                Report: {
-                  status: false,
-                  LogChannel: undefined,
-                },
+                'Report.status': false,
+                'Report.LogChannel': undefined,
               }
             );
 
@@ -51,10 +65,6 @@ export default new Command({
               ],
             });
           }
-
-          const config = await config_model.findOne({
-            GuildID: interaction.guild?.id,
-          });
 
           if (!config) {
             await config_model.create({
@@ -72,10 +82,8 @@ export default new Command({
                 GuildID: interaction.guild?.id,
               },
               {
-                Report: {
-                  status: true,
-                  LogChannel: channel.id,
-                },
+                'Report.status': true,
+                'Report.LogChannel': channel.id,
               }
             );
           }
@@ -85,6 +93,62 @@ export default new Command({
               {
                 title: '通報機能を有効化しました',
                 description: `通報されたメッセージは${channel}に送信されます`,
+                color: Colors.Green,
+                footer: footer(),
+              },
+            ],
+          });
+          break;
+        case 'publish':
+          if (!channel) {
+            await config_model.findOneAndUpdate(
+              {
+                GuildID: interaction.guild?.id,
+              },
+              {
+                'Publish.status': false,
+                'Publish.ChannelID': undefined,
+              }
+            );
+
+            return await interaction.followUp({
+              embeds: [
+                {
+                  title: `自動公開機能を無効化しました`,
+                  color: Colors.Aqua,
+                  footer: footer(),
+                },
+              ],
+            });
+          }
+
+          if (!config) {
+            await config_model.create({
+              GuildID: interaction.guild?.id,
+              'Publish.status': true,
+              'Publish.ChannelID': channel.id,
+            });
+          }
+
+          if (config) {
+            await config_model.findOneAndUpdate(
+              {
+                GuildID: interaction.guild?.id,
+              },
+              {
+                'Publish.status': true,
+                'Publish.ChannelID': channel.id,
+              }
+            );
+          }
+
+          await interaction.followUp({
+            embeds: [
+              {
+                title: '自動公開機能を有効化しました',
+                description:
+                  `${channel}に送信されたメッセージは自動的に公開されます\n` +
+                  '※Botのメッセージは公開されません',
                 color: Colors.Green,
                 footer: footer(),
               },
