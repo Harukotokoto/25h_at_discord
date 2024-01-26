@@ -1,8 +1,9 @@
 import { Event } from '../../lib/modules/Event';
 
 export default new Event('voiceStateUpdate', async (oldState, newState) => {
-  const channel = newState.member?.voice.channel;
-  if (!channel) return;
+  const channel = newState.channel
+  const member = newState.member
+  if (!channel || !member) return;
 
   if (channel) {
     if (channel.id === '1199280550087757864') {
