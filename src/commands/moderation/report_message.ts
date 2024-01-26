@@ -30,7 +30,7 @@ export default new Command({
         !config.Report.status ||
         !config.Report.LogChannel
       ) {
-        await interaction.reply({
+        return await interaction.reply({
           embeds: [
             {
               title: '通報機能がこのサーバーでは有効化されていません',
@@ -98,7 +98,7 @@ export default new Command({
                   type: ComponentType.Button,
                   label: 'メッセージを削除',
                   style: ButtonStyle.Success,
-                  customId: `delete_message-${message.id}`,
+                  customId: `delete_message-${message.channel.id}-${message.id}`,
                 },
                 {
                   type: ComponentType.Button,
