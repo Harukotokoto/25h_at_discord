@@ -11,7 +11,7 @@ const globPromise = promisify(glob);
 
 export const getCommands = async () => {
   const commandFiles = await globPromise(
-    `${__dirname}/../../../commands/**/*{.ts,.js}`
+    `${__dirname}/../../commands/**/*{.ts,.js}`
   );
   const commands: {
     category: string;
