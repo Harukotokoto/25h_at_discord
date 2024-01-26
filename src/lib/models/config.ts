@@ -1,24 +1,11 @@
 import { model, Schema } from 'mongoose';
 
 const config_model = model('config', new Schema({
-  GuildID: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+  GuildID: String,
   Report: {
-    status: {
-      type: Boolean,
-    },
-    LogChannel: {
-      type: String,
-    },
-    default: {
-      status: false,
-      LogChannel: undefined,
-    },
-    unique: true,
+    status: Boolean,
+    LogChannel: String,
   },
 }));
 
-export { config_model }
+export { config_model };
