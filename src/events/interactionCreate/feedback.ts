@@ -52,7 +52,7 @@ export default new Event('interactionCreate', async (interaction) => {
             description: `<t:${Math.round(moment().toDate().getTime() / 1000)}>`,
             fields: interaction.message.embeds[0].fields,
             color: Colors.Aqua,
-            footer: footer()
+            footer: footer(),
           },
         ],
       });
@@ -70,7 +70,7 @@ export default new Event('interactionCreate', async (interaction) => {
               '\n' +
               '貴重な意見をありがとうございました！',
             color: Colors.Gold,
-            footer: footer()
+            footer: footer(),
           },
         ],
         ephemeral: true,

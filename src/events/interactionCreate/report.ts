@@ -5,7 +5,7 @@ export default new Event('interactionCreate', async (interaction) => {
   if (!interaction.isButton()) return;
 
   if (interaction.customId.startsWith('delete_message')) {
-    const [customId, channelId, messageId] = interaction.customId.split("-");
+    const [customId, channelId, messageId] = interaction.customId.split('-');
     const channel = interaction.guild?.channels.cache.get(channelId);
     if (!channel || channel.type !== ChannelType.GuildText) return;
 
@@ -37,7 +37,7 @@ export default new Event('interactionCreate', async (interaction) => {
     });
   }
 
-  if (interaction.customId === "dismiss_report") {
-    await interaction.message.delete()
+  if (interaction.customId === 'dismiss_report') {
+    await interaction.message.delete();
   }
 });
