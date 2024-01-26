@@ -16,7 +16,7 @@ export default new Event('voiceStateUpdate', async (oldState, newState) => {
         '412347780841865216',
       ];
       if (!allowedMembers.includes(newState.member?.id)) {
-        await newState.disconnect()
+        await newState.setChannel("1200404387462398002")
       }
     }
   }
