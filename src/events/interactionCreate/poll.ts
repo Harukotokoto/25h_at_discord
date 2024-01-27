@@ -10,7 +10,7 @@ export default new Event('interactionCreate', async (interaction) => {
   if (!interaction.message) return;
   if (!interaction.channel) return;
 
-  let data = await vote_model.findOne({ GuildID: interaction.guild.id });
+  let data = await vote_model.findOne({ MessageID: interaction.message.id });
   if (!data) return console.log('データが存在しません');
   const msg = await interaction.channel.messages.fetch(data.MessageID);
 
