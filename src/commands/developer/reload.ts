@@ -59,7 +59,7 @@ export default new Command({
             ],
           });
 
-          exec('pm2 restart takkun');
+          exec('pm2 restart 25h_at_discord');
           break;
         case 'sync':
           await interaction.followUp({
@@ -109,7 +109,7 @@ export default new Command({
             ],
           });
 
-          execSync('pm2 restart takkun');
+          execSync('pm2 restart 25h_at_discord');
           break;
         case 'stop':
           await interaction.followUp({
@@ -122,7 +122,7 @@ export default new Command({
             ],
           });
 
-          execSync('pm2 stop takkun');
+          execSync('pm2 stop 25h_at_discord');
           break;
       }
     },
@@ -177,7 +177,7 @@ export default new Command({
           },
         });
 
-        exec('pm2 restart takkun');
+        exec('pm2 restart 25h_at_discord');
       } else if (args[0] === 'sync') {
         const msg_1 = await message.reply({
           embeds: [
@@ -238,7 +238,7 @@ export default new Command({
           },
         });
 
-        execSync('pm2 restart takkun');
+        execSync('pm2 restart 25h_at_discord');
       } else if (args[0] === 'stop') {
         await message.reply({
           embeds: [
@@ -253,7 +253,7 @@ export default new Command({
           },
         });
 
-        execSync('pm2 stop takkun');
+        execSync('pm2 stop 25h_at_discord');
       }
     },
   },

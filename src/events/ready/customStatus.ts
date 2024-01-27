@@ -27,7 +27,7 @@ export default new Event('ready', () => {
       ktrnds: ktrnds_guild?.memberCount.toString() || (0).toString(),
     };
 
-    takkun_memberCounter.setName(`メンバー数：${memberCount.takkun}`);
+    takkun_memberCounter.setName(`メンバー数：${memberCount.takkun} 人`);
 
     if (index === status_list.length) index = 0;
 
