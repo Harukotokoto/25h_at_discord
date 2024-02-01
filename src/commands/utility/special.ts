@@ -29,7 +29,7 @@ export default new Command({
       await interaction.followUp({
         embeds: [
           {
-            title: 'special add',
+            title: 'とってもスペシャル✨',
             description: `> ユーザー ${targetUser.tag} にロールが付与されました。\n> 付与されたロール <@&${roleId}>`,
             footer: footer(),
             color: Colors.Aqua,
