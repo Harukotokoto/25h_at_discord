@@ -6,8 +6,6 @@ import { Events } from 'discord.js';
 export default new Event('messageCreate', async (message) => {
   const prefix = '.';
 
-  console.log(message);
-
   const Error = new CommandError(message);
 
   if (

@@ -11,10 +11,10 @@ export default new Event('interactionCreate', async (interaction) => {
   if (!interaction.channel) return;
 
   let data = await vote_model.findOne({ MessageID: interaction.message.id });
-  if (!data) return console.log('データが存在しません');
+  if (!data) return;
   const msg = await interaction.channel.messages.fetch(data.MessageID);
 
-  if (!msg) return console.log('メッセージが存在しません');
+  if (!msg) return;
 
   if (interaction.customId === 'up') {
     if (data.UpMembers.includes(interaction.user.id)) {
