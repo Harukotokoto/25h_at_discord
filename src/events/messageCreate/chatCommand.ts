@@ -27,6 +27,19 @@ export default new Event('messageCreate', async (message) => {
 
   if (!command || !command.execute.message) return;
 
+  const member = message.guild?.members.cache.get(message.author.id);
+  if (!member) return;
+
+  const allowedCommands = ['snipe'];
+  if (
+    message.guild?.id === '1176812762110885908' &&
+    message.channel?.id !== '1176828166287921212' &&
+    !member.permissions.has(['ManageGuild']) &&
+    !allowedCommands.includes(command.name)
+  ) {
+    return;
+  }
+
   const admins = ['1004365048887660655', '1176812229631430660'];
 
   if (command.isOwnerCommand && !admins.includes(message.author.id))
@@ -34,9 +47,6 @@ export default new Event('messageCreate', async (message) => {
       'このコマンドはBot関係者のみ実行可能です',
       ErrorTypes.Warn
     );
-
-  const member = message.guild?.members.cache.get(message.author.id);
-  if (!member) return;
 
   if (!member.permissions.has(command.requiredPermissions || []))
     return await Error.create('このコマンドを使用する権限が不足しています');

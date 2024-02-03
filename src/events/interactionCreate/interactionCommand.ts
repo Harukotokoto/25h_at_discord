@@ -14,6 +14,22 @@ export default new Event('interactionCreate', async (interaction) => {
 
     const Error = new CommandError(interaction);
 
+    const member = interaction.guild?.members.cache.get(interaction.user.id);
+    if (!member) return;
+
+    const allowedCommands = ['snipe'];
+    if (
+      interaction.guild?.id === '1176812762110885908' &&
+      !command?.ephemeral &&
+      (!command?.type || command?.type === ApplicationCommandType.ChatInput) &&
+      interaction.channel?.id !== '1176828166287921212' &&
+      !member.permissions.has(['ManageGuild']) &&
+      !allowedCommands.includes(command?.name as string)
+    ) {
+      await interaction.deferReply({ ephemeral: true });
+      return await Error.create('コマンドチャンネルで実行してください');
+    }
+
     await interaction.deferReply({
       ephemeral: command?.ephemeral || false,
     });
@@ -33,9 +49,6 @@ export default new Event('interactionCreate', async (interaction) => {
         'このコマンドはBot関係者のみ実行可能です',
         ErrorTypes.Warn
       );
-
-    const member = interaction.guild?.members.cache.get(interaction.user.id);
-    if (!member) return;
 
     if (!member.permissions.has(command.requiredPermissions || []))
       return await Error.create('このコマンドを使用する権限が不足しています');
