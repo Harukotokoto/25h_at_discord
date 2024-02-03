@@ -90,7 +90,7 @@ export default new Event('interactionCreate', async (interaction) => {
   }
 
   if (interaction.customId === 'down') {
-    if (data.UpMembers.includes(interaction.user.id)) {
+    if (data.DownMembers.includes(interaction.user.id)) {
       return await interaction.reply({
         content:
           'あなたは既に投票しているため、重複して投票することができません',
