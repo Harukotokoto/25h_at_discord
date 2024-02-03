@@ -131,7 +131,7 @@ export default new Event('interactionCreate', async (interaction) => {
               {
                 type: ComponentType.Button,
                 label: 'チケットを閉じる',
-                customId: 'close_ticket',
+                customId: 'ticket_close',
                 style: ButtonStyle.Secondary,
               },
             ],
