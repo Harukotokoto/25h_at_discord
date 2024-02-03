@@ -52,7 +52,7 @@ export default new Command({
       const target_channel = interaction.guild?.channels.cache.get(
         '1203209546319921243'
       );
-      if (!target_channel || target_channel.type !== ChannelType.GuildText)
+      if (!target_channel || target_channel.type !== ChannelType.GuildThread)
         return;
 
       await target_channel.send({
