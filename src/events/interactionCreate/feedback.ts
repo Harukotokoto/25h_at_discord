@@ -42,7 +42,7 @@ export default new Event('interactionCreate', async (interaction) => {
           await interaction.message.delete();
         }, 5000);
       });
-      const channel = client.channels.cache.get('1199654282195128401');
+      const channel = client.channels.cache.get('1202685932101439489');
       if (!channel || channel.type !== ChannelType.GuildText) return;
 
       channel.send({
@@ -76,7 +76,7 @@ export default new Event('interactionCreate', async (interaction) => {
         ephemeral: true,
       });
 
-      const channel = client.channels.cache.get('1199648104924844162');
+      const channel = client.channels.cache.get('1203211087223197696');
       if (!channel || channel.type !== ChannelType.GuildText) return;
 
       channel.send({
