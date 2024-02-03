@@ -13,6 +13,7 @@ import { Member, Space } from '../../lib/utils/emojis';
 export default new Command({
   name: 'メッセージを通報',
   type: ApplicationCommandType.Message,
+  ephemeral: true,
   execute: {
     interaction: async ({ client, interaction }) => {
       const message = interaction.targetMessage;
@@ -62,6 +63,30 @@ export default new Command({
 
         await interaction.deleteReply();
 
+        await interaction.reply({
+          embeds: [
+            {
+              author: {
+                name: `${member.user.tag}のメッセージが通報されました`,
+                icon_url: member.user.displayAvatarURL().toString(),
+              },
+              description:
+                `${member.user}のメッセージを${interaction.user}が通報しました\n` +
+                `**${Member} メンバー:** ${member.user.tag} **[${member.user.id}]**\n` +
+                `**${Space} 作成日:** <t:${member.user.createdTimestamp}>`,
+              fields: [
+                {
+                  name: '通報されたメッセージ',
+                  value: message.content,
+                },
+              ],
+              footer: {
+                text: `Reported by ${interaction.user.tag}`,
+              },
+            },
+          ],
+        })
+
         await channel.send({
           embeds: [
             {
@@ -80,7 +105,7 @@ export default new Command({
                 },
               ],
               footer: {
-                text: `Reported by ${member.user.tag}`,
+                text: `Reported by ${interaction.user.tag}`,
               },
             },
           ],
