@@ -50,7 +50,7 @@ export default new Command({
       });
 
       const target_channel = interaction.guild?.channels.cache.get(
-        '1176819296010256384'
+        '1203209546319921243'
       );
       if (!target_channel || target_channel.type !== ChannelType.GuildText)
         return;
