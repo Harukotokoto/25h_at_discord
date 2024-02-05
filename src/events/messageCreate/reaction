@@ -1,0 +1,11 @@
+import { Event } from '../../lib/modules/Event';
+import { client } from '../../index';
+import { CommandError, ErrorTypes } from '../../lib/utils/CommandError';
+import { Events } from 'discord.js';
+
+client.on('messageCreate', (message) => {
+    if (message.author.id === '330416853971107840' && message.content.includes('ようこそ！ゆっくりしていってね！')) {
+        message.react('1204194769782317106')
+            .catch((error) => console.error('Error adding reaction:', error));
+    }
+});
