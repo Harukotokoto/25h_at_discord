@@ -5,7 +5,7 @@ import { footer } from '../../lib/utils/Embed';
 export default new Event('interactionCreate', async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
   if (
-    interaction.user.id !== '302050872383242240' ||
+    interaction.user.id !== '761562078095867916' ||
     interaction.commandName !== 'dissoku' ||
     interaction.options.getSubcommand() !== 'up'
   )
