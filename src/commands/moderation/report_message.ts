@@ -85,7 +85,7 @@ export default new Command({
               },
             },
           ],
-        })
+        });
 
         await channel.send({
           embeds: [
