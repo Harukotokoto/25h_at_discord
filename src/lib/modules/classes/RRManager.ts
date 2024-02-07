@@ -2,6 +2,7 @@ import {
   APIRole,
   ChatInputCommandInteraction,
   Colors,
+  ComponentType,
   Guild,
   Message,
   Role,
@@ -44,6 +45,7 @@ export class RRManager {
         MessageID: (await interaction.fetchReply()).id,
         RRID: id,
         GuildID: interaction.guild?.id,
+        ChannelID: interaction.channel.id,
       });
 
       await interaction.channel.send({
@@ -93,6 +95,10 @@ export class RRManager {
           );
         }
 
+        if (panel.Roles.filter((role) => role.RoleID === role.id)) {
+          return await Error.create('指定されたロールは既に登録されています');
+        }
+
         panel.Roles.push({
           RoleID: options.role.id,
           Label: options?.label || options.role.name,
@@ -115,5 +121,97 @@ export class RRManager {
         });
       }
     },
+    delete: async (
+      id: string,
+      options: { role: Role | APIRole; label?: string | null }
+    ) => {
+      if (this.InteractionOrMessage instanceof ChatInputCommandInteraction) {
+        const interaction = this.InteractionOrMessage;
+
+        const Error = new CommandError(interaction);
+
+        const panel = await reaction_roles_model.findOne({
+          GuildID: interaction.guild?.id,
+          RRID: id,
+        });
+
+        if (!panel) {
+          return await Error.create(
+            '指定されたIDのパネルは見つかりませんでした'
+          );
+        }
+
+        if (!panel.Roles.filter((role) => role.RoleID === role.id)) {
+          return await Error.create('指定されたロールは登録されていません');
+        }
+
+        panel.Roles.filter((role) => role.RoleID !== role.id);
+
+        await panel.save();
+
+        await interaction.followUp({
+          embeds: [
+            {
+              title: 'ロールを追加しました',
+              description:
+                `識別ID: ${id}\n\n` +
+                `追加したロール: ${options.role.toString()}\n` +
+                `表示名: ${options?.label || options.role.name}`,
+              color: Colors.Green,
+              footer: footer(),
+            },
+          ],
+        });
+      }
+    },
   };
+
+  public async refresh(id: string) {
+    if (this.InteractionOrMessage instanceof ChatInputCommandInteraction) {
+      const interaction = this.InteractionOrMessage;
+
+      const panel = await reaction_roles_model.findOne({
+        GuildID: interaction.guild?.id,
+        RRID: id,
+      });
+
+      if (!panel) return;
+
+      const channel = interaction.guild?.channels.cache.get(panel.ChannelID);
+      if (!channel || !channel.isTextBased()) {
+        panel.deleteOne();
+        await panel.save();
+        return;
+      }
+
+      const message = await channel.messages.fetch(panel.MessageID);
+      if (!message) {
+        panel.deleteOne();
+        await panel.save();
+        return;
+      }
+
+      await message.edit({
+        embeds: message.embeds,
+        components: [
+          {
+            type: ComponentType.ActionRow,
+            components: [
+              {
+                type: ComponentType.StringSelect,
+                options: panel.Roles.map((role) => {
+                  return {
+                    label: role.Label,
+                    value: role.RoleID,
+                  };
+                }),
+                placeholder: "ロールを選択",
+                customId: "reaction_role",
+              },
+            ],
+          },
+        ],
+      });
+    }
+  }
 }

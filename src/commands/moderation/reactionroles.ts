@@ -100,6 +100,8 @@ export default new Command({
             label,
           });
       }
+
+      await ReactionRole.refresh(rr_id);
     },
   },
 });

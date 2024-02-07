@@ -7,12 +7,28 @@ const reaction_roles_model = model(
       type: String,
       required: true,
     },
-    MessageID: String,
-    GuildID: String,
+    MessageID: {
+      type: String,
+      required: true,
+    },
+    ChannelID: {
+      type: String,
+      required: true,
+    },
+    GuildID: {
+      type: String,
+      required: true,
+    },
     Roles: [
       {
-        RoleID: String,
-        Label: String,
+        RoleID: {
+          type: String,
+          required: true,
+        },
+        Label: {
+          type: String,
+          required: true,
+        },
       },
     ],
   })
