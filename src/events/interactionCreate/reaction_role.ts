@@ -81,7 +81,7 @@ export default new Event('interactionCreate', async (interaction) => {
         });
     }
 
-    interaction.update({
+    await interaction.message.edit({
       embeds: interaction.message.embeds,
       components: interaction.message.components
     });
