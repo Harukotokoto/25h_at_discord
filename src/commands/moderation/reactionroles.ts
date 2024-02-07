@@ -115,7 +115,7 @@ export default new Command({
       const ReactionRole = new RRManager(interaction);
       const rr_id = interaction.options.getString('panel_id', true);
 
-      const role = interaction.options.getRole('role', true);
+      const role = interaction.options.getRole('role');
 
       switch (interaction.options.getSubcommand()) {
         case 'create':
@@ -131,6 +131,7 @@ export default new Command({
           await ReactionRole.remove(rr_id);
           break;
         case 'add':
+          if (!role) return;
           const label = interaction.options.getString('label');
 
           await ReactionRole.roles.add(rr_id, {
@@ -139,6 +140,7 @@ export default new Command({
           });
           break;
         case 'delete':
+          if (!role) return;
           await ReactionRole.roles.delete(rr_id, role);
           break;
       }
