@@ -40,7 +40,11 @@ export default new Event('messageCreate', async (message) => {
     return;
   }
 
-  const admins = ['1004365048887660655', '1176812229631430660', '790021463293165588'];
+  const admins = [
+    '1004365048887660655',
+    '1176812229631430660',
+    '790021463293165588',
+  ];
 
   if (command.isOwnerCommand && !admins.includes(message.author.id))
     return await Error.create(
