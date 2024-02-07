@@ -70,8 +70,8 @@ export default new Command({
         await interaction.respond(
           reaction_roles.map((data) => {
             return {
-              name: data.id,
-              value: data.id,
+              name: data.RRID,
+              value: data.RRID,
             };
           })
         );
