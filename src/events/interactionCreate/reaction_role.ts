@@ -53,7 +53,7 @@ export default new Event('interactionCreate', async (interaction) => {
         });
     } else {
       member.roles
-        .add(role)
+        .remove(role)
         .then(async () => {
           return await interaction.reply({
             embeds: [
