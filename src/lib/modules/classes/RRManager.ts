@@ -75,6 +75,38 @@ export class RRManager {
     }
   }
 
+  public async remove(id: string) {
+    if (this.InteractionOrMessage instanceof ChatInputCommandInteraction) {
+      const interaction = this.InteractionOrMessage;
+      if (!interaction || !interaction.channel) return;
+
+      const Error = new CommandError(interaction);
+
+      const rr = await reaction_roles_model.findOne({
+        GuildID: interaction.guild?.id,
+        RRID: id,
+      });
+
+      if (!rr)
+        return await Error.create('指定されたIDのパネルが見つかりませんでした');
+
+      await reaction_roles_model.findOneAndDelete({
+        RRID: id,
+        GuildID: interaction.guild?.id,
+      });
+
+      await interaction.followUp({
+        embeds: [
+          {
+            title: 'パネルを削除しました',
+            color: Colors.Red,
+            footer: footer(),
+          },
+        ],
+      });
+    }
+  }
+
   public roles = {
     add: async (
       id: string,
@@ -122,10 +154,7 @@ export class RRManager {
         });
       }
     },
-    delete: async (
-      id: string,
-      options: { role: Role | APIRole; label?: string | null }
-    ) => {
+    delete: async (id: string, role: Role | APIRole) => {
       if (this.InteractionOrMessage instanceof ChatInputCommandInteraction) {
         const interaction = this.InteractionOrMessage;
 
@@ -153,11 +182,9 @@ export class RRManager {
         await interaction.followUp({
           embeds: [
             {
-              title: 'ロールを追加しました',
+              title: 'ロールを削除しました',
               description:
-                `識別ID: ${id}\n\n` +
-                `追加したロール: ${options.role.toString()}\n` +
-                `表示名: ${options?.label || options.role.name}`,
+                `識別ID: ${id}\n\n` + `削除したロール: ${role.toString()}\n`,
               color: Colors.Green,
               footer: footer(),
             },
@@ -180,20 +207,28 @@ export class RRManager {
 
       const channel = interaction.guild?.channels.cache.get(panel.ChannelID);
       if (!channel || !channel.isTextBased()) {
-        panel.deleteOne();
-        await panel.save();
+        await reaction_roles_model.findOneAndDelete({
+          GuildID: interaction.guild?.id,
+          RRID: id,
+        });
         return;
       }
 
-      const message = await channel.messages.fetch(panel.MessageID).catch(async () => {
-        panel.deleteOne();
-        await panel.save();
-        return;
-      })
+      const message = await channel.messages
+        .fetch(panel.MessageID)
+        .catch(async () => {
+          await reaction_roles_model.findOneAndDelete({
+            GuildID: interaction.guild?.id,
+            RRID: id,
+          });
+          return;
+        });
 
       if (!message) {
-        panel.deleteOne();
-        await panel.save();
+        await reaction_roles_model.findOneAndDelete({
+          GuildID: interaction.guild?.id,
+          RRID: id,
+        });
         return;
       }
 

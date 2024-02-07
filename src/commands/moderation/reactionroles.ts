@@ -33,6 +33,20 @@ export default new Command({
       ],
     },
     {
+      name: 'remove',
+      description: 'リアクションロールを削除します',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        {
+          name: 'panel_id',
+          description: 'パネルの識別名',
+          type: ApplicationCommandOptionType.String,
+          required: true,
+          autocomplete: true,
+        },
+      ],
+    },
+    {
       name: 'add',
       description: 'ロールを追加します',
       type: ApplicationCommandOptionType.Subcommand,
@@ -54,6 +68,26 @@ export default new Command({
           name: 'label',
           description: '表示名',
           type: ApplicationCommandOptionType.String,
+        },
+      ],
+    },
+    {
+      name: 'delete',
+      description: 'ロールを削除します',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        {
+          name: 'panel_id',
+          description: 'パネルの識別名',
+          type: ApplicationCommandOptionType.String,
+          autocomplete: true,
+          required: true,
+        },
+        {
+          name: 'role',
+          description: '削除するロール',
+          type: ApplicationCommandOptionType.Role,
+          required: true,
         },
       ],
     },
@@ -81,6 +115,8 @@ export default new Command({
       const ReactionRole = new RRManager(interaction);
       const rr_id = interaction.options.getString('panel_id', true);
 
+      const role = interaction.options.getRole('role', true);
+
       switch (interaction.options.getSubcommand()) {
         case 'create':
           const title = interaction.options.getString('title');
@@ -91,14 +127,20 @@ export default new Command({
             description,
           });
           break;
+        case 'remove':
+          await ReactionRole.remove(rr_id);
+          break;
         case 'add':
-          const role = interaction.options.getRole('role', true);
           const label = interaction.options.getString('label');
 
           await ReactionRole.roles.add(rr_id, {
             role,
             label,
           });
+          break;
+        case 'delete':
+          await ReactionRole.roles.delete(rr_id, role);
+          break;
       }
 
       await ReactionRole.refresh(rr_id);
