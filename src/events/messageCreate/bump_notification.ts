@@ -19,18 +19,22 @@ export default new Event('messageCreate', async (message) => {
         ],
       });
 
-      setTimeout(async () => {
-        await message.channel.send({
-          embeds: [
-            {
-              title: 'Bumpの時間です！',
-              description: '</bump:947088344167366698> で表示順位を上げよう！',
-              color: Colors.Blue,
-              footer: footer(),
-            },
-          ],
-        });
-      }, 2 * 60 * 60 * 1000);
+      setTimeout(
+        async () => {
+          await message.channel.send({
+            embeds: [
+              {
+                title: 'Bumpの時間です！',
+                description:
+                  '</bump:947088344167366698> で表示順位を上げよう！',
+                color: Colors.Blue,
+                footer: footer(),
+              },
+            ],
+          });
+        },
+        2 * 60 * 60 * 1000
+      );
     }
   }
 });

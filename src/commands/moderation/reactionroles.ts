@@ -27,7 +27,7 @@ export default new Command({
         },
         {
           name: 'description',
-          description: 'パネルの説明("\\||/"で改行)',
+          description: 'パネルの説明("//"で改行)',
           type: ApplicationCommandOptionType.String,
         },
       ],

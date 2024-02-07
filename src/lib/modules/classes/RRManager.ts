@@ -10,6 +10,7 @@ import {
 import { footer } from '../../utils/Embed';
 import { reaction_roles_model } from '../../models/reaction_roles';
 import { CommandError } from '../../utils/CommandError';
+import { Promise } from 'mongoose';
 
 type RROptions = {
   title?: string | null;
@@ -46,7 +47,7 @@ export class RRManager {
           {
             title: options?.title || 'リアクションロール',
             description:
-              options?.description ||
+              options?.description?.replace(/\/\//g, '\n') ||
               'メニューから取得したいロールを選択し、決定してください',
             color: Colors.Gold,
             footer: footer(),
@@ -205,8 +206,8 @@ export class RRManager {
                     value: role.RoleID,
                   };
                 }),
-                placeholder: "ロールを選択",
-                customId: "reaction_role",
+                placeholder: 'ロールを選択',
+                customId: 'reaction_role',
               },
             ],
           },
