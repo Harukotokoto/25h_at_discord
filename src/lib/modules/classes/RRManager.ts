@@ -185,7 +185,12 @@ export class RRManager {
         return;
       }
 
-      const message = await channel.messages.fetch(panel.MessageID);
+      const message = await channel.messages.fetch(panel.MessageID).catch(async () => {
+        panel.deleteOne();
+        await panel.save();
+        return;
+      })
+
       if (!message) {
         panel.deleteOne();
         await panel.save();
