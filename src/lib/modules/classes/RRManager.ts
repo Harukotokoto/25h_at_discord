@@ -4,9 +4,8 @@ import { reaction_roles_model } from '../../models/reaction_roles';
 import { CommandError } from '../../utils/CommandError';
 
 type RROptions = {
-  title?: string;
-  description?: string;
-  color?: number;
+  title?: string | null;
+  description?: string | null;
 };
 
 export class RRManager {
@@ -47,7 +46,7 @@ export class RRManager {
             description:
               options?.description ||
               'メニューから取得したいロールを選択し、決定してください',
-            color: options?.color || Colors.Gold,
+            color: Colors.Gold,
             footer: footer(),
           },
         ],
