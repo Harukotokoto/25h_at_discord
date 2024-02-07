@@ -30,7 +30,7 @@ export default new Event('messageCreate', async (message) => {
             },
           ],
         });
-      }, 7200000);
+      }, 2 * 60 * 60 * 1000);
     }
   }
 });

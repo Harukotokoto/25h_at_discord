@@ -31,7 +31,7 @@ export default new Event('messageUpdate', async (message) => {
             },
           ],
         });
-      }, 3600000);
+      }, 60 * 60 * 1000);
     }
   }
 });

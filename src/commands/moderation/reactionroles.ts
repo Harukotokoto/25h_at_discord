@@ -5,6 +5,8 @@ import { RRManager } from '../../lib/modules/classes/RRManager';
 export default new Command({
   name: 'reactionrole',
   description: 'リアクションロールの設定を行います',
+  ephemeral: true,
+  requiredPermissions: ['ManageGuild', 'ManageRoles'],
   options: [
     {
       name: 'create',
