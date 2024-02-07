@@ -41,13 +41,6 @@ export class RRManager {
 
       if (rr) return await Error.create('既に指定されたIDは使用されています');
 
-      await reaction_roles_model.create({
-        MessageID: (await interaction.fetchReply()).id,
-        RRID: id,
-        GuildID: interaction.guild?.id,
-        ChannelID: interaction.channel.id,
-      });
-
       await interaction.channel.send({
         embeds: [
           {
@@ -59,6 +52,13 @@ export class RRManager {
             footer: footer(),
           },
         ],
+      });
+
+      await reaction_roles_model.create({
+        MessageID: (await interaction.fetchReply()).id,
+        RRID: id,
+        GuildID: interaction.guild?.id,
+        ChannelID: interaction.channel.id,
       });
 
       await interaction.followUp({
@@ -95,7 +95,7 @@ export class RRManager {
           );
         }
 
-        if (panel.Roles.filter((role) => role.RoleID === role.id)) {
+        if (panel.Roles.find((role) => role.RoleID === role.id)) {
           return await Error.create('指定されたロールは既に登録されています');
         }
 
@@ -141,7 +141,7 @@ export class RRManager {
           );
         }
 
-        if (!panel.Roles.filter((role) => role.RoleID === role.id)) {
+        if (!panel.Roles.find((role) => role.RoleID === role.id)) {
           return await Error.create('指定されたロールは登録されていません');
         }
 
