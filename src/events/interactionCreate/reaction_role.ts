@@ -80,5 +80,10 @@ export default new Event('interactionCreate', async (interaction) => {
           });
         });
     }
+
+    interaction.update({
+      embeds: interaction.message.embeds,
+      components: interaction.message.components
+    });
   }
 });
