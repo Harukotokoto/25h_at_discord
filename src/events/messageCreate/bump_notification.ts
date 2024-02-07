@@ -19,9 +19,9 @@ export default new Event('messageCreate', async (message) => {
         ],
       });
 
-      setTimeout(async () => {
-        await message.channel
-          .send({
+      setTimeout(
+        async () => {
+          await message.channel.send({
             embeds: [
               {
                 title: 'Bumpの時間です！',
@@ -31,8 +31,10 @@ export default new Event('messageCreate', async (message) => {
                 footer: footer(),
               },
             ],
-          })
-      }, 7200000);
+          });
+        },
+        2 * 60 * 60 * 1000
+      );
     }
   }
 });

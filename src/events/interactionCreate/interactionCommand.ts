@@ -42,7 +42,11 @@ export default new Event('interactionCreate', async (interaction) => {
         ErrorTypes.Warn
       );
 
-    const admins = ['1004365048887660655', '1176812229631430660', '790021463293165588'];
+    const admins = [
+      '1004365048887660655',
+      '1176812229631430660',
+      '790021463293165588',
+    ];
 
     if (command.isOwnerCommand && !admins.includes(interaction.user.id))
       return await Error.create(
@@ -73,5 +77,13 @@ export default new Event('interactionCreate', async (interaction) => {
         interaction: interaction as UserContextMenuCommandInteraction,
       });
     }
+  } else if (interaction.isAutocomplete()) {
+    const command = client.commands.get(interaction.commandName);
+    if (!command || !command.execute.autoComplete) return;
+
+    await command.execute.autoComplete({
+      client,
+      interaction,
+    });
   }
 });

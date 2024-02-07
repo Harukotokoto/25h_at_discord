@@ -1,6 +1,7 @@
 import {
   ApplicationCommandData,
   ApplicationCommandType,
+  AutocompleteInteraction,
   ChatInputCommandInteraction,
   Message,
   MessageContextMenuCommandInteraction,
@@ -17,6 +18,14 @@ type MessageExecuteType = ({
   client: ExtendedClient;
   message: Message;
   args: string[];
+}) => any;
+
+type AutoCompleteExecuteType = ({
+  client,
+  interaction,
+}: {
+  client: ExtendedClient;
+  interaction: AutocompleteInteraction;
 }) => any;
 
 type CommandBase = {
@@ -47,6 +56,7 @@ type Command<
           : UserContextMenuCommandInteraction;
     }) => any;
     message?: MessageExecuteType;
+    autoComplete?: AutoCompleteExecuteType;
   };
 };
 
@@ -61,6 +71,7 @@ type CommandWithDefault = {
       interaction: ChatInputCommandInteraction;
     }) => any;
     message?: MessageExecuteType;
+    autoComplete?: AutoCompleteExecuteType;
   };
 };
 

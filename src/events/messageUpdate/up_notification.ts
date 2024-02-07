@@ -19,19 +19,22 @@ export default new Event('messageUpdate', async (message) => {
         ],
       });
 
-      setTimeout(async () => {
-        await message.channel.send({
-          embeds: [
-            {
-              title: 'Upの時間です！',
-              description:
-                '</dissoku up:828002256690610256> で表示順位を上げよう！',
-              color: Colors.Blue,
-              footer: footer(),
-            },
-          ],
-        });
-      }, 3600000);
+      setTimeout(
+        async () => {
+          await message.channel.send({
+            embeds: [
+              {
+                title: 'Upの時間です！',
+                description:
+                  '</dissoku up:828002256690610256> で表示順位を上げよう！',
+                color: Colors.Blue,
+                footer: footer(),
+              },
+            ],
+          });
+        },
+        60 * 60 * 1000
+      );
     }
   }
 });
