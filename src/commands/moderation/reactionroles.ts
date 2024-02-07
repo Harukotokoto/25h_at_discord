@@ -1,6 +1,7 @@
 import { Command } from '../../lib/modules/Command';
 import { ApplicationCommandOptionType } from 'discord.js';
 import { RRManager } from '../../lib/modules/classes/RRManager';
+import { reaction_roles_model } from '../../lib/models/reaction_roles';
 
 export default new Command({
   name: 'reactionrole',
@@ -58,6 +59,24 @@ export default new Command({
     },
   ],
   execute: {
+    autoComplete: async ({ client, interaction }) => {
+      const option = interaction.options.getFocused(true);
+      if (option.name === 'panel_id') {
+        const reaction_roles = await reaction_roles_model.find({
+          GuildID: interaction.guild?.id,
+        });
+        if (!reaction_roles) return;
+
+        await interaction.respond(
+          reaction_roles.map((data) => {
+            return {
+              name: data.id,
+              value: data.id,
+            };
+          })
+        );
+      }
+    },
     interaction: async ({ client, interaction }) => {
       const ReactionRole = new RRManager(interaction);
       const rr_id = interaction.options.getString('panel_id', true);

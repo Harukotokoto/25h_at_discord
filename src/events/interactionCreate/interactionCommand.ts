@@ -77,5 +77,13 @@ export default new Event('interactionCreate', async (interaction) => {
         interaction: interaction as UserContextMenuCommandInteraction,
       });
     }
+  } else if (interaction.isAutocomplete()) {
+    const command = client.commands.get(interaction.commandName);
+    if (!command || !command.execute.autoComplete) return;
+
+    await command.execute.autoComplete({
+      client,
+      interaction,
+    });
   }
 });
