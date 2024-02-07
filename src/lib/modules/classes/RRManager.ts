@@ -41,7 +41,7 @@ export class RRManager {
 
       if (rr) return await Error.create('既に指定されたIDは使用されています');
 
-      await interaction.channel.send({
+      const msg = await interaction.channel.send({
         embeds: [
           {
             title: options?.title || 'リアクションロール',
@@ -55,7 +55,7 @@ export class RRManager {
       });
 
       await reaction_roles_model.create({
-        MessageID: (await interaction.fetchReply()).id,
+        MessageID: msg.id,
         RRID: id,
         GuildID: interaction.guild?.id,
         ChannelID: interaction.channel.id,
