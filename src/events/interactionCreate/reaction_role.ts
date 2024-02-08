@@ -16,7 +16,7 @@ export default new Event('interactionCreate', async (interaction) => {
       const role = interaction.guild?.roles.cache.get(roleId);
 
       if (role) {
-        if (member.roles.cache.has(role.id)) {
+        if (!member.roles.cache.has(role.id)) {
           await member.roles.remove(role);
         } else {
           await member.roles.add(role);
