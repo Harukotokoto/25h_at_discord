@@ -8,80 +8,48 @@ export default new Event('interactionCreate', async (interaction) => {
     const member = interaction.guild?.members.cache.get(interaction.user.id);
     if (!member) return;
 
-    const role = interaction.guild?.roles.cache.get(interaction.values[0]);
-    if (!role) {
-      return await interaction.reply({
-        embeds: [
-          {
-            title: 'ロールの取得に失敗しました',
-            description: '指定されたロールが存在しません',
-            color: Colors.Red,
-            footer: footer(),
-          },
-        ],
-        ephemeral: true,
-      });
+    interaction.deferReply({ ephemeral: true });
+
+    const selected_roles = interaction.values;
+
+    for (const roleId of selected_roles) {
+      const role = interaction.guild?.roles.cache.get(roleId);
+
+      if (role) {
+        if (member.roles.cache.has(role.id)) {
+          await member.roles.remove(role);
+        } else {
+          await member.roles.add(role);
+        }
+      }
     }
 
-    if (!member.roles.cache.has(role.id)) {
-      member.roles
-        .add(role)
-        .then(async () => {
-          return await interaction.reply({
-            embeds: [
-              {
-                description: `${role}を付与しました`,
-                color: Colors.Green,
-                footer: footer(),
-              },
-            ],
-            ephemeral: true,
-          });
-        })
-        .catch(async () => {
-          return await interaction.reply({
-            embeds: [
-              {
-                title: 'ロールの付与に失敗しました',
-                description: '権限設定を確認してください',
-                color: Colors.Red,
-                footer: footer(),
-              },
-            ],
-            ephemeral: true,
-          });
-        });
-    } else {
-      member.roles
-        .remove(role)
-        .then(async () => {
-          return await interaction.reply({
-            embeds: [
-              {
-                description: `${role}を削除しました`,
-                color: Colors.Green,
-                footer: footer(),
-              },
-            ],
-            ephemeral: true,
-          });
-        })
-        .catch(async () => {
-          return await interaction.reply({
-            embeds: [
-              {
-                title: 'ロールの削除に失敗しました',
-                description: '権限設定を確認してください',
-                color: Colors.Red,
-                footer: footer(),
-              },
-            ],
-            ephemeral: true,
-          });
-        });
-    }
+    interaction.followUp({
+      embeds: [
+        {
+          title: `${selected_roles.length}個のロールを更新しました`,
+          description: selected_roles
+            .map((roleId, index) => {
+              const role = interaction.guild?.roles.cache.get(roleId);
 
-    await interaction.message.edit({
+              if (!role)
+                return `${index + 1}. 指定されたロールが存在しませんでした`;
+
+              if (member.roles.cache.has(role.id)) {
+                return `${index + 1}. ${role}を削除しました`;
+              } else {
+                return `${index + 1}. ${role}を付与しました`;
+              }
+            })
+            .join('\n'),
+          color: Colors.Blue,
+          footer: footer(),
+        },
+      ],
+      ephemeral: true,
+    });
+
+    interaction.message.edit({
       embeds: interaction.message.embeds,
       components: interaction.message.components,
     });

@@ -248,6 +248,8 @@ export class RRManager {
                 }),
                 placeholder: 'ロールを選択',
                 customId: 'reaction_role',
+                minValues: 1,
+                maxValues: panel.Roles.length,
               },
             ],
           },
