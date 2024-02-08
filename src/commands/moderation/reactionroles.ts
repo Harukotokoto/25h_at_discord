@@ -1,7 +1,8 @@
 import { Command } from '../../lib/modules/Command';
-import { ApplicationCommandOptionType } from 'discord.js';
+import { ApplicationCommandOptionType, Colors } from 'discord.js';
 import { RRManager } from '../../lib/modules/classes/RRManager';
 import { reaction_roles_model } from '../../lib/models/reaction_roles';
+import { footer } from '../../lib/utils/Embed';
 
 export default new Command({
   name: 'reactionrole',
@@ -91,6 +92,20 @@ export default new Command({
         },
       ],
     },
+    {
+      name: 'refresh',
+      description: 'パネルを再読み込みします',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        {
+          name: 'panel_id',
+          description: 'パネルの識別名',
+          type: ApplicationCommandOptionType.String,
+          autocomplete: true,
+          required: true,
+        },
+      ],
+    },
   ],
   execute: {
     autoComplete: async ({ client, interaction }) => {
@@ -142,6 +157,17 @@ export default new Command({
         case 'delete':
           if (!role) return;
           await ReactionRole.roles.delete(rr_id, role);
+          break;
+        case 'refresh':
+          await interaction.followUp({
+            embeds: [
+              {
+                title: 'パネルを再描画します',
+                color: Colors.Blue,
+                footer: footer(),
+              },
+            ],
+          });
           break;
       }
 
