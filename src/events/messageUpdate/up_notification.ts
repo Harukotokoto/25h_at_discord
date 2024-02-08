@@ -5,10 +5,10 @@ import { footer } from '../../lib/utils/Embed';
 
 export default new Event('messageUpdate', async (message) => {
   if (message.author?.id === '761562078095867916') {
-    const channel = client.channels.cache.get(message.channel.id)
-    if (!channel || !channel.isTextBased()) return
+    const channel = client.channels.cache.get(message.channel.id);
+    if (!channel || !channel.isTextBased()) return;
 
-    const msg = await channel.messages.fetch(message.id)
+    const msg = await channel.messages.fetch(message.id);
 
     if (
       msg.embeds[0].fields[0].name.match(/をアップしたよ!/) ||

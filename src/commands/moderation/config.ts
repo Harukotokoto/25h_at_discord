@@ -6,7 +6,7 @@ import { footer } from '../../lib/utils/Embed';
 export default new Command({
   name: 'config',
   description: 'サーバーの設定を変更します',
-  requiredPermissions: ["ManageGuild"],
+  requiredPermissions: ['ManageGuild'],
   options: [
     {
       name: 'report',
