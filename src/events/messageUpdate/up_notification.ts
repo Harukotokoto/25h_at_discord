@@ -9,7 +9,6 @@ export default new Event('messageUpdate', async (message) => {
     if (!channel || !channel.isTextBased()) return
 
     const msg = await channel.messages.fetch(message.id)
-    console.log(msg)
 
     if (
       msg.embeds[0].fields[0].name.match(/をアップしたよ!/) ||
