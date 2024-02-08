@@ -1,14 +1,21 @@
 import { Event } from '../../lib/modules/Event';
+import { client } from '../../index';
 import { Colors } from 'discord.js';
 import { footer } from '../../lib/utils/Embed';
 
 export default new Event('messageUpdate', async (message) => {
   if (message.author?.id === '761562078095867916') {
+    const channel = client.channels.cache.get(message.channel.id)
+    if (!channel || !channel.isTextBased()) return
+
+    const msg = await channel.messages.fetch(message.id)
+    console.log(msg)
+
     if (
-      message.embeds[0]?.fields[0]?.name.match(/をアップしたよ/) ||
-      message.embeds[0]?.fields[0]?.name.match(/I've bumped up/)
+      msg.embeds[0].fields[0].name.match(/をアップしたよ!/) ||
+      msg.embeds[0].fields[0].name.match(/I've bumped up/)
     ) {
-      await message.channel.send({
+      await channel.send({
         embeds: [
           {
             title: 'Upしてくれてありがとね！',
@@ -21,7 +28,7 @@ export default new Event('messageUpdate', async (message) => {
 
       setTimeout(
         async () => {
-          await message.channel.send({
+          await channel.send({
             embeds: [
               {
                 title: 'Upの時間です！',
