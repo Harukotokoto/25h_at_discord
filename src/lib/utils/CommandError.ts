@@ -47,4 +47,24 @@ export class CommandError {
       });
     }
   }
+
+  public async edit(message: string, ErrorType?: ErrorTypes) {
+    if (this.parent instanceof CommandInteraction) {
+      await this.parent.editReply({
+        embeds: [
+          {
+            title:
+              ErrorType === ErrorTypes.Error
+                ? 'エラーが発生しました'
+                : undefined,
+            description: message,
+            color: ErrorType || Colors.Red,
+            footer: footer(),
+          },
+        ],
+      });
+    } else {
+      new Error("Editエラーはコマンドでのみ使用できます")
+    }
+  }
 }

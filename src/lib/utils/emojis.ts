@@ -30,3 +30,5 @@ export const Empty_RightG = '<:25D_Empty_RightG:1192011766171971675>';
 export const Full_LeftG = '<:25D_Full_LeftG:1192011770685038682>';
 export const Full_InnerG = '<:25D_Full_InnerG:1192011769024094248>';
 export const Full_RightG = '<:25D_Full_RightG:1192011773855944836>';
+export const Check = ' <:25D_Check:1203332454937788466> ';
+export const X = '<:25D_X:1203332485920981052>';

@@ -8,23 +8,11 @@ export default new Event('interactionCreate', async (interaction) => {
     const member = interaction.guild?.members.cache.get(interaction.user.id);
     if (!member) return;
 
-    interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ ephemeral: true });
 
     const selected_roles = interaction.values;
 
-    for (const roleId of selected_roles) {
-      const role = interaction.guild?.roles.cache.get(roleId);
-
-      if (role) {
-        if (!member.roles.cache.has(role.id)) {
-          await member.roles.remove(role);
-        } else {
-          await member.roles.add(role);
-        }
-      }
-    }
-
-    interaction.followUp({
+    await interaction.followUp({
       embeds: [
         {
           title: `${selected_roles.length}個のロールを更新しました`,
@@ -49,7 +37,19 @@ export default new Event('interactionCreate', async (interaction) => {
       ephemeral: true,
     });
 
-    interaction.message.edit({
+    for (const roleId of selected_roles) {
+      const role = interaction.guild?.roles.cache.get(roleId);
+
+      if (role) {
+        if (member.roles.cache.has(role.id)) {
+          await member.roles.remove(role);
+        } else {
+          await member.roles.add(role);
+        }
+      }
+    }
+
+    await interaction.message.edit({
       embeds: interaction.message.embeds,
       components: interaction.message.components,
     });
