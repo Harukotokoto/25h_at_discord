@@ -65,7 +65,8 @@ export default async ({
     embeds: [
       {
         title: `登録しました`,
-        description: `${channel}をたっくん鯖グローバルに接続しました\n` +
+        description:
+          `${channel}をたっくん鯖グローバルに接続しました\n` +
           'ルールを厳守してご利用ください\n' +
           '連携を解除したい場合は</gchat unlink:1205443761744912437>を使用してください。\n' +
           'Wick等のAnti Raid Botが導入されている場合、スパムと誤認されWebhookが削除され、連携が自動的に解除される場合があります。\n' +

@@ -36,6 +36,20 @@ export default new Command({
         },
       ],
     },
+    {
+      name: 'repair',
+      description: 'グローバルチャットチャンネルの異常を修復します',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        {
+          name: 'channel',
+          description: 'グローバルチャットを修復するチャンネル',
+          type: ApplicationCommandOptionType.String,
+          autocomplete: true,
+          required: true,
+        },
+      ],
+    },
   ],
   execute: {
     autoComplete: async ({ client, interaction }) => {

@@ -64,7 +64,7 @@ export class CommandError {
         ],
       });
     } else {
-      new Error("Editエラーはコマンドでのみ使用できます")
+      new Error('Editエラーはコマンドでのみ使用できます');
     }
   }
 }
