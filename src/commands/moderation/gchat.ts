@@ -8,7 +8,7 @@ import {
 } from 'discord.js';
 import { gchat_model } from '../../lib/models/gchat';
 import { footer } from '../../lib/utils/Embed';
-import { Check, Space } from '../../lib/utils/emojis';
+import { CommandError } from '../../lib/utils/CommandError';
 
 export default new Command({
   name: 'gchat',
@@ -16,7 +16,7 @@ export default new Command({
   requiredPermissions: ['Administrator'],
   options: [
     {
-      name: 'register',
+      name: 'link',
       description: 'グローバルチャットに登録します',
       type: ApplicationCommandOptionType.Subcommand,
       options: [
@@ -36,12 +36,25 @@ export default new Command({
           ChannelType.GuildText,
         ]) || interaction.channel;
 
+      const Error = new CommandError(interaction);
+
       if (
         !channel ||
         !interaction.guild ||
         channel.type !== ChannelType.GuildText
       )
         return;
+
+      const data = await gchat_model.findOne({
+        GuildID: interaction.guild.id,
+        ChannelID: channel.id,
+      });
+
+      if (data) {
+        return await Error.create(
+          `既に登録しています。/gchat unlinkで連携を解除できます。`
+        );
+      }
 
       await gchat_model.create({
         GuildID: interaction.guild.id,
