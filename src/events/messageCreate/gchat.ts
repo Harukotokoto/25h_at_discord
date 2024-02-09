@@ -2,6 +2,7 @@ import { Event } from '../../lib/modules/Event';
 import { gchat_model } from '../../lib/models/gchat';
 import { AttachmentBuilder, Colors, WebhookClient } from 'discord.js';
 import { client } from '../../index';
+import { messages_model } from '../../lib/models/messages';
 
 export default new Event('messageCreate', async (message) => {
   if (message.author.bot || !message.guild || !message.channel) return;
@@ -16,9 +17,15 @@ export default new Event('messageCreate', async (message) => {
 
   const global_chats = await gchat_model.find();
 
+  await messages_model.create({
+    MessageID: message.id,
+    ChannelID: message.channel.id,
+    SentMessageID: [],
+  });
+
   global_chats.forEach((data) => {
     if (!data || !data.Webhook) {
-      return gchat_model.findOneAndDelete({
+      return gchat_model.deleteOne({
         GuildID: data.GuildID,
         ChannelID: data.ChannelID,
       });
@@ -28,7 +35,7 @@ export default new Event('messageCreate', async (message) => {
 
     const channel = client.channels.cache.get(data.ChannelID);
     if (!channel) {
-      return gchat_model.deleteMany({
+      return gchat_model.deleteOne({
         GuildID: data.GuildID,
         ChannelID: data.ChannelID,
       });
@@ -39,17 +46,30 @@ export default new Event('messageCreate', async (message) => {
     });
 
     try {
-      hook.send({
-        content: message.content,
-        username: `${message.author.displayName} (${message.author.tag})`,
-        avatarURL: message.author.displayAvatarURL(),
-        allowedMentions: {
-          parse: [],
-        },
-        files: message.attachments.map(
-          (attachment) => new AttachmentBuilder(attachment.proxyURL)
-        ),
-      });
+      hook
+        .send({
+          content: message.content,
+          username: `${message.author.displayName} (${message.author.tag})`,
+          avatarURL: message.author.displayAvatarURL(),
+          allowedMentions: {
+            parse: [],
+          },
+          files: message.attachments.map(
+            (attachment) => new AttachmentBuilder(attachment.proxyURL)
+          ),
+        })
+        .then(async (msg) => {
+          await messages_model.updateOne(
+            {
+              MessageID: message.id,
+            },
+            {
+              $push: {
+                SentMessageID: msg.id,
+              },
+            }
+          );
+        });
     } catch (e) {
       return e;
     }
