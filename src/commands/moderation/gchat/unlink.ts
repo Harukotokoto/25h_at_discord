@@ -33,7 +33,7 @@ export default async ({
   });
 
   if (!data) {
-    await interaction.editReply({
+    return await interaction.editReply({
       embeds: [
         {
           title: '解除に失敗しました',
