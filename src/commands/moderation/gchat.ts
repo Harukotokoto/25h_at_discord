@@ -3,6 +3,7 @@ import { ApplicationCommandOptionType, ChannelType } from 'discord.js';
 import link from './gchat/link';
 import unlink from './gchat/unlink';
 import { gchat_model } from '../../lib/models/gchat';
+import repair from './gchat/repair';
 
 export default new Command({
   name: 'gchat',
@@ -84,6 +85,9 @@ export default new Command({
           break;
         case 'unlink':
           await unlink({ client, interaction });
+          break;
+        case 'repair':
+          await repair({ client, interaction });
           break;
       }
     },
