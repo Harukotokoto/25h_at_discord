@@ -26,4 +26,4 @@ const messages_model = model(
   })
 );
 
-export { messages_model }
+export { messages_model };
