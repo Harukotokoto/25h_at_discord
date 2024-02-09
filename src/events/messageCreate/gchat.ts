@@ -20,7 +20,7 @@ export default new Event('messageCreate', async (message) => {
   await messages_model.create({
     MessageID: message.id,
     ChannelID: message.channel.id,
-    SentMessageID: [],
+    SentMessages: [],
   });
 
   global_chats.forEach((data) => {
@@ -65,7 +65,8 @@ export default new Event('messageCreate', async (message) => {
             },
             {
               $push: {
-                SentMessageID: msg.id,
+                'SentMessages.MessageID': msg.id,
+                'SentMessages.ChannelID': msg.channel_id,
               },
             }
           );
