@@ -5,6 +5,7 @@ import {
   ChatInputCommandInteraction,
   Colors,
   ComponentType,
+  WebhookClient,
 } from 'discord.js';
 import { CommandError } from '../../../lib/utils/CommandError';
 import { gchat_model } from '../../../lib/models/gchat';
@@ -65,7 +66,8 @@ export default async ({
     embeds: [
       {
         title: `登録しました`,
-        description: `${channel}をたっくん鯖グローバルに接続しました\n` +
+        description:
+          `${channel}をたっくん鯖グローバルに接続しました\n` +
           'ルールを厳守してご利用ください\n' +
           '連携を解除したい場合は</gchat unlink:1205443761744912437>を使用してください。\n' +
           'Wick等のAnti Raid Botが導入されている場合、スパムと誤認されWebhookが削除され、連携が自動的に解除される場合があります。\n' +
@@ -95,14 +97,61 @@ export default async ({
     ],
   });
 
+  if (!interaction.guild) return;
+
+  const members = await interaction.guild.members.fetch();
+
+  const global_chats = await gchat_model.find();
+  global_chats.forEach((data) => {
+    if (!data || !data.Webhook) {
+      return gchat_model.deleteOne({
+        GuildID: data.GuildID,
+        ChannelID: data.ChannelID,
+      });
+    }
+
+    if (data.ChannelID === channel?.id) return;
+
+    const target_channel = client.channels.cache.get(data.ChannelID);
+    if (!target_channel) {
+      return gchat_model.deleteOne({
+        GuildID: data.GuildID,
+        ChannelID: data.ChannelID,
+      });
+    }
+
+    const hook = new WebhookClient({
+      url: data.Webhook.URL,
+    });
+
+    try {
+      if (!interaction.guild) return;
+      hook.send({
+        embeds: [
+          {
+            title: `新規サーバーが参加しました！`,
+            description:
+              `${interaction.guild.name}がグローバルチャットに参加しました\n` +
+              `サーバーID: ${interaction.guild.id}\n` +
+              `人数: ${members.size}人`,
+            author: {
+              name: interaction.guild.name,
+              icon_url: interaction.guild.iconURL() ?? '',
+            },
+          },
+        ],
+      });
+    } catch (e) {
+      return e;
+    }
+  });
+
   const target_channel = client.channels.cache.get('1205163605247393833');
   if (!target_channel || !target_channel.isTextBased()) return;
 
   const invite = await channel.createInvite({
     maxAge: 0,
   });
-
-  const members = await interaction.guild.members.fetch();
 
   await target_channel.send({
     embeds: [

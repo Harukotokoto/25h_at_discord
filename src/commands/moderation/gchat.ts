@@ -3,6 +3,7 @@ import { ApplicationCommandOptionType, ChannelType } from 'discord.js';
 import link from './gchat/link';
 import unlink from './gchat/unlink';
 import { gchat_model } from '../../lib/models/gchat';
+import repair from './gchat/repair';
 
 export default new Command({
   name: 'gchat',
@@ -30,6 +31,20 @@ export default new Command({
         {
           name: 'channel',
           description: 'グローバルチャットとの連携を解除するチャンネル',
+          type: ApplicationCommandOptionType.String,
+          autocomplete: true,
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'repair',
+      description: 'グローバルチャットチャンネルの異常を修復します',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        {
+          name: 'channel',
+          description: 'グローバルチャットを修復するチャンネル',
           type: ApplicationCommandOptionType.String,
           autocomplete: true,
           required: true,
@@ -70,6 +85,9 @@ export default new Command({
           break;
         case 'unlink':
           await unlink({ client, interaction });
+          break;
+        case 'repair':
+          await repair({ client, interaction });
           break;
       }
     },
