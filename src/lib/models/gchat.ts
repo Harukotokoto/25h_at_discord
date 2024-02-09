@@ -11,6 +11,20 @@ const gchat_model = model(
       type: String,
       required: true,
     },
+    Webhook: {
+      URL: {
+        type: String,
+        required: true,
+      },
+      Token: {
+        type: String,
+        required: true,
+      },
+      ID: {
+        type: String,
+        required: true,
+      },
+    },
   })
 );
 
