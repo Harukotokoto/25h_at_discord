@@ -65,8 +65,10 @@ export default new Event('messageCreate', async (message) => {
             },
             {
               $push: {
-                'SentMessages.MessageID': msg.id,
-                'SentMessages.ChannelID': msg.channel_id,
+                SentMessages: {
+                  MessageID: msg.id,
+                  ChannelID: msg.channel_id,
+                },
               },
             }
           );
