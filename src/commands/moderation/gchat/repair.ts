@@ -30,6 +30,19 @@ export default async ({
     ChannelID: interaction.options.getString('channel', true),
   });
 
+  if (!data) {
+    await interaction.editReply({
+      embeds: [
+        {
+          title: '修復に失敗しました',
+          description: '指定されたチャンネルは登録されていません',
+          color: Colors.Red,
+          footer: footer(),
+        },
+      ],
+    });
+  }
+
   if (data) {
     const channel = client.channels.cache.get(
       interaction.options.getString('channel', true)

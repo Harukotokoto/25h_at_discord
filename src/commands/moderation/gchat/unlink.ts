@@ -32,6 +32,19 @@ export default async ({
     ChannelID: channel_id,
   });
 
+  if (!data) {
+    await interaction.editReply({
+      embeds: [
+        {
+          title: '解除に失敗しました',
+          description: '指定されたチャンネルは登録されていません',
+          color: Colors.Red,
+          footer: footer(),
+        },
+      ],
+    });
+  }
+
   const channel = client.channels.cache.get(channel_id);
 
   if (

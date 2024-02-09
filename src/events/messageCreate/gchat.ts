@@ -39,17 +39,14 @@ export default new Event('messageCreate', async (message) => {
     try {
       hook.send({
         content: message.content,
-        username: `${message.author.displayName}(${message.author.tag})`,
+        username: `${message.author.displayName} (${message.author.tag})`,
         avatarURL: message.author.displayAvatarURL(),
         allowedMentions: {
           parse: [],
         },
       });
     } catch (e) {
-      gchat_model.findOneAndDelete({
-        GuildID: data.GuildID,
-        ChannelID: data.ChannelID,
-      });
+      return e;
     }
   });
 });
