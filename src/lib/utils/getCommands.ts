@@ -43,9 +43,8 @@ export const getCommands = async (): Promise<
 
     const command = await client.importFile<CommandType>(filePath);
 
-    if (!command) return;
-    if (command.type && command.type !== ApplicationCommandType.ChatInput)
-      return;
+    if (!command) continue;
+    if (command.type && command.type !== ApplicationCommandType.ChatInput) continue;
     const commandOptions = command.options?.map((option) => {
       if (option.type === ApplicationCommandOptionType.Subcommand) {
         const options =
