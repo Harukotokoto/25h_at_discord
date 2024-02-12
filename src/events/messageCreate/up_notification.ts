@@ -1,21 +1,13 @@
 import { Event } from '../../lib/modules/Event';
-import { client } from '../../index';
 import { Colors } from 'discord.js';
 import { footer } from '../../lib/utils/Embed';
 
-export default new Event('messageUpdate', async (message) => {
-  if (message.author?.id === '761562078095867916') {
-    const channel = client.channels.cache.get(message.channel.id);
-    if (!channel || !channel.isTextBased()) return;
-
-    const msg = await channel.messages.fetch(message.id);
-
+export default new Event('messageCreate', async (message) => {
+  if (message.author.id === '903541413298450462') {
     if (
-      msg.embeds[0].fields[0].name.match(/をアップしたよ!/) ||
-      msg.embeds[0].fields[0].name.match(/I've bumped up/)
+      message.embeds[0]?.description?.match(/UPに成功しました/)
     ) {
-      await channel.send({
-        content: "<@&1176816017905811526>",
+      await message.channel.send({
         embeds: [
           {
             title: 'Upしてくれてありがとね！',
@@ -28,12 +20,13 @@ export default new Event('messageUpdate', async (message) => {
 
       setTimeout(
         async () => {
-          await channel.send({
+          await message.channel.send({
+            content: "<@&1176816017905811526>",
             embeds: [
               {
                 title: 'Upの時間です！',
                 description:
-                  '</dissoku up:828002256690610256> で表示順位を上げよう！',
+                  '</up:935190259111706754> で表示順位を上げよう！',
                 color: Colors.Blue,
                 footer: footer(),
               },
