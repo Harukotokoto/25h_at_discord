@@ -1,7 +1,10 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
-const admin_model = model('admin', new Schema({
-  UserID: {type: String, required: true},
-}))
+const admin_model = model(
+  'admin',
+  new Schema({
+    UserID: { type: String, required: true },
+  })
+);
 
-export { admin_model }
+export { admin_model };

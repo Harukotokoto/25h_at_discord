@@ -19,8 +19,8 @@ export default new Command({
           description: '追加するユーザー',
           type: ApplicationCommandOptionType.User,
           required: true,
-        }
-      ]
+        },
+      ],
     },
     {
       name: 'remove',
@@ -30,11 +30,10 @@ export default new Command({
         {
           name: 'user',
           description: '削除するユーザー',
-          type: ApplicationCommandOptionType.String,
+          type: ApplicationCommandOptionType.User,
           required: true,
-          autocomplete: true,
-        }
-      ]
+        },
+      ],
     },
     {
       name: 'list',
@@ -45,36 +44,16 @@ export default new Command({
       name: 'toggle',
       description: '管理者権限を切り替えます',
       type: ApplicationCommandOptionType.Subcommand,
-    }
+    },
   ],
   private: true,
   execute: {
-    autoComplete: async ({ interaction }) => {
-      const admins = await admin_model.find();
-      const members = admins.map((data) => {
-        const user = interaction.client.users.cache.get(data.UserID);
-        if (!user) return;
-        return user;
-      });
-
-      return {
-        options: members.map((member) => {
-          return {
-            name: member?.username,
-            value: member?.id,
-          };
-        }),
-      };
-    },
     interaction: async ({ interaction, client }) => {
       if (!interaction.guild) return;
-      const administrators = [
-        "1176812229631430660",
-        "1004365048887660655",
-      ];
+      const administrators = ['1176812229631430660', '1004365048887660655'];
 
       const Error = new CommandError(interaction);
-      
+
       switch (interaction.options.getSubcommand()) {
         case 'add':
           if (!administrators.includes(interaction.user.id)) {
@@ -82,6 +61,12 @@ export default new Command({
           }
 
           const add_user = interaction.options.getUser('user', true);
+
+          if (await admin_model.findOne({ UserID: interaction.user.id })) {
+            return await Error.create(
+              'このユーザーは既に管理者に登録されています'
+            );
+          }
 
           await admin_model.create({ UserID: add_user.id });
 
@@ -91,18 +76,22 @@ export default new Command({
                 description: `${add_user}を管理者に追加しました`,
                 color: Colors.Green,
                 footer: footer(),
-              }
-            ]
-          })
+              },
+            ],
+          });
           break;
         case 'remove':
           if (!administrators.includes(interaction.user.id)) {
             return await Error.create('このコマンドは開発者のみ実行可能です');
           }
 
-          const user_id = interaction.options.getString('user', true);
-          const remove_user = client.users.cache.get(user_id);
-          if (!remove_user) return await Error.create('ユーザーが見つかりませんでした');
+          const remove_user = interaction.options.getUser('user', true);
+
+          if (!(await admin_model.findOne({ UserID: interaction.user.id }))) {
+            return await Error.create(
+              'このユーザーは管理者に登録されていません'
+            );
+          }
 
           await admin_model.deleteOne({ UserID: remove_user.id });
 
@@ -112,9 +101,9 @@ export default new Command({
                 description: `${remove_user}を管理者から削除しました`,
                 color: Colors.Red,
                 footer: footer(),
-              }
-            ]
-          })
+              },
+            ],
+          });
           break;
         case 'list':
           const admins = await admin_model.find();
@@ -122,29 +111,38 @@ export default new Command({
             const user = client.users.cache.get(data.UserID);
             if (!user) return;
             return user;
-          })
-          
+          });
+
           await interaction.followUp({
             embeds: [
               {
                 title: '管理者一覧',
-                description: members.map((member) => member?.toString()).join('\n'),
+                description: members
+                  .map((member) => member?.toString())
+                  .join('\n'),
                 color: Colors.Blue,
                 footer: footer(),
-              }
-            ]
+              },
+            ],
           });
           break;
         case 'toggle':
-          const admin = await admin_model.findOne({ UserID: interaction.user.id });
-    
+          const admin = await admin_model.findOne({
+            UserID: interaction.user.id,
+          });
+
           if (!admin) {
-            return await Error.create('このコマンドは許可されたユーザーのみ実行可能です');
+            return await Error.create(
+              'このコマンドは許可されたユーザーのみ実行可能です'
+            );
           }
-    
-          const member = interaction.guild.members.cache.get(interaction.user.id);
-          if (!member) return await Error.create('メンバーが見つかりませんでした');
-    
+
+          const member = interaction.guild.members.cache.get(
+            interaction.user.id
+          );
+          if (!member)
+            return await Error.create('メンバーが見つかりませんでした');
+
           if (member.roles.cache.has('1208105713419817042')) {
             member.roles.remove('1208105713419817042').then(async () => {
               interaction.followUp({
