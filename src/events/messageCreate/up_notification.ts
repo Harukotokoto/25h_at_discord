@@ -4,9 +4,7 @@ import { footer } from '../../lib/utils/Embed';
 
 export default new Event('messageCreate', async (message) => {
   if (message.author.id === '903541413298450462') {
-    if (
-      message.embeds[0]?.description?.match(/UPに成功しました/)
-    ) {
+    if (message.embeds[0]?.description?.match(/UPに成功しました/)) {
       await message.channel.send({
         embeds: [
           {
@@ -21,12 +19,11 @@ export default new Event('messageCreate', async (message) => {
       setTimeout(
         async () => {
           await message.channel.send({
-            content: "<@&1176816017905811526>",
+            content: '<@&1176816017905811526>',
             embeds: [
               {
                 title: 'Upの時間です！',
-                description:
-                  '</up:935190259111706754> で表示順位を上げよう！',
+                description: '</up:935190259111706754> で表示順位を上げよう！',
                 color: Colors.Blue,
                 footer: footer(),
               },

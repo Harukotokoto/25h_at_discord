@@ -23,7 +23,9 @@ export default new Command({
         });
       }
 
-      const member = interaction.guild?.members.cache.get(interaction.targetMessage.author.id);
+      const member = interaction.guild?.members.cache.get(
+        interaction.targetMessage.author.id
+      );
 
       const Error = new CommandError(interaction);
 
