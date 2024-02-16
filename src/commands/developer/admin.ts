@@ -49,6 +49,23 @@ export default new Command({
   ],
   private: true,
   execute: {
+    autoComplete: async ({ interaction }) => {
+      const admins = await admin_model.find();
+      const members = admins.map((data) => {
+        const user = interaction.client.users.cache.get(data.UserID);
+        if (!user) return;
+        return user;
+      });
+
+      return {
+        options: members.map((member) => {
+          return {
+            name: member?.username,
+            value: member?.id,
+          };
+        }),
+      };
+    },
     interaction: async ({ interaction, client }) => {
       if (!interaction.guild) return;
       const administrators = [
@@ -83,7 +100,9 @@ export default new Command({
             return await Error.create('このコマンドは開発者のみ実行可能です');
           }
 
-          const remove_user = interaction.options.getUser('user', true);
+          const user_id = interaction.options.getString('user', true);
+          const remove_user = client.users.cache.get(user_id);
+          if (!remove_user) return await Error.create('ユーザーが見つかりませんでした');
 
           await admin_model.deleteOne({ UserID: remove_user.id });
 
