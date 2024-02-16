@@ -33,7 +33,7 @@ export default new Event('messageCreate', async (message) => {
   const allowedCommands = ['snipe'];
   if (
     message.guild?.id === '1176812762110885908' &&
-    message.channel?.id !== '1176828166287921212' &&
+    message.channel?.id !== '1207564615320608798' &&
     !member.permissions.has(['ManageGuild']) &&
     !allowedCommands.includes(command.name)
   ) {

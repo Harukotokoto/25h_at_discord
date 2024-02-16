@@ -22,7 +22,7 @@ export default new Event('interactionCreate', async (interaction) => {
       interaction.guild?.id === '1176812762110885908' &&
       !command?.ephemeral &&
       (!command?.type || command?.type === ApplicationCommandType.ChatInput) &&
-      interaction.channel?.id !== '1176828166287921212' &&
+      interaction.channel?.id !== '1207564615320608798' &&
       !member.permissions.has(['ManageGuild']) &&
       !allowedCommands.includes(command?.name as string)
     ) {
