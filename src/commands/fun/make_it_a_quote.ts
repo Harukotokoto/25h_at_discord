@@ -3,13 +3,14 @@ import axios from 'axios';
 import { ApplicationCommandType, ChannelType, Colors } from 'discord.js';
 import { footer } from '../../lib/utils/Embed';
 import { client } from '../../index';
+import { CommandError } from '../../lib/utils/CommandError';
 
 export default new Command({
   name: 'Make it a Quote',
   type: ApplicationCommandType.Message,
   execute: {
     interaction: async ({ interaction }) => {
-      if (!interaction.targetMessage) {
+      if (!interaction.targetMessage.content) {
         return await interaction.followUp({
           embeds: [
             {
@@ -22,12 +23,20 @@ export default new Command({
         });
       }
 
+      const member = interaction.guild?.members.cache.get(interaction.targetMessage.author.id);
+
+      const Error = new CommandError(interaction);
+
+      if (!member) {
+        return await Error.create('サーバー内にメンバーが存在しません');
+      }
+
       const response = (
         await axios.post('https://api.voids.top/fakequote', {
           text: interaction.targetMessage.content,
-          avatar: interaction.targetMessage.author.displayAvatarURL(),
-          username: interaction.targetMessage.author.tag,
-          display_name: interaction.targetMessage.author.displayName,
+          avatar: member.displayAvatarURL(),
+          username: member.user.tag,
+          display_name: member.displayName,
           color: true,
           watermark: client.user?.tag,
         })
