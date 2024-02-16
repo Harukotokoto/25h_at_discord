@@ -62,7 +62,7 @@ export default new Command({
 
           const add_user = interaction.options.getUser('user', true);
 
-          if (await admin_model.findOne({ UserID: interaction.user.id })) {
+          if (await admin_model.findOne({ UserID: add_user.id })) {
             return await Error.create(
               'このユーザーは既に管理者に登録されています'
             );
@@ -87,7 +87,7 @@ export default new Command({
 
           const remove_user = interaction.options.getUser('user', true);
 
-          if (!(await admin_model.findOne({ UserID: interaction.user.id }))) {
+          if (!(await admin_model.findOne({ UserID: remove_user.id }))) {
             return await Error.create(
               'このユーザーは管理者に登録されていません'
             );
