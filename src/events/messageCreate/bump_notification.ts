@@ -22,7 +22,6 @@ export default new Event('messageCreate', async (message) => {
       setTimeout(
         async () => {
           await message.channel.send({
-            content: '<@&1176816017905811526>',
             embeds: [
               {
                 title: 'Bumpの時間です！',
