@@ -17,11 +17,14 @@ export default new Event('interactionCreate', async (interaction) => {
     const member = interaction.guild?.members.cache.get(interaction.user.id);
     if (!member) return;
 
-    const allowedCommands = ['snipe'];
+    const allowedCommands = ['snipe', 'admin'];
     if (
       interaction.guild?.id === '1176812762110885908' &&
       !command?.ephemeral &&
-      (!command?.type || command?.type === ApplicationCommandType.ChatInput) &&
+      (
+        !command?.type || 
+        command?.type === ApplicationCommandType.ChatInput
+      ) &&
       interaction.channel?.id !== '1207564615320608798' &&
       !member.permissions.has(['ManageGuild']) &&
       !allowedCommands.includes(command?.name as string)
