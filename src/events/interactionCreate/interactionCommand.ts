@@ -18,6 +18,8 @@ export default new Event('interactionCreate', async (interaction) => {
     if (!member) return;
 
     const allowedCommands = ['snipe', 'admin'];
+    const administrators = ['1176812229631430660', '1004365048887660655'];
+
     if (
       interaction.guild?.id === '1176812762110885908' &&
       !command?.ephemeral &&
@@ -27,7 +29,8 @@ export default new Event('interactionCreate', async (interaction) => {
       ) &&
       interaction.channel?.id !== '1207564615320608798' &&
       !member.permissions.has(['ManageGuild']) &&
-      !allowedCommands.includes(command?.name as string)
+      !allowedCommands.includes(command?.name as string) &&
+      !administrators.includes(interaction.user.id)
     ) {
       await interaction.deferReply({ ephemeral: true });
       return await Error.create('コマンドチャンネルで実行してください');
