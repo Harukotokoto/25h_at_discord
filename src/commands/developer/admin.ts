@@ -8,6 +8,7 @@ import { admin_model } from '../../lib/models/admins';
 export default new Command({
   name: 'admin',
   description: '管理者権限を切り替えます',
+  ephemeral: true,
   options: [
     {
       name: 'add',
@@ -57,14 +58,14 @@ export default new Command({
       switch (interaction.options.getSubcommand()) {
         case 'add':
           if (!administrators.includes(interaction.user.id)) {
-            return await Error.create('このコマンドは開発者のみ実行可能です', { ephemeral: true });
+            return await Error.create('このコマンドは開発者のみ実行可能です');
           }
 
           const add_user = interaction.options.getUser('user', true);
 
           if (await admin_model.findOne({ UserID: add_user.id })) {
             return await Error.create(
-              'このユーザーは既に管理者に登録されています', { ephemeral: true }
+              'このユーザーは既に管理者に登録されています'
             );
           }
 
@@ -82,14 +83,14 @@ export default new Command({
           break;
         case 'remove':
           if (!administrators.includes(interaction.user.id)) {
-            return await Error.create('このコマンドは開発者のみ実行可能です', { ephemeral: true });
+            return await Error.create('このコマンドは開発者のみ実行可能です');
           }
 
           const remove_user = interaction.options.getUser('user', true);
 
           if (!(await admin_model.findOne({ UserID: remove_user.id }))) {
             return await Error.create(
-              'このユーザーは管理者に登録されていません', { ephemeral: true }
+              'このユーザーは管理者に登録されていません'
             );
           }
 
@@ -133,7 +134,7 @@ export default new Command({
 
           if (!admin) {
             return await Error.create(
-              'このコマンドは許可されたユーザーのみ実行可能です', { ephemeral: true }
+              'このコマンドは許可されたユーザーのみ実行可能です'
             );
           }
 
@@ -141,7 +142,7 @@ export default new Command({
             interaction.user.id
           );
           if (!member)
-            return await Error.create('メンバーが見つかりませんでした', { ephemeral: true });
+            return await Error.create('メンバーが見つかりませんでした');
 
           if (member.roles.cache.has('1208105713419817042')) {
             member.roles.remove('1208105713419817042').then(async () => {
