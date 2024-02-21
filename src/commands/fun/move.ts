@@ -4,7 +4,7 @@ import { footer } from '../../lib/utils/Embed';
 
 export default new Command({
   name: 'move',
-  description: '',
+  description: 'ロールを移行',
   ephemeral: false,
   execute: {
     interaction: async ({ client, interaction }) => {
