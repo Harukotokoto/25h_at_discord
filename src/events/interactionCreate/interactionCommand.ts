@@ -21,13 +21,13 @@ export default new Event('interactionCreate', async (interaction) => {
     const administrators = ['1176812229631430660', '1004365048887660655'];
 
     if (
-      interaction.guild?.id === '1176812762110885908' &&
+      interaction.guild?.id === client.config.guildId &&
       !command?.ephemeral &&
       (
         !command?.type || 
         command?.type === ApplicationCommandType.ChatInput
       ) &&
-      interaction.channel?.id !== '1207564615320608798' &&
+      interaction.channel?.id !== client.config.command_channel &&
       !member.permissions.has(['ManageGuild']) &&
       !allowedCommands.includes(command?.name as string) &&
       !administrators.includes(interaction.user.id)

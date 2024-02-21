@@ -7,7 +7,7 @@ import { footer } from '../../lib/utils/Embed';
 export default new Event('ready', async () => {
   client.Logger.info(`\x1b[32m${client.user?.tag} is now ready!\x1b[0m`);
 
-  const channel = client.channels.cache.get('1207564642059157545');
+  const channel = client.channels.cache.get(client.config.nsfw);
   if (!channel || !channel.isTextBased()) return;
 
   const response = await axios.get('https://nekobot.xyz/api/image?type=hentai');
@@ -27,7 +27,7 @@ export default new Event('ready', async () => {
 
   setInterval(
     async () => {
-      const channel = client.channels.cache.get('1207564642059157545');
+      const channel = client.channels.cache.get(client.config.nsfw);
       if (!channel || !channel.isTextBased()) return;
 
       const response = await axios.get(

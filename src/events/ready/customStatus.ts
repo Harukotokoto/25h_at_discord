@@ -6,25 +6,20 @@ export default new Event('ready', () => {
   let index = 0;
   const status_list = [
     `たっくん鯖 | [takkun]人を捕食中`,
-    `語るんです | [ktrnds]人を監視中`,
     `/help | Produced by Rena`,
   ];
 
   setInterval(() => {
-    const takkun_guild = client.guilds.cache.get('1176812762110885908');
+    const takkun_guild = client.guilds.cache.get(client.config.guildId);
     if (!takkun_guild) return;
 
-    const ktrnds_guild = client.guilds.cache.get('1149350818747781120');
-    if (!ktrnds_guild) return;
-
     const takkun_memberCounter = takkun_guild.channels.cache.get(
-      '1189473966297981030'
+      client.config.counter
     );
     if (!takkun_memberCounter) return;
 
     const memberCount = {
-      takkun: takkun_guild?.memberCount.toString() || (0).toString(),
-      ktrnds: ktrnds_guild?.memberCount.toString() || (0).toString(),
+      takkun: takkun_guild?.memberCount.toString() || (0).toString()
     };
 
     takkun_memberCounter.setName(`メンバー数：${memberCount.takkun} 人`);
@@ -35,8 +30,7 @@ export default new Event('ready', () => {
 
     client.user?.setActivity({
       name: status
-        .replace('[takkun]', memberCount.takkun)
-        .replace('[ktrnds]', memberCount.ktrnds),
+        .replace('[takkun]', memberCount.takkun),
       type: ActivityType.Custom,
     });
 

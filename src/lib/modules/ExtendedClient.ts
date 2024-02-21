@@ -14,6 +14,7 @@ import { Logger } from '../utils';
 import mongoose from 'mongoose';
 import process from 'process';
 import moment from 'moment';
+import Jsonconfig from "../../../config.json";
 
 const globPromise = promisify(glob);
 
@@ -46,6 +47,8 @@ export class ExtendedClient extends Client {
   public constructor(options: ClientOptions) {
     super(options);
   }
+
+  public config = Jsonconfig;
 
   public start(): void {
     this.login(process.env.CLIENT_TOKEN).then(() => {
@@ -108,7 +111,7 @@ export class ExtendedClient extends Client {
           this.Logger.error(e);
         });
 
-      const guild = this.guilds.cache.get('1209731058266808360');
+      const guild = this.guilds.cache.get(this.config.guildId);
       if (!guild) return this.Logger.error('Guild not found');
 
       guild.commands

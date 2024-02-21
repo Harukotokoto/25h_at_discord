@@ -144,8 +144,8 @@ export default new Command({
           if (!member)
             return await Error.create('メンバーが見つかりませんでした');
 
-          if (member.roles.cache.has('1208105713419817042')) {
-            member.roles.remove('1208105713419817042').then(async () => {
+          if (member.roles.cache.has(client.config.admin_roleId)) {
+            member.roles.remove(client.config.admin_roleId).then(async () => {
               interaction.followUp({
                 embeds: [
                   {
@@ -157,7 +157,7 @@ export default new Command({
               });
             });
           } else {
-            member.roles.add('1208105713419817042').then(async () => {
+            member.roles.add(client.config.admin_roleId).then(async () => {
               interaction.followUp({
                 embeds: [
                   {

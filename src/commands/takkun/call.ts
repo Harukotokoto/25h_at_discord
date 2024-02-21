@@ -31,7 +31,7 @@ export default new Command({
           },
         ],
       });
-      await interaction.channel?.send(`<@&1176816017905811526>`);
+      await interaction.channel?.send(`<@&${client.config.mod_id}>`);
     },
   },
 });

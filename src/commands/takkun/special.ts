@@ -19,7 +19,7 @@ export default new Command({
     interaction: async ({ client, interaction }) => {
       const targetUser = interaction.options.getUser('user');
       if (!targetUser) return;
-      const roleId = '1180691750164123688';
+      const roleId = client.config.special;
 
       const member = interaction.guild?.members.cache.get(targetUser.id);
 

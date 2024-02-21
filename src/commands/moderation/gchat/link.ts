@@ -84,7 +84,7 @@ export default async ({
             type: ComponentType.Button,
             label: 'たっくん鯖',
             style: ButtonStyle.Link,
-            url: 'https://discord.gg/dWK6cxsmBH',
+            url: client.config.gchat.invite,
           },
           {
             type: ComponentType.Button,
@@ -146,7 +146,7 @@ export default async ({
     }
   });
 
-  const target_channel = client.channels.cache.get('1205163605247393833');
+  const target_channel = client.channels.cache.get(client.config.gchat.log);
   if (!target_channel || !target_channel.isTextBased()) return;
 
   const invite = await channel.createInvite({
