@@ -128,7 +128,7 @@ export default async ({
     }
   });
 
-  const target_channel = client.channels.cache.get('1205163605247393833');
+  const target_channel = client.channels.cache.get(client.config.gchat.log);
   if (!target_channel || !target_channel.isTextBased()) return;
 
   await target_channel.send({

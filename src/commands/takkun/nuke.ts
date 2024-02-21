@@ -9,7 +9,7 @@ import { footer } from '../../lib/utils/Embed';
 
 export default new Command({
   name: 'nuke',
-  description: '指定したチャンネルをアーカイブします',
+  description: '指定したチャンネルを再作成します',
   requiredPermissions: ['Administrator'],
   private: true,
   options: [
@@ -46,7 +46,7 @@ export default new Command({
       if (!selected_channel) return;
 
       const archives_category = interaction.guild?.channels.cache.get(
-        '1176827301049139252'
+        client.config.archive
       );
 
       if (

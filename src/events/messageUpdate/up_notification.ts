@@ -28,7 +28,6 @@ export default new Event('messageUpdate', async (message) => {
       setTimeout(
         async () => {
           await channel.send({
-            content: '<@&1176816017905811526>',
             embeds: [
               {
                 title: 'Upの時間です！',

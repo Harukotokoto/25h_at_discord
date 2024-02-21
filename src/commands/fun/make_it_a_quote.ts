@@ -61,7 +61,7 @@ export default new Command({
       });
 
       const target_channel = interaction.guild?.channels.cache.get(
-        '1203209546319921243'
+        client.config.miq_channel
       );
       if (!target_channel || target_channel.type !== ChannelType.PublicThread)
         return;
