@@ -14,7 +14,7 @@ import { Logger } from '../utils';
 import mongoose from 'mongoose';
 import process from 'process';
 import moment from 'moment';
-const Jsonconfig = require(`${__dirname}/config.json`)
+const Jsonconfig = require(`../../config.json`)
 
 const globPromise = promisify(glob);
 
