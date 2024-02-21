@@ -108,7 +108,7 @@ export class ExtendedClient extends Client {
           this.Logger.error(e);
         });
 
-      const guild = this.guilds.cache.get('1176812762110885908');
+      const guild = this.guilds.cache.get('1209731058266808360');
       if (!guild) return this.Logger.error('Guild not found');
 
       guild.commands
