@@ -132,6 +132,19 @@ export default new Event('interactionCreate', async (interaction) => {
             footer: footer(),
           },
         ],
+        components: [],
+      });
+    } else if (interaction.customId === 'ktrndsmc_disagree') {
+      await interaction.update({
+        embeds: [
+          {
+            title: '認証申請を破棄しました',
+            description: interaction.message.embeds[0].description as string,
+            color: Colors.Red,
+            footer: footer(),
+          },
+        ],
+        components: [],
       });
     }
   }
@@ -183,11 +196,6 @@ export default new Event('interactionCreate', async (interaction) => {
                 label: '承諾',
                 customId: `ktrndsmc_agree-${interaction.user.id}`,
               },
-            ],
-          },
-          {
-            type: ComponentType.ActionRow,
-            components: [
               {
                 type: ComponentType.Button,
                 style: ButtonStyle.Danger,
