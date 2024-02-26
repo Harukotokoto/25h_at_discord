@@ -10,7 +10,7 @@ import { promisify } from 'util';
 import glob from 'glob';
 import { Event } from './Event';
 import { CommandType } from '../interfaces/Command';
-import { Logger } from '../utils';
+import { Logger } from './classes/Logger';
 import mongoose from 'mongoose';
 import process from 'process';
 import moment from 'moment';
