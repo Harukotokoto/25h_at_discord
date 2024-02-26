@@ -7,9 +7,9 @@ import {
   Message,
   Role,
 } from 'discord.js';
-import { footer } from '../../utils/Embed';
+import { footer } from '../../utils/embed';
 import { reaction_roles_model } from '../../models/reaction_roles';
-import { CommandError } from '../../utils/CommandError';
+import { CommandError } from './CommandError';
 import { Promise } from 'mongoose';
 
 type RROptions = {
@@ -17,7 +17,7 @@ type RROptions = {
   description?: string | null;
 };
 
-export class RRManager {
+export class ReactionRole {
   protected InteractionOrMessage:
     | ChatInputCommandInteraction
     | Message<boolean>;

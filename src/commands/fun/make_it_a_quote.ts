@@ -1,9 +1,9 @@
 import { Command } from '../../lib/modules/Command';
 import axios from 'axios';
 import { ApplicationCommandType, ChannelType, Colors } from 'discord.js';
-import { footer } from '../../lib/utils/Embed';
+import { footer } from '../../lib/utils/embed';
 import { client } from '../../index';
-import { CommandError } from '../../lib/utils/CommandError';
+import { CommandError } from '../../lib/modules/classes/CommandError';
 
 export default new Command({
   name: 'Make it a Quote',
@@ -52,29 +52,6 @@ export default new Command({
 
       await interaction.followUp({
         content: `[生成元のメッセージ](${interaction.targetMessage.url})`,
-        files: [
-          {
-            attachment: imageBinary,
-            name: 'quote.jpg',
-          },
-        ],
-      });
-
-      const target_channel = interaction.guild?.channels.cache.get(
-        client.config.miq_channel
-      );
-      if (!target_channel || target_channel.type !== ChannelType.PublicThread)
-        return;
-
-      await target_channel.send({
-        embeds: [
-          {
-            description: `[元メッセージへ飛ぶ](${interaction.targetMessage.url})`,
-            image: {
-              url: 'attachment://quote.jpg',
-            },
-          },
-        ],
         files: [
           {
             attachment: imageBinary,

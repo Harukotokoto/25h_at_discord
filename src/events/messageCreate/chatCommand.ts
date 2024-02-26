@@ -1,6 +1,6 @@
 import { Event } from '../../lib/modules/Event';
 import { client } from '../../index';
-import { CommandError, ErrorTypes } from '../../lib/utils/CommandError';
+import { CommandError, ErrorTypes } from '../../lib/modules/classes/CommandError';
 import { Events } from 'discord.js';
 
 export default new Event('messageCreate', async (message) => {

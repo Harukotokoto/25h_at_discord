@@ -6,7 +6,7 @@ import {
 } from 'discord.js';
 import { client } from '../../index';
 import { Event } from '../../lib/modules/Event';
-import { CommandError, ErrorTypes } from '../../lib/utils/CommandError';
+import { CommandError, ErrorTypes } from '../../lib/modules/classes/CommandError';
 
 export default new Event('interactionCreate', async (interaction) => {
   if (interaction.isCommand()) {
@@ -16,25 +16,6 @@ export default new Event('interactionCreate', async (interaction) => {
 
     const member = interaction.guild?.members.cache.get(interaction.user.id);
     if (!member) return;
-
-    const allowedCommands = ['snipe', 'admin'];
-    const administrators = ['1176812229631430660', '1004365048887660655'];
-
-    if (
-      interaction.guild?.id === client.config.guildId &&
-      !command?.ephemeral &&
-      (
-        !command?.type || 
-        command?.type === ApplicationCommandType.ChatInput
-      ) &&
-      interaction.channel?.id !== client.config.command_channel &&
-      !member.permissions.has(['ManageGuild']) &&
-      !allowedCommands.includes(command?.name as string) &&
-      !administrators.includes(interaction.user.id)
-    ) {
-      await interaction.deferReply({ ephemeral: true });
-      return await Error.create('コマンドチャンネルで実行してください');
-    }
 
     await interaction.deferReply({
       ephemeral: command?.ephemeral || false,
@@ -48,11 +29,7 @@ export default new Event('interactionCreate', async (interaction) => {
         ErrorTypes.Warn
       );
 
-    const admins = [
-      '1004365048887660655',
-      '1176812229631430660',
-      '790021463293165588',
-    ];
+    const admins = ["1004365048887660655"];
 
     if (command.isOwnerCommand && !admins.includes(interaction.user.id))
       return await Error.create(

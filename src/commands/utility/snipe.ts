@@ -5,7 +5,7 @@ import {
   ApplicationCommandType,
   Colors,
 } from 'discord.js';
-import { footer } from '../../lib/utils/Embed';
+import { footer } from '../../lib/utils/embed';
 
 export default new Command({
   name: 'snipe',

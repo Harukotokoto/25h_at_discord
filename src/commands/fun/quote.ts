@@ -5,7 +5,7 @@ import {
   ApplicationCommandType,
 } from 'discord.js';
 import { client } from '../../index';
-import { CommandError } from '../../lib/utils/CommandError';
+import { CommandError } from '../../lib/modules/classes/CommandError';
 
 export default new Command({
   name: 'quote',
@@ -43,7 +43,7 @@ export default new Command({
           username: member.user.username,
           display_name: member.displayName,
           color: true,
-          watermark: client.user?.tag,
+          watermark: `Fake quote by ${client.user?.tag}`,
         })
       ).data;
 

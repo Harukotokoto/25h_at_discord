@@ -33,7 +33,6 @@ type CommandBase = {
   ephemeral?: boolean;
   aliases?: string[];
   isOwnerCommand?: boolean;
-  private?: boolean;
 };
 
 type Command<

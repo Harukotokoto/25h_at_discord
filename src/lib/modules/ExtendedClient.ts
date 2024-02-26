@@ -14,7 +14,6 @@ import { Logger } from '../utils';
 import mongoose from 'mongoose';
 import process from 'process';
 import moment from 'moment';
-const Jsonconfig = require(`../../config.json`)
 
 const globPromise = promisify(glob);
 
@@ -47,8 +46,6 @@ export class ExtendedClient extends Client {
   public constructor(options: ClientOptions) {
     super(options);
   }
-
-  public config = Jsonconfig;
 
   public start(): void {
     this.login(process.env.CLIENT_TOKEN).then(() => {
@@ -104,21 +101,6 @@ export class ExtendedClient extends Client {
         .then(() =>
           this.Logger.info(
             `Registered ${commands.length} slash commands on ${this.guilds.cache.size} servers`
-          )
-        )
-        .catch((e) => {
-          this.Logger.info(`Failed to register slash commands`);
-          this.Logger.error(e);
-        });
-
-      const guild = this.guilds.cache.get(this.config.guildId);
-      if (!guild) return this.Logger.error('Guild not found');
-
-      guild.commands
-        .set(original_commands)
-        .then(() =>
-          this.Logger.info(
-            `Registered ${original_commands.length} private slash commands on ${guild.name}.`
           )
         )
         .catch((e) => {

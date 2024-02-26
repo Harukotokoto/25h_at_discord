@@ -6,7 +6,7 @@ import {
   Colors,
   ComponentType,
 } from 'discord.js';
-import { footer } from '../../lib/utils/Embed';
+import { footer } from '../../lib/utils/embed';
 import { ticket_setup_model } from '../../lib/models/ticket_setup';
 import { randomUUID } from 'node:crypto';
 

@@ -17,50 +17,22 @@ export default new Command({
   name: 'degawa',
   description: 'めっちゃ出川',
   aliases: ['d'],
-  options: [
-    {
-      name: 'text',
-      description: 'text',
-      type: ApplicationCommandOptionType.String,
-      max_length: 10,
-    },
-  ],
   execute: {
     interaction: async ({ client, interaction }) => {
-      const text = interaction.options.getString('text');
+      const imageBuffer = (await axios.get('https://degawa.ktrnds.com/random'))
+        .data.data;
 
-      if (!text) {
-        const imageBuffer = (
-          await axios.get('https://degawa.ktrnds.com/random')
-        ).data.data;
-
-        await interaction.followUp({
-          files: [
-            {
-              attachment: await createBuffer(imageBuffer),
-              name: 'degawa.png',
-            },
-          ],
-        });
-      } else {
-        const imageBuffer = (
-          await axios.post('https://api.ktrnds.com/degawa/generator', {
-            text: text,
-          })
-        ).data.data;
-
-        await interaction.followUp({
-          files: [
-            {
-              attachment: await createBuffer(imageBuffer),
-              name: 'degawa.png',
-            },
-          ],
-        });
-      }
+      await interaction.followUp({
+        files: [
+          {
+            attachment: await createBuffer(imageBuffer),
+            name: 'degawa.png',
+          },
+        ],
+      });
     },
     message: async ({ client, message, args }) => {
-      const imageBuffer = (await axios.get('http://degawa.ktrnds.com/random'))
+      const imageBuffer = (await axios.get('https://degawa.ktrnds.com/random'))
         .data.data;
 
       await message.reply({

@@ -1,7 +1,7 @@
 import { Command } from '../../lib/modules/Command';
 import { ApplicationCommandOptionType, ChannelType, Colors } from 'discord.js';
 import { config_model } from '../../lib/models/config';
-import { footer } from '../../lib/utils/Embed';
+import { footer } from '../../lib/utils/embed';
 
 export default new Command({
   name: 'config',

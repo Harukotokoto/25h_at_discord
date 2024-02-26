@@ -1,5 +1,5 @@
 import { Command } from '../../lib/modules/Command';
-import { serverInfo } from '../../lib/utils/Embed';
+import { serverInfo } from '../../lib/utils/embed';
 
 export default new Command({
   name: 'server',

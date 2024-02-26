@@ -1,14 +1,17 @@
 import { Event } from '../../lib/modules/Event';
 import { client } from '../../index';
 import { Colors } from 'discord.js';
-import { footer } from '../../lib/utils/Embed';
+import { footer } from '../../lib/utils/embed';
 
-export default new Event('messageUpdate', async (message) => {
-  if (message.author?.id === '761562078095867916') {
-    const channel = client.channels.cache.get(message.channel.id);
+export default new Event('messageUpdate', async (oldMessage, newMessage) => {
+  if (newMessage?.author?.id === '761562078095867916') {
+    const channel = client.channels.cache.get(newMessage.channel.id);
     if (!channel || !channel.isTextBased()) return;
 
-    const msg = await channel.messages.fetch(message.id);
+    const msg = await channel.messages.fetch(newMessage.id);
+    const oldMsg = await channel.messages.fetch(oldMessage.id);
+
+    if (oldMsg.embeds[0].fields[0].name === msg.embeds[0].fields[0].name) return;
 
     if (
       msg.embeds[0].fields[0].name.match(/をアップしたよ!/) ||

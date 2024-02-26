@@ -1,5 +1,5 @@
 import { Command } from '../../lib/modules/Command';
-import { pingEmbed } from '../../lib/utils/Embed';
+import { pingEmbed } from '../../lib/utils/embed';
 
 export default new Command({
   name: 'ping',

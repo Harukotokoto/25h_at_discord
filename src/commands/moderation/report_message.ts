@@ -7,7 +7,7 @@ import {
   ComponentType,
 } from 'discord.js';
 import { config_model } from '../../lib/models/config';
-import { footer } from '../../lib/utils/Embed';
+import { footer } from '../../lib/utils/embed';
 import { Member, Space } from '../../lib/utils/emojis';
 
 export default new Command({
