@@ -1,7 +1,7 @@
 import { Command } from '../../lib/modules/Command';
 import { ApplicationCommandOptionType, Colors } from 'discord.js';
 import { exec } from 'child_process';
-import { footer } from '../../lib/utils/Embed';
+import { footer } from '../../lib/utils/embed';
 
 export default new Command({
   name: 'execute',

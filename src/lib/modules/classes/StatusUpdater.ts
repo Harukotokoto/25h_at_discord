@@ -4,7 +4,7 @@ import {
   Collection,
   GuildChannelResolvable,
 } from 'discord.js';
-import { client } from '../../index';
+import { client } from '../../../index';
 import moment, { min } from 'moment';
 import osu from 'node-os-utils';
 

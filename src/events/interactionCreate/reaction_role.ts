@@ -1,6 +1,6 @@
 import { Event } from '../../lib/modules/Event';
 import { Colors } from 'discord.js';
-import { footer } from '../../lib/utils/Embed';
+import { footer } from '../../lib/utils/embed';
 
 export default new Event('interactionCreate', async (interaction) => {
   if (!interaction.isStringSelectMenu()) return;

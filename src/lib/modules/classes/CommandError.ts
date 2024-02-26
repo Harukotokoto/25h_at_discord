@@ -1,5 +1,5 @@
 import { Colors, CommandInteraction, Message } from 'discord.js';
-import { footer } from './Embed';
+import { footer } from '../../utils/embed';
 
 export enum ErrorTypes {
   Warn = Colors.Yellow,

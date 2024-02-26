@@ -1,6 +1,5 @@
 import { Event } from '../../lib/modules/Event';
-import { Events } from 'discord.js';
-import { StatusUpdater, UpdateType } from '../../lib/utils/StatusUpdater';
+import { StatusUpdater, UpdateType } from '../../lib/modules/classes/StatusUpdater';
 import ms from 'ms';
 import { client } from '../../index';
 

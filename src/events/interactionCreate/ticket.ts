@@ -8,7 +8,7 @@ import {
   TextInputStyle,
 } from 'discord.js';
 import { ticket_setup_model } from '../../lib/models/ticket_setup';
-import { footer } from '../../lib/utils/Embed';
+import { footer } from '../../lib/utils/embed';
 
 export default new Event('interactionCreate', async (interaction) => {
   if (interaction.isButton()) {

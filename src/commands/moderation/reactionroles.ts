@@ -1,8 +1,8 @@
 import { Command } from '../../lib/modules/Command';
 import { ApplicationCommandOptionType, Colors } from 'discord.js';
-import { RRManager } from '../../lib/modules/classes/RRManager';
+import { ReactionRole } from '../../lib/modules/classes/ReactionRole';
 import { reaction_roles_model } from '../../lib/models/reaction_roles';
-import { footer } from '../../lib/utils/Embed';
+import { footer } from '../../lib/utils/embed';
 
 export default new Command({
   name: 'reactionrole',
@@ -127,7 +127,7 @@ export default new Command({
       }
     },
     interaction: async ({ client, interaction }) => {
-      const ReactionRole = new RRManager(interaction);
+      const ReactionRole = new ReactionRole(interaction);
       const rr_id = interaction.options.getString('panel_id', true);
 
       const role = interaction.options.getRole('role');

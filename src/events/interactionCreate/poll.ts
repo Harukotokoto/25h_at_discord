@@ -2,7 +2,7 @@ import { Event } from '../../lib/modules/Event';
 import { vote_model } from '../../lib/models/vote';
 import { ButtonStyle, Colors, ComponentType, EmbedBuilder } from 'discord.js';
 import { Types } from 'mongoose';
-import { footer } from '../../lib/utils/Embed';
+import { footer } from '../../lib/utils/embed';
 
 export default new Event('interactionCreate', async (interaction) => {
   if (!interaction.guild) return;

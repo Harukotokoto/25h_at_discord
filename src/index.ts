@@ -8,7 +8,7 @@ export const client = new ExtendedClient({
     'GuildMembers',
     'MessageContent',
     'GuildVoiceStates',
-    'GuildEmojisAndStickers'
+    'GuildEmojisAndStickers',
   ],
 });
 

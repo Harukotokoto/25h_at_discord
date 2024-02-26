@@ -5,7 +5,7 @@ import {
   Colors,
   ComponentType,
 } from 'discord.js';
-import { footer } from '../../lib/utils/Embed';
+import { footer } from '../../lib/utils/embed';
 import { vote_model } from '../../lib/models/vote';
 
 export default new Command({
