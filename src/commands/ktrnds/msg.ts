@@ -50,7 +50,6 @@ export default new Command({
               ],
               color: Colors.Blue,
               footer: footer(),
-              timestamp: new Date().toTimeString(),
             },
           ],
           components: [
