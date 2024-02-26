@@ -6,7 +6,10 @@ import {
 } from 'discord.js';
 import { client } from '../../index';
 import { Event } from '../../lib/modules/Event';
-import { CommandError, ErrorTypes } from '../../lib/modules/classes/CommandError';
+import {
+  CommandError,
+  ErrorTypes,
+} from '../../lib/modules/classes/CommandError';
 
 export default new Event('interactionCreate', async (interaction) => {
   if (interaction.isCommand()) {
@@ -29,7 +32,7 @@ export default new Event('interactionCreate', async (interaction) => {
         ErrorTypes.Warn
       );
 
-    const admins = ["1004365048887660655"];
+    const admins = ['1004365048887660655'];
 
     if (command.isOwnerCommand && !admins.includes(interaction.user.id))
       return await Error.create(

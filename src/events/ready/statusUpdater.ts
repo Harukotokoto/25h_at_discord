@@ -1,5 +1,8 @@
 import { Event } from '../../lib/modules/Event';
-import { StatusUpdater, UpdateType } from '../../lib/modules/classes/StatusUpdater';
+import {
+  StatusUpdater,
+  UpdateType,
+} from '../../lib/modules/classes/StatusUpdater';
 import ms from 'ms';
 import { client } from '../../index';
 
