@@ -127,7 +127,7 @@ export default new Command({
       }
     },
     interaction: async ({ client, interaction }) => {
-      const ReactionRole = new ReactionRole(interaction);
+      const reactionRole = new ReactionRole(interaction);
       const rr_id = interaction.options.getString('panel_id', true);
 
       const role = interaction.options.getRole('role');
@@ -137,26 +137,26 @@ export default new Command({
           const title = interaction.options.getString('title');
           const description = interaction.options.getString('description');
 
-          await ReactionRole.create(rr_id, {
+          await reactionRole.create(rr_id, {
             title,
             description,
           });
           break;
         case 'remove':
-          await ReactionRole.remove(rr_id);
+          await reactionRole.remove(rr_id);
           break;
         case 'add':
           if (!role) return;
           const label = interaction.options.getString('label');
 
-          await ReactionRole.roles.add(rr_id, {
+          await reactionRole.roles.add(rr_id, {
             role,
             label,
           });
           break;
         case 'delete':
           if (!role) return;
-          await ReactionRole.roles.delete(rr_id, role);
+          await reactionRole.roles.delete(rr_id, role);
           break;
         case 'refresh':
           await interaction.followUp({
@@ -171,7 +171,7 @@ export default new Command({
           break;
       }
 
-      await ReactionRole.refresh(rr_id);
+      await reactionRole.refresh(rr_id);
     },
   },
 });

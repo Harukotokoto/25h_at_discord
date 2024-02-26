@@ -89,9 +89,7 @@ export class ExtendedClient extends Client {
       const command = await this.importFile<CommandType>(filePath);
       if (!command || !('name' in command)) continue;
 
-      if (command.private) original_commands.push(command);
-      if (!command.private) commands.push(command);
-
+      commands.push(command);
       this.commands.set(command.name, command);
     }
 
