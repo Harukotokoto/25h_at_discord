@@ -159,8 +159,8 @@ export default new Event('interactionCreate', async (interaction) => {
           {
             title: '認証申請を送信しました',
             description:
-              `ゲーム内ID: ${username}\n` +
-              `プラットフォーム: ${platform}\n` +
+              `ゲーム内ID: \`${username}\`\n` +
+              `プラットフォーム: \`${platform}\`\n` +
               '\n' +
               '認証完了まで少々お待ちください\n' +
               '認証完了後、DMで通知します',
