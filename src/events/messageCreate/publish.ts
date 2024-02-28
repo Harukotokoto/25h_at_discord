@@ -1,6 +1,8 @@
 import { Event } from '../../lib/modules/Event';
 import { ChannelType } from 'discord.js';
-import { config_model } from '../../lib/models/config';
+import { client } from '../../index';
+
+const config_model = client.models.config;
 
 export default new Event('messageCreate', async (message) => {
   if (message.author.bot || !message.guild) return;

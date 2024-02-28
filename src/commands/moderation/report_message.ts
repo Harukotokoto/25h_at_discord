@@ -6,7 +6,6 @@ import {
   Colors,
   ComponentType,
 } from 'discord.js';
-import { config_model } from '../../lib/models/config';
 import { footer } from '../../lib/utils/embed';
 import { Member, Space } from '../../lib/utils/emojis';
 
@@ -16,6 +15,7 @@ export default new Command({
   ephemeral: true,
   execute: {
     interaction: async ({ client, interaction }) => {
+      const config_model = client.models.config;
       const message = interaction.targetMessage;
       const member = interaction.targetMessage.member;
 

@@ -1,8 +1,9 @@
 import { Event } from '../../lib/modules/Event';
-import { vote_model } from '../../lib/models/vote';
 import { ButtonStyle, Colors, ComponentType, EmbedBuilder } from 'discord.js';
-import { Types } from 'mongoose';
 import { footer } from '../../lib/utils/embed';
+import { client } from '../../index';
+
+const vote_model = client.models.vote;
 
 export default new Event('interactionCreate', async (interaction) => {
   if (!interaction.guild) return;

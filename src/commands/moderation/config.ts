@@ -1,6 +1,5 @@
 import { Command } from '../../lib/modules/Command';
 import { ApplicationCommandOptionType, ChannelType, Colors } from 'discord.js';
-import { config_model } from '../../lib/models/config';
 import { footer } from '../../lib/utils/embed';
 
 export default new Command({
@@ -37,6 +36,8 @@ export default new Command({
   ],
   execute: {
     interaction: async ({ client, interaction }) => {
+      const config_model = client.models.config;
+
       const cmd = interaction.options.getSubcommand();
       const channel = interaction.options.getChannel('channel');
       const config = await config_model.findOne({
