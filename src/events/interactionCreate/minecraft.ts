@@ -90,10 +90,11 @@ export default new Event('interactionCreate', async (interaction) => {
         ],
       });
     } else if (interaction.customId.startsWith('ktrndsmc_agree')) {
+      await interaction.deferUpdate();
       const memberId = interaction.customId.split('-')[1];
       const member = interaction.guild?.members.cache.get(memberId);
       if (!member) {
-        return await interaction.reply({
+        return await interaction.followUp({
           embeds: [
             {
               description: 'ユーザーが見つかりませんでした',
@@ -123,7 +124,7 @@ export default new Event('interactionCreate', async (interaction) => {
         ],
       });
 
-      await interaction.update({
+      await interaction.followUp({
         embeds: [
           {
             title: '受諾済みの認証申請',
