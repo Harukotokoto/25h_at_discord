@@ -124,7 +124,7 @@ export default new Event('interactionCreate', async (interaction) => {
         ],
       });
 
-      await interaction.followUp({
+      await interaction.update({
         embeds: [
           {
             title: '受諾済みの認証申請',
