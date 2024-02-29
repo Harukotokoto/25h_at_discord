@@ -175,6 +175,7 @@ export default new Event('interactionCreate', async (interaction) => {
       if (!channel || channel.type !== ChannelType.GuildText) return;
 
       await channel.send({
+        content: '<@!1004365048887660655>',
         embeds: [
           {
             title: '認証申請を受諾しました',
