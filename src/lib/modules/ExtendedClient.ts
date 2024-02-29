@@ -50,7 +50,7 @@ export class ExtendedClient extends Client {
     reaction_roles: Models.reaction_roles_model,
     ticket_setup: Models.ticket_setup_model,
     vote: Models.vote_model,
-    gchat: Models.gchat_model,
+    // gchat: Models.gchat_model,
   };
 
   public constructor(options: ClientOptions) {
