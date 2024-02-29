@@ -122,7 +122,25 @@ export default new Event('interactionCreate', async (interaction) => {
             },
           },
         ],
-      });
+      }).catch(async () => {
+        return await interaction.editReply({
+          embeds: [
+            {
+              title: '受諾済みの認証申請',
+              description: interaction.message.embeds[0].description as string,
+              fields: [
+                {
+                  name: 'エラー',
+                  value: "ユーザーにDMを送信できませんでした",
+                }
+              ],
+              color: Colors.Red,
+              footer: footer(),
+            },
+          ],
+          components: [],
+        });
+      })
 
       await interaction.editReply({
         embeds: [
@@ -181,8 +199,8 @@ export default new Event('interactionCreate', async (interaction) => {
           {
             title: '認証申請を受諾しました',
             description:
-              `ユーザー: ${interaction.user.tag}\n` +
-              `ゲーム内ID: ${username}\n` +
+              `ユーザー: ${interaction.user}\n` +
+              `ゲーム内ID: \`${username}\`\n` +
               `プラットフォーム: ${platform}\n`,
             color: Colors.Blue,
             footer: footer(),
