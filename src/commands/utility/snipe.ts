@@ -64,6 +64,9 @@ export default new Command({
             description: `${sniped_message.content}`,
             timestamp: new Date(sniped_message.createdTimestamp).toISOString(),
             color: Colors.Aqua,
+            image: {
+              url: `25dsnipe:${sniped_message.author?.id}`
+            }
           },
         ];
 
@@ -114,6 +117,9 @@ export default new Command({
                 snipe.newMessage.createdTimestamp
               ).toISOString(),
               color: Colors.Yellow,
+              image: {
+                url: `25dsnipe:${snipe.newMessage.author?.id}`
+              }
             },
           ],
           allowedMentions: {
@@ -157,6 +163,9 @@ export default new Command({
             description: `${sniped_message.content}`,
             timestamp: new Date(sniped_message.createdTimestamp).toISOString(),
             color: Colors.Aqua,
+            image: {
+              url: `25dsnipe:${sniped_message.author?.id}`
+            }
           },
         ];
 
@@ -206,6 +215,9 @@ export default new Command({
                 snipe.newMessage.createdTimestamp
               ).toISOString(),
               color: Colors.Yellow,
+              image: {
+                url: `25dsnipe:${snipe.newMessage.author?.id}`
+              }
             },
           ],
           allowedMentions: {
