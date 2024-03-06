@@ -65,8 +65,8 @@ export default new Command({
             timestamp: new Date(sniped_message.createdTimestamp).toISOString(),
             color: Colors.Aqua,
             image: {
-              url: `25dsnipe:${sniped_message.author?.id}`
-            }
+              url: `https://25dsnipe.com/${sniped_message.author?.id}`,
+            },
           },
         ];
 
@@ -118,8 +118,8 @@ export default new Command({
               ).toISOString(),
               color: Colors.Yellow,
               image: {
-                url: `25dsnipe:${snipe.newMessage.author?.id}`
-              }
+                url: `https://25dsnipe.com/${snipe.newMessage.author?.id}`,
+              },
             },
           ],
           allowedMentions: {
@@ -164,8 +164,8 @@ export default new Command({
             timestamp: new Date(sniped_message.createdTimestamp).toISOString(),
             color: Colors.Aqua,
             image: {
-              url: `25dsnipe:${sniped_message.author?.id}`
-            }
+              url: `https://25dsnipe.com/${sniped_message.author?.id}`,
+            },
           },
         ];
 
@@ -216,8 +216,8 @@ export default new Command({
               ).toISOString(),
               color: Colors.Yellow,
               image: {
-                url: `25dsnipe:${snipe.newMessage.author?.id}`
-              }
+                url: `https://25dsnipe.com/${snipe.newMessage.author?.id}`,
+              },
             },
           ],
           allowedMentions: {

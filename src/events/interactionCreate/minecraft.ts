@@ -107,40 +107,43 @@ export default new Event('interactionCreate', async (interaction) => {
 
       await member.roles.add('1211617202177052672');
 
-      await member.send({
-        embeds: [
-          {
-            title: '認証完了',
-            description:
-              'マイクラサーバーの認証申請が承諾されました。\n' +
-              '[参加方法](<https://discord.com/channels/1149350818747781120/1211614876443873320>)の手順に沿って参加してください。',
-            color: Colors.Green,
-            footer: footer(),
-            author: {
-              name: interaction.guild.name,
-              icon_url: interaction.guild.iconURL() as string,
-            },
-          },
-        ],
-      }).catch(async () => {
-        return await interaction.editReply({
+      await member
+        .send({
           embeds: [
             {
-              title: '受諾済みの認証申請',
-              description: interaction.message.embeds[0].description as string,
-              fields: [
-                {
-                  name: 'エラー',
-                  value: "ユーザーにDMを送信できませんでした",
-                }
-              ],
-              color: Colors.Red,
+              title: '認証完了',
+              description:
+                'マイクラサーバーの認証申請が承諾されました。\n' +
+                '[参加方法](<https://discord.com/channels/1149350818747781120/1211614876443873320>)の手順に沿って参加してください。',
+              color: Colors.Green,
               footer: footer(),
+              author: {
+                name: interaction.guild.name,
+                icon_url: interaction.guild.iconURL() as string,
+              },
             },
           ],
-          components: [],
+        })
+        .catch(async () => {
+          return await interaction.editReply({
+            embeds: [
+              {
+                title: '受諾済みの認証申請',
+                description: interaction.message.embeds[0]
+                  .description as string,
+                fields: [
+                  {
+                    name: 'エラー',
+                    value: 'ユーザーにDMを送信できませんでした',
+                  },
+                ],
+                color: Colors.Red,
+                footer: footer(),
+              },
+            ],
+            components: [],
+          });
         });
-      })
 
       await interaction.editReply({
         embeds: [

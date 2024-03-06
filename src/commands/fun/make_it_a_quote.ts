@@ -21,31 +21,25 @@ export default new Command({
         message.embeds[0].author &&
         message.embeds[0].timestamp &&
         message.embeds[0].image &&
-        message.embeds[0].image.url.startsWith('25dsnipe:')
+        message.embeds[0].image.url.startsWith('https://25dsnipe.com/')
       ) {
-        const memberId = message.embeds[0].image.url.split(':')[1];
-        const member =
-          interaction.guild.members.cache.get(memberId) ||
-          client.users.cache.get(memberId);
+        const memberId = message.embeds[0].image.url.split(
+          'https://25dsnipe.com/'
+        )[1];
+        const member = interaction.guild.members.cache.get(memberId);
         if (!member) {
-          return await Error.create('ユーザーが存在しません');
+          return await Error.create('サーバー内にメンバーが存在しません');
         }
 
         const response = (
           await axios.post('https://api.voids.top/fakequote', {
             text:
-              message.embeds[0].color === Colors.Blue
+              message.embeds[0].color === Colors.Aqua
                 ? message.embeds[0].description
-                : message.embeds[0].description.split(' => ')[1],
-            avatar:
-              member instanceof User
-                ? member.displayAvatarURL()
-                : member.displayAvatarURL(),
-            username: member instanceof User ? member.tag : member.user.tag,
-            display_name:
-              member instanceof User
-                ? member.displayName
-                : member.user.displayName,
+                : message.embeds[0].description.split(' => ')[0],
+            avatar: member.displayAvatarURL(),
+            username: member.user.tag,
+            display_name: member.displayName,
             color: true,
             watermark: client.user?.tag,
           })
