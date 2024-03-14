@@ -51,6 +51,7 @@ export class ExtendedClient extends Client {
     ticket_setup: Models.ticket_setup_model,
     vote: Models.vote_model,
     // gchat: Models.gchat_model,
+    quotes: Models.quote_model
   };
 
   public constructor(options: ClientOptions) {

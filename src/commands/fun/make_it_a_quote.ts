@@ -4,6 +4,7 @@ import { ApplicationCommandType, ChannelType, Colors, User } from 'discord.js';
 import { footer } from '../../lib/utils/embed';
 import { client } from '../../index';
 import { CommandError } from '../../lib/modules/classes/CommandError';
+import { randomUUID } from 'node:crypto';
 
 export default new Command({
   name: 'Make it a Quote',
@@ -24,7 +25,7 @@ export default new Command({
         message.embeds[0].image.url.startsWith('https://25dsnipe.com/')
       ) {
         const memberId = message.embeds[0].image.url.split(
-          'https://25dsnipe.com/'
+          'https://25dsnipe.com/',
         )[1];
         const member = interaction.guild.members.cache.get(memberId);
         if (!member) {
@@ -59,6 +60,14 @@ export default new Command({
               name: 'quote.jpg',
             },
           ],
+        });
+
+        await client.models.quotes.create({
+          user_id: message.author.id,
+          id: randomUUID(),
+          content: message.content,
+          quote_url: response.url || '',
+          timestamp: new Date().toISOString(),
         });
       } else {
         if (!message.content) {
@@ -105,6 +114,14 @@ export default new Command({
               name: 'quote.jpg',
             },
           ],
+        });
+
+        await client.models.quotes.create({
+          user_id: message.author.id,
+          id: randomUUID(),
+          content: message.content,
+          quote_url: response.url || '',
+          timestamp: new Date().toISOString(),
         });
       }
     },
