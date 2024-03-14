@@ -62,13 +62,15 @@ export default new Command({
           ],
         });
 
-        await client.models.quotes.create({
-          user_id: message.author.id,
-          id: randomUUID(),
-          content: message.content,
-          quote_url: response.url || '',
-          timestamp: new Date(),
-        });
+        if (interaction.guild.id === "1122860511571234867") {
+          await client.models.quotes.create({
+            user_id: message.author.id,
+            id: randomUUID(),
+            content: message.content,
+            quote_url: response.url || '',
+            timestamp: new Date(),
+          });
+        }
       } else {
         if (!message.content) {
           return await interaction.followUp({
@@ -116,13 +118,15 @@ export default new Command({
           ],
         });
 
-        await client.models.quotes.create({
-          user_id: message.author.id,
-          id: randomUUID(),
-          content: message.content,
-          quote_url: response.url || '',
-          timestamp: new Date().toISOString(),
-        });
+        if (interaction.guild.id === "1122860511571234867") {
+          await client.models.quotes.create({
+            user_id: message.author.id,
+            id: randomUUID(),
+            content: message.content,
+            quote_url: response.url || '',
+            timestamp: new Date(),
+          });
+        }
       }
     },
   },
