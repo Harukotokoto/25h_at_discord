@@ -67,7 +67,7 @@ export default new Command({
           id: randomUUID(),
           content: message.content,
           quote_url: response.url || '',
-          timestamp: new Date().toISOString(),
+          timestamp: new Date(),
         });
       } else {
         if (!message.content) {
