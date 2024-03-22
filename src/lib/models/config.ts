@@ -1,18 +1,41 @@
 import { model, Schema } from 'mongoose';
 
-const config_model = model(
-  'config',
+const publish_model = model(
+  'publish',
   new Schema({
-    GuildID: String,
-    Report: {
-      status: Boolean,
-      LogChannel: String,
+    GuildID: {
+      type: String,
+      required: true,
     },
-    Publish: {
-      status: Boolean,
-      ChannelID: String,
+    ChannelID: {
+      type: String,
+      required: true,
     },
   })
 );
 
-export { config_model };
+const report_model = model(
+  'report',
+  new Schema({
+    GuildID: {
+      type: String,
+      required: true,
+    },
+    ChannelID: {
+      type: String,
+      required: true,
+    },
+  })
+);
+
+const leveling_model = model(
+  'leveling',
+  new Schema({
+    GuildID: {
+      type: String,
+      required: true,
+    },
+  })
+);
+
+export { publish_model, report_model, leveling_model };

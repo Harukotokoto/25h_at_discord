@@ -6,6 +6,7 @@ import {
   ComponentType,
 } from 'discord.js';
 import { footer } from '../../lib/utils/embed';
+import { vote_model } from '../../lib/models/vote';
 
 export default new Command({
   name: 'poll',
@@ -22,8 +23,6 @@ export default new Command({
   ],
   execute: {
     interaction: async ({ client, interaction }) => {
-      const vote_model = client.models.vote;
-
       const topic = interaction.options.getString('topic', true);
 
       await interaction.deleteReply();

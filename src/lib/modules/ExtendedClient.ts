@@ -14,7 +14,6 @@ import { Logger } from './classes/Logger';
 import mongoose from 'mongoose';
 import process from 'process';
 import moment from 'moment';
-import * as Models from '../models/index';
 
 const globPromise = promisify(glob);
 
@@ -43,16 +42,6 @@ export class ExtendedClient extends Client {
   public start_time = moment();
 
   public Logger = new Logger();
-
-  public models = {
-    admins: Models.admin_model,
-    config: Models.config_model,
-    reaction_roles: Models.reaction_roles_model,
-    ticket_setup: Models.ticket_setup_model,
-    vote: Models.vote_model,
-    // gchat: Models.gchat_model,
-    quotes: Models.quote_model
-  };
 
   public constructor(options: ClientOptions) {
     super(options);

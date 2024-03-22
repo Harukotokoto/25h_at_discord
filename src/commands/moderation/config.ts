@@ -1,6 +1,7 @@
 import { Command } from '../../lib/modules/Command';
 import { ApplicationCommandOptionType, ChannelType, Colors } from 'discord.js';
 import { footer } from '../../lib/utils/embed';
+import { Config } from '../../lib/modules/classes/Config';
 
 export default new Command({
   name: 'config',
@@ -36,28 +37,17 @@ export default new Command({
   ],
   execute: {
     interaction: async ({ client, interaction }) => {
-      const config_model = client.models.config;
-
+      if (!interaction.guild) return;
       const cmd = interaction.options.getSubcommand();
       const channel = interaction.options.getChannel('channel');
-      const config = await config_model.findOne({
-        GuildID: interaction.guild?.id,
-      });
+      const config = new Config(interaction.guild?.id);
 
       switch (cmd) {
         case 'report':
           if (!channel) {
-            await config_model.findOneAndUpdate(
-              {
-                GuildID: interaction.guild?.id,
-              },
-              {
-                'Report.status': false,
-                'Report.LogChannel': undefined,
-              }
-            );
+            await config.setReport();
 
-            return await interaction.followUp({
+            await interaction.followUp({
               embeds: [
                 {
                   title: `通報機能を無効化しました`,
@@ -66,54 +56,26 @@ export default new Command({
                 },
               ],
             });
-          }
+          } else {
+            await config.setReport(channel.id);
 
-          if (!config) {
-            await config_model.create({
-              GuildID: interaction.guild?.id,
-              Report: {
-                status: true,
-                LogChannel: channel.id,
-              },
+            await interaction.followUp({
+              embeds: [
+                {
+                  title: '通報機能を有効化しました',
+                  description: `通報されたメッセージは${channel}に送信されます`,
+                  color: Colors.Green,
+                  footer: footer(),
+                },
+              ],
             });
           }
-
-          if (config) {
-            await config_model.findOneAndUpdate(
-              {
-                GuildID: interaction.guild?.id,
-              },
-              {
-                'Report.status': true,
-                'Report.LogChannel': channel.id,
-              }
-            );
-          }
-
-          await interaction.followUp({
-            embeds: [
-              {
-                title: '通報機能を有効化しました',
-                description: `通報されたメッセージは${channel}に送信されます`,
-                color: Colors.Green,
-                footer: footer(),
-              },
-            ],
-          });
           break;
         case 'publish':
           if (!channel) {
-            await config_model.findOneAndUpdate(
-              {
-                GuildID: interaction.guild?.id,
-              },
-              {
-                'Publish.status': false,
-                'Publish.ChannelID': undefined,
-              }
-            );
+            await config.setPublish();
 
-            return await interaction.followUp({
+            await interaction.followUp({
               embeds: [
                 {
                   title: `自動公開機能を無効化しました`,
@@ -122,40 +84,22 @@ export default new Command({
                 },
               ],
             });
-          }
+          } else {
+            await config.setPublish(channel.id);
 
-          if (!config) {
-            await config_model.create({
-              GuildID: interaction.guild?.id,
-              'Publish.status': true,
-              'Publish.ChannelID': channel.id,
+            await interaction.followUp({
+              embeds: [
+                {
+                  title: '自動公開機能を有効化しました',
+                  description:
+                    `${channel}に送信されたメッセージは自動的に公開されます\n` +
+                    '※Botのメッセージは公開されません',
+                  color: Colors.Green,
+                  footer: footer(),
+                },
+              ],
             });
           }
-
-          if (config) {
-            await config_model.findOneAndUpdate(
-              {
-                GuildID: interaction.guild?.id,
-              },
-              {
-                'Publish.status': true,
-                'Publish.ChannelID': channel.id,
-              }
-            );
-          }
-
-          await interaction.followUp({
-            embeds: [
-              {
-                title: '自動公開機能を有効化しました',
-                description:
-                  `${channel}に送信されたメッセージは自動的に公開されます\n` +
-                  '※Botのメッセージは公開されません',
-                color: Colors.Green,
-                footer: footer(),
-              },
-            ],
-          });
           break;
       }
     },

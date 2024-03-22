@@ -8,6 +8,7 @@ import {
 } from 'discord.js';
 import { footer } from '../../lib/utils/embed';
 import { Member, Space } from '../../lib/utils/emojis';
+import { report_model } from '../../lib/models/config';
 
 export default new Command({
   name: 'メッセージを通報',
@@ -15,22 +16,16 @@ export default new Command({
   ephemeral: true,
   execute: {
     interaction: async ({ client, interaction }) => {
-      const config_model = client.models.config;
       const message = interaction.targetMessage;
       const member = interaction.targetMessage.member;
 
       if (!member) return;
 
-      const config = await config_model.findOne({
+      const config = await report_model.findOne({
         GuildID: interaction.guild?.id,
       });
 
-      if (
-        !config ||
-        !config.Report ||
-        !config.Report.status ||
-        !config.Report.LogChannel
-      ) {
+      if (!config) {
         return await interaction.reply({
           embeds: [
             {
@@ -43,9 +38,7 @@ export default new Command({
           ephemeral: true,
         });
       } else {
-        const channel = interaction.guild?.channels.cache.get(
-          config.Report.LogChannel
-        );
+        const channel = interaction.guild?.channels.cache.get(config.ChannelID);
 
         if (!channel || channel.type !== ChannelType.GuildText) {
           return await interaction.reply({

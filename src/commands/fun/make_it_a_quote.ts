@@ -25,7 +25,7 @@ export default new Command({
         message.embeds[0].image.url.startsWith('https://25dsnipe.com/')
       ) {
         const memberId = message.embeds[0].image.url.split(
-          'https://25dsnipe.com/',
+          'https://25dsnipe.com/'
         )[1];
         const member = interaction.guild.members.cache.get(memberId);
         if (!member) {
@@ -61,16 +61,6 @@ export default new Command({
             },
           ],
         });
-
-        if (interaction.guild.id === "1122860511571234867") {
-          await client.models.quotes.create({
-            user_id: message.author.id,
-            id: randomUUID(),
-            content: message.content,
-            quote_url: response.url || '',
-            timestamp: new Date(),
-          });
-        }
       } else {
         if (!message.content) {
           return await interaction.followUp({
@@ -117,16 +107,6 @@ export default new Command({
             },
           ],
         });
-
-        if (interaction.guild.id === "1122860511571234867") {
-          await client.models.quotes.create({
-            user_id: message.author.id,
-            id: randomUUID(),
-            content: message.content,
-            quote_url: response.url || '',
-            timestamp: new Date(),
-          });
-        }
       }
     },
   },

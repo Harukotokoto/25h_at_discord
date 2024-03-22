@@ -9,8 +9,7 @@ import {
 } from 'discord.js';
 import { footer } from '../../lib/utils/embed';
 import { client } from '../../index';
-
-const ticket_setup_model = client.models.ticket_setup;
+import { ticket_setup_model } from '../../lib/models/ticket_setup';
 
 export default new Event('interactionCreate', async (interaction) => {
   if (interaction.isButton()) {

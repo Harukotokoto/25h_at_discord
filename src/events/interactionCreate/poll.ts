@@ -2,8 +2,7 @@ import { Event } from '../../lib/modules/Event';
 import { ButtonStyle, Colors, ComponentType, EmbedBuilder } from 'discord.js';
 import { footer } from '../../lib/utils/embed';
 import { client } from '../../index';
-
-const vote_model = client.models.vote;
+import { vote_model } from '../../lib/models/vote';
 
 export default new Event('interactionCreate', async (interaction) => {
   if (!interaction.guild) return;

@@ -2,6 +2,7 @@ import { Command } from '../../lib/modules/Command';
 import { ApplicationCommandOptionType, Colors } from 'discord.js';
 import { ReactionRole } from '../../lib/modules/classes/ReactionRole';
 import { footer } from '../../lib/utils/embed';
+import { reaction_roles_model } from '../../lib/models/reaction_roles';
 
 export default new Command({
   name: 'reactionrole',
@@ -108,8 +109,6 @@ export default new Command({
   ],
   execute: {
     autoComplete: async ({ client, interaction }) => {
-      const reaction_roles_model = client.models.reaction_roles;
-
       const option = interaction.options.getFocused(true);
       if (option.name === 'panel_id') {
         const reaction_roles = await reaction_roles_model.find({

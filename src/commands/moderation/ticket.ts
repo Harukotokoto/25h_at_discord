@@ -8,6 +8,7 @@ import {
 } from 'discord.js';
 import { footer } from '../../lib/utils/embed';
 import { randomUUID } from 'node:crypto';
+import { ticket_setup_model } from '../../lib/models/ticket_setup';
 
 export default new Command({
   name: 'ticket',
@@ -37,8 +38,6 @@ export default new Command({
   ],
   execute: {
     interaction: async ({ client, interaction }) => {
-      const ticket_setup_model = client.models.ticket_setup;
-
       switch (interaction.options.getSubcommand()) {
         case 'setup':
           await ticket_setup_model.create({
