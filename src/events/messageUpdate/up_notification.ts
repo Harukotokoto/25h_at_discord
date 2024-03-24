@@ -11,7 +11,7 @@ export default new Event('messageUpdate', async (oldMessage, newMessage) => {
     const msg = await channel.messages.fetch(newMessage.id);
     const oldMsg = await channel.messages.fetch(oldMessage.id);
 
-    if (oldMsg.embeds[0] === msg.embeds[0]) return;
+    if (oldMsg.embeds[0].fields[0].name === msg.embeds[0].fields[0].name) return;
 
     if (
       msg.embeds[0].fields[0].name.match(/をアップしたよ!/) ||
