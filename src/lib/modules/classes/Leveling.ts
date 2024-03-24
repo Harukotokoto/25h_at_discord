@@ -111,7 +111,7 @@ export class Leveling extends User {
       .setStatus('online')
       .registerFonts([
         {
-          path: `${__dirname}/../../../assets/fonts/MPLUSRounded1c-Regular.ttf`,
+          path: `${__dirname}/../../../../assets/fonts/MPLUSRounded1c-Regular.ttf`,
           name: 'MPLUSRounded1c-Regular',
         },
       ])
