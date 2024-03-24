@@ -34,17 +34,32 @@ export default new Command({
         },
       ],
     },
+    {
+      name: 'leveling',
+      description: 'レベリング機能の有無を切り替えます',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        {
+          name: 'state',
+          description: 'レベリングの有無(デフォルト:OFF)',
+          type: ApplicationCommandOptionType.Boolean,
+          required: true,
+        },
+      ],
+    },
   ],
   execute: {
     interaction: async ({ client, interaction }) => {
       if (!interaction.guild) return;
       const cmd = interaction.options.getSubcommand();
-      const channel = interaction.options.getChannel('channel');
       const config = new Config(interaction.guild?.id);
 
       switch (cmd) {
+        case 'leveling':
+          break;
         case 'report':
-          if (!channel) {
+          const report_channel = interaction.options.getChannel('channel');
+          if (!report_channel) {
             await config.setReport();
 
             await interaction.followUp({
@@ -57,13 +72,13 @@ export default new Command({
               ],
             });
           } else {
-            await config.setReport(channel.id);
+            await config.setReport(report_channel.id);
 
             await interaction.followUp({
               embeds: [
                 {
                   title: '通報機能を有効化しました',
-                  description: `通報されたメッセージは${channel}に送信されます`,
+                  description: `通報されたメッセージは${report_channel}に送信されます`,
                   color: Colors.Green,
                   footer: footer(),
                 },
@@ -72,7 +87,8 @@ export default new Command({
           }
           break;
         case 'publish':
-          if (!channel) {
+          const publish_channel = interaction.options.getChannel('channel');
+          if (!publish_channel) {
             await config.setPublish();
 
             await interaction.followUp({
@@ -85,14 +101,14 @@ export default new Command({
               ],
             });
           } else {
-            await config.setPublish(channel.id);
+            await config.setPublish(publish_channel.id);
 
             await interaction.followUp({
               embeds: [
                 {
                   title: '自動公開機能を有効化しました',
                   description:
-                    `${channel}に送信されたメッセージは自動的に公開されます\n` +
+                    `${publish_channel}に送信されたメッセージは自動的に公開されます\n` +
                     '※Botのメッセージは公開されません',
                   color: Colors.Green,
                   footer: footer(),

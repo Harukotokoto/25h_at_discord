@@ -62,4 +62,22 @@ export class Config {
       });
     }
   }
+
+  public async setLeveling(state?: boolean) {
+    if (state) {
+      const leveling = await leveling_model.findOne({
+        GuildID: this.guild.id,
+      });
+
+      if (!leveling) {
+        await leveling_model.create({
+          GuildID: this.guild.id,
+        });
+      }
+    } else {
+      await leveling_model.deleteMany({
+        GuildID: this.guild.id,
+      });
+    }
+  }
 }
