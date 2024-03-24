@@ -13,6 +13,9 @@ export const client = new ExtendedClient({
     'GuildVoiceStates',
     'GuildEmojisAndStickers',
   ],
+  allowedMentions: {
+    parse: [],
+  },
 });
 
 console.clear();

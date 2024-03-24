@@ -3,6 +3,7 @@ import axios from 'axios';
 import {
   ApplicationCommandOptionType,
   ApplicationCommandType,
+  Colors,
 } from 'discord.js';
 import { client } from '../../index';
 import { CommandError } from '../../lib/modules/classes/CommandError';
@@ -43,10 +44,42 @@ export default new Command({
         .setUsername(member.user.username)
         .setDisplayName(member.displayName)
         .setAvatarURL(member.displayAvatarURL())
+        .setWatermark(`Fake quote by ${client.user?.tag}`)
         .setColor()
         .build();
 
       await interaction.followUp({
+        files: [
+          {
+            attachment: quote.binary,
+            name: 'quote.jpg',
+          },
+        ],
+      });
+    },
+    message: async ({ client, message, args }) => {
+      const member =
+        message.mentions.members?.first() ||
+        message.guild?.members.cache.get(args[0]);
+
+      const Error = new CommandError(message);
+
+      if (!member) {
+        return await Error.create('サーバー内にメンバーが存在しません');
+      }
+
+      const content = message.cleanContent.split(' ').slice(2).join(' ');
+
+      const quote = await new Quote()
+        .setText(content)
+        .setAvatarURL(member.displayAvatarURL())
+        .setUsername(member.user.username)
+        .setDisplayName(member.displayName)
+        .setColor()
+        .setWatermark(`Fake quote by ${client.user?.tag}`)
+        .build();
+
+      await message.reply({
         files: [
           {
             attachment: quote.binary,

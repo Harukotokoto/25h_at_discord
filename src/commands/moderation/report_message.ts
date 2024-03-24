@@ -54,8 +54,6 @@ export default new Command({
           });
         }
 
-        await interaction.deleteReply();
-
         await interaction.reply({
           embeds: [
             {
@@ -78,6 +76,7 @@ export default new Command({
               },
             },
           ],
+          ephemeral: true,
         });
 
         await channel.send({

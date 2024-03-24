@@ -102,9 +102,6 @@ const pingEmbed = async (response: number) => {
         footer: footer(),
       },
     ],
-    allowedMentions: {
-      parse: [],
-    },
   };
 };
 

@@ -23,9 +23,6 @@ export default new Command({
 
       await message.reply({
         embeds: [embed],
-        allowedMentions: {
-          parse: [],
-        },
       });
     },
   },

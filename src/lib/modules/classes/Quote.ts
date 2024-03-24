@@ -57,7 +57,7 @@ export class Quote {
     if (!color) throw new Error('カラーモードが指定されていません');
     if (!watermark) throw new Error('ウォーターマークが指定されていません');
 
-    const response = await axios.post('https://api.voids.top/fakequote', {
+    const response = await axios.post(`${process.env.VOIDS_API}/fakequote`, {
       text: text,
       avatar: avatarURL,
       username: username,

@@ -12,6 +12,7 @@ export default new Command({
       type: ApplicationCommandOptionType.User,
     },
   ],
+  aliases: ['level'],
   execute: {
     interaction: async ({ client, interaction }) => {
       if (!interaction.guild) return;
@@ -21,10 +22,33 @@ export default new Command({
       if (!member) return;
       const levelingManager = new Leveling(member);
 
-      const rank = await levelingManager.createCard();
+      const card = await levelingManager.createCard();
 
       await interaction.followUp({
-        files: [new AttachmentBuilder(rank)],
+        files: [
+          {
+            attachment: card,
+            name: 'card.jpg',
+          },
+        ],
+      });
+    },
+    message: async ({ client, message, args }) => {
+      if (!message.guild) return;
+      const userId = message.mentions.users.first()?.id || message.author.id;
+      const member = message.guild.members.cache.get(userId);
+      if (!member) return;
+      const levelingManager = new Leveling(member);
+
+      const card = await levelingManager.createCard();
+
+      await message.reply({
+        files: [
+          {
+            attachment: card,
+            name: 'card.jpg',
+          },
+        ],
       });
     },
   },

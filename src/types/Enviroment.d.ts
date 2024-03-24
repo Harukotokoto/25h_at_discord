@@ -7,6 +7,7 @@ declare global {
       DATABASE_CONNECTION_URI: string;
       GUILD_LOG: string;
       ERROR_LOG: string;
+      VOIDS_API: string;
     }
   }
 }

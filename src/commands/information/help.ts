@@ -231,9 +231,6 @@ export default new Command({
               .setDisabled(true)
           ),
         ],
-        allowedMentions: {
-          parse: [],
-        },
       });
 
       const collecter = msg.createMessageComponentCollector({
