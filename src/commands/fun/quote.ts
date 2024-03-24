@@ -6,6 +6,7 @@ import {
 } from 'discord.js';
 import { client } from '../../index';
 import { CommandError } from '../../lib/modules/classes/CommandError';
+import { Quote } from '../../lib/modules/classes/Quote';
 
 export default new Command({
   name: 'quote',
@@ -28,6 +29,7 @@ export default new Command({
   execute: {
     interaction: async ({ interaction }) => {
       const user = interaction.options.getUser('user', true);
+      const content = interaction.options.getString('message', true);
       const member = interaction.guild?.members.cache.get(user.id);
 
       const Error = new CommandError(interaction);
@@ -36,27 +38,18 @@ export default new Command({
         return await Error.create('サーバー内にメンバーが存在しません');
       }
 
-      const response = (
-        await axios.post('https://api.voids.top/fakequote', {
-          text: interaction.options.getString('message', true),
-          avatar: member.displayAvatarURL(),
-          username: member.user.username,
-          display_name: member.displayName,
-          color: true,
-          watermark: `Fake quote by ${client.user?.tag}`,
-        })
-      ).data;
-
-      const imageBuffer = await axios.get(response.url, {
-        responseType: 'arraybuffer',
-      });
-
-      const imageBinary = Buffer.from(imageBuffer.data, 'binary');
+      const quote = await new Quote()
+        .setText(content)
+        .setUsername(member.user.username)
+        .setDisplayName(member.displayName)
+        .setAvatarURL(member.displayAvatarURL())
+        .setColor()
+        .build();
 
       await interaction.followUp({
         files: [
           {
-            attachment: imageBinary,
+            attachment: quote.binary,
             name: 'quote.jpg',
           },
         ],
