@@ -31,11 +31,26 @@ export class Leveling extends User {
     });
 
     if (level_data) {
-      const now = new Date();
-      const updatedAt = new Date(level_data.updatedAt);
-      const difference = (now.getTime() - updatedAt.getTime()) / 1000;
+      if (level_data.updatedAt) {
+        const now = new Date();
+        const updatedAt = new Date(level_data.updatedAt);
+        const difference = (now.getTime() - updatedAt.getTime()) / 1000;
 
-      if (difference > 15) {
+        if (difference > 15) {
+          level_data.Experience += this.getRandomExperience();
+
+          if (
+            level_data.Experience >= this.getExperienceByLevel(level_data.Level)
+          ) {
+            level_data.Level++;
+            level_data.Experience = 0;
+          }
+
+          await level_data.save().catch(() => {
+            return false;
+          });
+        }
+      } else {
         level_data.Experience += this.getRandomExperience();
 
         if (
