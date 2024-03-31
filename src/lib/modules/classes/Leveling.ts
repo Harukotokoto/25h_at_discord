@@ -1,4 +1,4 @@
-import { level } from '../../models/level';
+import { level_model } from '../../models/level_model';
 import { Rank } from 'canvacord';
 import { User } from './User';
 
@@ -9,7 +9,7 @@ export class Leveling extends User {
 
   public getExperienceByLevel(level: number): number {
     return (
-      111 * level +
+      250 * level +
       Math.pow(level, 2) * 0.5 +
       (123 * level + Math.pow(level, 2) * 0.5)
     );
@@ -25,7 +25,7 @@ export class Leveling extends User {
   }
 
   public async addExperience(): Promise<boolean> {
-    const level_data = await level.findOne({
+    const level_data = await level_model.findOne({
       UserID: this.member.id,
       GuildID: this.member.guild.id,
     });
@@ -65,7 +65,7 @@ export class Leveling extends User {
         });
       }
     } else {
-      const newLevel = new level({
+      const newLevel = new level_model({
         UserID: this.member.id,
         GuildID: this.member.guild.id,
         Experience: this.getRandomExperience(),
@@ -81,26 +81,15 @@ export class Leveling extends User {
   }
 
   public async getCurrentLevel() {
-    return level.findOne({
+    return level_model.findOne({
       UserID: this.member.id,
       GuildID: this.member.guild.id,
     });
   }
 
-  public async getLevel() {
-    return (
-      (
-        await level.findOne({
-          UserID: this.member.id,
-          GuildID: this.member.guild.id,
-        })
-      )?.Level ?? 0
-    );
-  }
-
   public async createCard() {
     const fetchedLevel = await this.getCurrentLevel();
-    let allLevels = await level
+    let allLevels = await level_model
       .find({ GuildID: this.member.guild.id })
       .select('-_id UserID Level Experience');
 
@@ -139,7 +128,7 @@ export class Leveling extends User {
   }
 
   public static async getTop10(guildID: string) {
-    const allLevels = await level
+    const allLevels = await level_model
       .find({ GuildID: guildID })
       .select('-_id UserID Level Experience');
 
@@ -152,5 +141,13 @@ export class Leveling extends User {
         }
       })
       .slice(0, 10);
+  }
+
+  public async resetLevel() {
+    const allLevels = await level_model.find({ UserID: this.member.id });
+  }
+
+  public async resetAll(guildId: string) {
+    await level_model.deleteMany({ GuildID: guildId });
   }
 }

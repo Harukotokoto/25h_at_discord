@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 
-const level = model(
+const level_model = model(
   'level',
   new Schema(
     {
@@ -27,4 +27,4 @@ const level = model(
   )
 );
 
-export { level };
+export { level_model };

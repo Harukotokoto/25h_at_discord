@@ -1,10 +1,12 @@
 import { client } from '../../../index';
 import { Guild } from 'discord.js';
 import {
-  report_model,
   leveling_model,
   publish_model,
+  report_model,
 } from '../../models/config';
+
+type config = 'publish' | 'report' | 'leveling';
 
 export class Config {
   protected guild: Guild;
@@ -79,5 +81,48 @@ export class Config {
         GuildID: this.guild.id,
       });
     }
+  }
+
+  public async getEnable(config: config, channelId?: string) {
+    if (!channelId) throw new Error('チャンネルIDを指定してください');
+
+    switch (config) {
+      case 'publish':
+        return !!(await publish_model.findOne({
+          GuildID: this.guild.id,
+          ChannelID: channelId,
+        }));
+      case 'report':
+        return !!(await report_model.findOne({
+          GuildID: this.guild.id,
+          ChannelID: channelId,
+        }));
+      case 'leveling':
+        return !!(await leveling_model.findOne({
+          GuildID: this.guild.id,
+        }));
+      default:
+        return false;
+    }
+  }
+
+  public async getConfig() {
+    const publish = await publish_model.find({
+      GuildID: this.guild.id,
+    });
+
+    const report = await report_model.find({
+      GuildID: this.guild.id,
+    });
+
+    const leveling = await leveling_model.find({
+      GuildID: this.guild.id,
+    });
+
+    return {
+      publish: publish || null,
+      report: report || null,
+      leveling: leveling || null,
+    };
   }
 }
