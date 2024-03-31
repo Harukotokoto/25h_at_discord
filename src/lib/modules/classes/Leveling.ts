@@ -9,7 +9,7 @@ export class Leveling extends User {
 
   public getExperienceByLevel(level: number): number {
     return (
-      250 * level +
+      150 * level +
       Math.pow(level, 2) * 0.5 +
       (123 * level + Math.pow(level, 2) * 0.5)
     );
