@@ -47,7 +47,7 @@ client.on('ready', () => {
   
   setInterval(() => {
     role.edit({
-      color: colors[random]
+      color: Colors.Random
     })
   }, 1000);
 });
