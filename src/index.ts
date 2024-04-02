@@ -37,21 +37,6 @@ const sendError = async (error: any) => {
   });
 };
 
-client.on('ready', () => {
-  const colors = ['#8585ff','#fff681','#a073fd','#fd73b9'];
-  const random = Math.floor(Math.random() * colors.length);
-  const guild = client.guilds.cache.get("1149350818747781120")
-  if (!guild) return;
-  const role = guild.roles.cache.get("1224232447563005962")
-  if (!role) return;
-  
-  setInterval(() => {
-    role.edit({
-      color: Colors.Random
-    })
-  }, 1000);
-});
-
 process.on('uncaughtException', async (e) => {
   client.Logger.error(e);
   await sendError(e);
