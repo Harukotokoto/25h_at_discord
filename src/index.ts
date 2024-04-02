@@ -8,10 +8,7 @@ export const client = new ExtendedClient({
   intents: [
     'Guilds',
     'GuildMessages',
-    'GuildMembers',
     'MessageContent',
-    'GuildVoiceStates',
-    'GuildEmojisAndStickers',
   ],
   allowedMentions: {
     parse: [],
