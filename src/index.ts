@@ -1,8 +1,5 @@
-import { ChannelType, codeBlock, Colors } from 'discord.js';
-
 require('dotenv').config();
 import { ExtendedClient } from './lib/modules/ExtendedClient';
-import { footer } from './lib/utils/embed';
 
 export const client = new ExtendedClient({
   intents: [
