@@ -6,7 +6,7 @@ import { footer } from '../../lib/utils/embed';
 export default new Command({
   name: 'leaderboard',
   description: '上位10名を表示します',
-  aliases: ["top", "lb"],
+  aliases: ['top', 'lb'],
   execute: {
     interaction: async ({ client, interaction }) => {
       if (!interaction.guild) return;
@@ -44,7 +44,7 @@ export default new Command({
             footer: footer(),
           },
         ],
-      })
-    }
+      });
+    },
   },
 });

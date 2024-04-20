@@ -1,5 +1,10 @@
 import { Command } from '../../lib/modules/Command';
-import { APIRole, ApplicationCommandOptionType, Colors, Role } from 'discord.js';
+import {
+  APIRole,
+  ApplicationCommandOptionType,
+  Colors,
+  Role,
+} from 'discord.js';
 import { footer } from '../../lib/utils/embed';
 import { Config } from '../../lib/modules/classes/Config';
 import { CommandError } from '../../lib/modules/classes/CommandError';

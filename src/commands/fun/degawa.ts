@@ -41,7 +41,7 @@ export default new Command({
             attachment: await createBuffer(imageBuffer),
             name: 'degawa.png',
           },
-        ]
+        ],
       });
     },
   },

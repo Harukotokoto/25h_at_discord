@@ -1,12 +1,23 @@
+import { SimpleShardingStrategy } from 'discord.js';
+
 require('dotenv').config();
 import { ExtendedClient } from './lib/modules/ExtendedClient';
 
 export const client = new ExtendedClient({
-  intents: [
-    'Guilds',
-    'GuildMessages',
-    'MessageContent',
-  ],
+  ws: {
+    buildStrategy: (manager) =>
+      new (class MobileSimpleShardingStrategy extends SimpleShardingStrategy {
+        constructor(manager: any) {
+          manager.options.identifyProperties = {
+            os: 'ios',
+            device: 'device',
+            browser: 'Discord iOS',
+          };
+          super(manager);
+        }
+      })(manager),
+  },
+  intents: ['Guilds', 'GuildMessages', 'MessageContent'],
   allowedMentions: {
     parse: [],
   },
