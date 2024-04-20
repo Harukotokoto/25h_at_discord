@@ -5,8 +5,8 @@ import { ExtendedClient } from './lib/modules/ExtendedClient';
 
 export const client = new ExtendedClient({
   ws: {
-    buildStrategy: (manager) =>
-      new (class MobileSimpleShardingStrategy extends SimpleShardingStrategy {
+    buildStrategy: (manager) => {
+      return new (class MobileSimpleShardingStrategy extends SimpleShardingStrategy {
         constructor(manager: any) {
           manager.options.identifyProperties = {
             os: 'ios',
@@ -15,7 +15,8 @@ export const client = new ExtendedClient({
           };
           super(manager);
         }
-      })(manager),
+      })(manager);
+    },
   },
   intents: ['Guilds', 'GuildMessages', 'MessageContent'],
   allowedMentions: {
