@@ -8,7 +8,6 @@ import {
   TextInputStyle,
 } from 'discord.js';
 import { footer } from '../../lib/utils/embed';
-import { client } from '../../index';
 import { ticket_setup_model } from '../../lib/models/ticket_setup';
 
 export default new Event('interactionCreate', async (interaction) => {
@@ -138,6 +137,11 @@ export default new Event('interactionCreate', async (interaction) => {
             ],
           },
         ],
+        allowedMentions: {
+          parse: [
+            "roles"
+          ]
+        }
       });
 
       await interaction.reply({
