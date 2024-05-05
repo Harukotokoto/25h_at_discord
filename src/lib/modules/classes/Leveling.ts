@@ -4,7 +4,7 @@ import { User } from './User';
 
 export class Leveling extends User {
   private getRandomExperience(): number {
-    return Math.floor(Math.random() * 10) + 15;
+    return Math.floor(Math.random() * 15) + 15;
   }
 
   public getExperienceByLevel(level: number): number {
