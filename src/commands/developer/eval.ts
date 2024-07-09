@@ -18,6 +18,13 @@ export default new Command({
     interaction: async ({ client, interaction }) => {
       const content = interaction.options.getString('content') || '';
 
+      try {
+        await new Promise((resolve, reject) => resolve(eval(content)));
+        await interaction.followUp('実行しました');
+      } catch (err) {
+        await interaction.followUp(`${err}`);
+      }
+
       await interaction.followUp('実行しました');
 
       await new Promise((resolve, reject) => resolve(eval(content)));
@@ -27,7 +34,13 @@ export default new Command({
         ? args.join(' ')
         : "message.reply('コードが入力されていません')";
 
-      await new Promise((resolve, reject) => resolve(eval(content)));
+      try {
+        await new Promise((resolve, reject) => resolve(eval(content)));
+        await message.react('✅');
+      } catch (err) {
+        await message.react('❌');
+        await message.reply(`${err}`);
+      }
     },
   },
 });
