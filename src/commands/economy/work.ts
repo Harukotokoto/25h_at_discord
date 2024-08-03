@@ -33,6 +33,8 @@ export default new Command({
       const amount = Math.floor(Math.random() * 1000) + 300;
       await economy.addToWallet(amount);
 
+      cooltime.setCooltime(await uuid.getUUID(), 'work');
+
       await interaction.followUp({
         embeds: [
           {
