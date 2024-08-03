@@ -33,13 +33,13 @@ export default new Command({
       const amount = Math.floor(Math.random() * 1000) + 300;
       await economy.addToWallet(amount);
 
-      cooltime.setCooltime(await uuid.getUUID(), 'work');
+      await cooltime.setCooltime(await uuid.getUUID(), 'work');
 
       await interaction.followUp({
         embeds: [
           {
-            title: 'あなたは働きました',
-            description: `+${amount}`,
+            title: 'コインを獲得しました',
+            description: `+${amount}コイン`,
             color: Colors.Green,
             footer: footer(),
           },

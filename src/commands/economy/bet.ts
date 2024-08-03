@@ -67,7 +67,7 @@ export default new Command({
               embeds: [
                 {
                   title: '勝利',
-                  description: `+${bet + Math.round(bet * 2.5)}`,
+                  description: `+${bet + Math.round(bet * 2.5)}コイン`,
                   color: Colors.Green,
                   footer: footer(),
                 },
@@ -79,7 +79,7 @@ export default new Command({
               embeds: [
                 {
                   title: '敗北',
-                  description: `-${bet}`,
+                  description: `あなたの数字: ${prediction}\nディーラーの数字${answer}\n-${bet}コイン`,
                   color: Colors.Grey,
                   footer: footer(),
                 },
