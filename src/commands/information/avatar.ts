@@ -26,7 +26,7 @@ export default new Command({
           {
             title: user.tag,
             image: {
-              url: `${avatarURL}?size=1024`,
+              url: avatarURL,
             },
             color: Colors.Green,
             footer: footer(),
