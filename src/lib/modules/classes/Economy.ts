@@ -1,7 +1,7 @@
 import { economy_model } from '../../models/economy';
 
 class Economy {
-  public readonly uuid: string;
+  private readonly uuid: string;
 
   constructor(uuid: string) {
     this.uuid = uuid;
@@ -135,3 +135,5 @@ class Economy {
     return economy_model.findOne({ UUID: this.uuid });
   }
 }
+
+export { Economy };
