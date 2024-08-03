@@ -138,10 +138,8 @@ export default new Event('interactionCreate', async (interaction) => {
           },
         ],
         allowedMentions: {
-          parse: [
-            "roles"
-          ]
-        }
+          parse: ['roles'],
+        },
       });
 
       await interaction.reply({

@@ -1,5 +1,7 @@
 import { Command } from '../../lib/modules/Command';
-import { ApplicationCommandOptionType } from 'discord.js';
+import { ApplicationCommandOptionType, Colors } from 'discord.js';
+import { CommandError } from '../../lib/modules/classes/CommandError';
+import { footer } from '../../lib/utils/embed';
 
 export default new Command({
   name: 'avatar',
@@ -12,6 +14,25 @@ export default new Command({
     },
   ],
   execute: {
-    interaction: ({ client, interaction }) => {},
+    interaction: async ({ client, interaction }) => {
+      const user = interaction.options.getUser('user');
+      const Error = new CommandError(interaction);
+      if (!user) return Error.create('ユーザーが存在しません');
+
+      const avatarURL = user.displayAvatarURL();
+
+      await interaction.followUp({
+        embeds: [
+          {
+            title: user.tag,
+            image: {
+              url: avatarURL,
+            },
+            color: Colors.Green,
+            footer: footer(),
+          },
+        ],
+      });
+    },
   },
 });
