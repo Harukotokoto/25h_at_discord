@@ -19,14 +19,14 @@ export default new Command({
       const Error = new CommandError(interaction);
       if (!user) return Error.create('ユーザーが存在しません');
 
-      const avatarURL = user.displayAvatarURL();
+      const avatarURL = user.displayAvatarURL({ extension: 'png', size: 1024 });
 
       await interaction.followUp({
         embeds: [
           {
             title: user.tag,
             image: {
-              url: avatarURL,
+              url: `${avatarURL}?size=1024`,
             },
             color: Colors.Green,
             footer: footer(),
