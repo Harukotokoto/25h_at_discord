@@ -27,7 +27,7 @@ class Economy {
     return data.Bank;
   }
 
-  public async addWallet(balance: number): Promise<boolean> {
+  public async addToWallet(balance: number): Promise<boolean> {
     const data = await this.getData();
     if (!data) {
       const newData = new economy_model({
@@ -49,7 +49,7 @@ class Economy {
     return true;
   }
 
-  public async addBank(balance: number): Promise<boolean> {
+  public async addToBank(balance: number): Promise<boolean> {
     const data = await this.getData();
     if (!data) {
       const newData = new economy_model({
@@ -71,13 +71,25 @@ class Economy {
     return true;
   }
 
-  public async removeWallet(balance: number): Promise<boolean> {
+  public async removeFromWallet(balance: number): Promise<boolean> {
     const data = await this.getData();
     if (!data) {
       return false;
     }
 
     data.Wallet -= balance;
+
+    await data.save();
+    return true;
+  }
+
+  public async removeFromBank(balance: number): Promise<boolean> {
+    const data = await this.getData();
+    if (!data) {
+      return false;
+    }
+
+    data.Bank -= balance;
 
     await data.save();
     return true;

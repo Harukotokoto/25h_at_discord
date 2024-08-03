@@ -60,7 +60,7 @@ export default new Command({
             return Error.create('現在の残高を上回るベットはできません');
           }
 
-          await economy.removeWallet(bet);
+          await economy.removeFromWallet(bet);
 
           if (prediction === answer) {
             await interaction.followUp({
@@ -73,7 +73,7 @@ export default new Command({
                 },
               ],
             });
-            await economy.addWallet(bet + Math.round(bet * 2.5));
+            await economy.addToWallet(bet + Math.round(bet * 2.5));
           } else {
             await interaction.followUp({
               embeds: [
