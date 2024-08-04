@@ -23,6 +23,13 @@ class UUID {
 
     return newData.UUID;
   }
+
+  public static async getUser(uuid: string): Promise<String | null> {
+    const data = await uuid_model.findOne({ UUID: uuid });
+    if (!data) return null;
+
+    return data.UserID;
+  }
 }
 
 export { UUID };
