@@ -11,7 +11,6 @@ import { CommandError } from '../../lib/modules/classes/CommandError';
 
 export default new Command({
   name: 'clear',
-  aliases: ['c', 'purge'],
   description: 'チャンネル内のメッセージをパージします',
   options: [
     {
@@ -27,7 +26,7 @@ export default new Command({
     interaction: async ({ client, interaction }) => {
       await clearMessages_Interaction(interaction);
 
-      await interaction.followUp({
+      await interaction.channel?.send({
         embeds: [
           {
             title: 'メッセージをパージしました',
@@ -37,22 +36,6 @@ export default new Command({
           },
         ],
       });
-    },
-    message: async ({ client, message, args }) => {
-      const clear = await clearMessages_Message(message, args);
-
-      if (clear) {
-        await message.reply({
-          embeds: [
-            {
-              title: 'メッセージをパージしました',
-              description: `最大${parseInt(args[0])}件のメッセージをパージしました\n※古いメッセージなどは削除できない場合があります。`,
-              color: Colors.Green,
-              footer: footer(),
-            },
-          ],
-        });
-      }
     },
   },
 });
@@ -74,6 +57,11 @@ async function clearMessages_Interaction(
     const messages = await interaction.channel.messages.fetch({
       limit: 100,
     });
+
+    if (!messages) {
+      break;
+    }
+
     if (messages.size === 0) {
       break;
     }
@@ -87,42 +75,4 @@ async function clearMessages_Interaction(
     await interaction.channel.bulkDelete(messagesToDelete, true);
     total_deleted += toDelete;
   }
-}
-
-async function clearMessages_Message(message: Message, args: string[]) {
-  let total_deleted = 0;
-  const count = parseInt(args[0]);
-  const Error = new CommandError(message);
-
-  if (isNaN(count) || count <= 0) {
-    await Error.create('有効な数値を入力してください');
-    return false;
-  }
-
-  if (!message.channel) return false;
-  if (
-    message.channel.type !== ChannelType.GuildText &&
-    message.channel.type !== ChannelType.GuildAnnouncement
-  )
-    return false;
-
-  while (total_deleted < count) {
-    const messages = await message.channel.messages.fetch({
-      limit: 100,
-    });
-    if (messages.size === 0) {
-      break;
-    }
-
-    const toDelete =
-      messages.size > count - total_deleted
-        ? count - total_deleted
-        : messages.size;
-    const messagesToDelete = messages.first(toDelete);
-
-    await message.channel.bulkDelete(messagesToDelete, true);
-    total_deleted += toDelete;
-  }
-
-  return true;
 }
