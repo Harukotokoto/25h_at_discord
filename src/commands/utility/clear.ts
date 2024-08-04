@@ -3,7 +3,8 @@ import {
   ApplicationCommandOptionType,
   ChannelType,
   ChatInputCommandInteraction,
-  Colors, Message,
+  Colors,
+  Message,
 } from 'discord.js';
 import { footer } from '../../lib/utils/embed';
 import { CommandError } from '../../lib/modules/classes/CommandError';
@@ -50,13 +51,15 @@ export default new Command({
               footer: footer(),
             },
           ],
-        })
+        });
       }
-    }
+    },
   },
 });
 
-async function clearMessages_Interaction(interaction: ChatInputCommandInteraction) {
+async function clearMessages_Interaction(
+  interaction: ChatInputCommandInteraction
+) {
   let total_deleted = 0;
   const count = interaction.options.getNumber('count', true);
 
@@ -88,11 +91,11 @@ async function clearMessages_Interaction(interaction: ChatInputCommandInteractio
 
 async function clearMessages_Message(message: Message, args: string[]) {
   let total_deleted = 0;
-  const count = parseInt(args[0])
-  const Error = new CommandError(message)
+  const count = parseInt(args[0]);
+  const Error = new CommandError(message);
 
   if (isNaN(count) || count <= 0) {
-    await Error.create("有効な数値を入力してください")
+    await Error.create('有効な数値を入力してください');
     return false;
   }
 
@@ -120,7 +123,6 @@ async function clearMessages_Message(message: Message, args: string[]) {
     await message.channel.bulkDelete(messagesToDelete, true);
     total_deleted += toDelete;
   }
-
 
   return true;
 }

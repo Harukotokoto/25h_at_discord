@@ -63,7 +63,7 @@ export default new Command({
           await economy.removeFromWallet(bet);
 
           if (prediction === answer) {
-            const multiplier = random([1.5, 1.5, 1.5, 2, 2, 2.5, 3 ])
+            const multiplier = random([1.5, 1.5, 1.5, 2, 2, 2.5, 3]);
             await economy.addToWallet(Math.round(bet * multiplier));
 
             await interaction.followUp({

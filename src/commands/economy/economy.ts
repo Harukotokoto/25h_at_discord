@@ -18,8 +18,8 @@ export default new Command({
           description: '確認するユーザー',
           type: ApplicationCommandOptionType.User,
         },
-      ]
-    }
+      ],
+    },
   ],
   execute: {
     interaction: async ({ client, interaction }) => {
