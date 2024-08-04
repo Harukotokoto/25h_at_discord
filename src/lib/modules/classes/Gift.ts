@@ -125,6 +125,11 @@ class Gift {
           ReceivedGifts: [code],
           UUID: this.uuid,
         });
+
+        return {
+          success: true,
+          message: `${amount}コインのスペシャルギフトを受け取りました\n\n口座残高: ${await economy.getBank()}コイン`,
+        };
       } else {
         if (
           received_gifts.ReceivedGifts.find((used_code) => code === used_code)
@@ -134,6 +139,7 @@ class Gift {
             message: 'このギフトコードは既に使用済みです',
           };
         }
+
         received_gifts.ReceivedGifts.push(code);
         await received_gifts.save();
 
