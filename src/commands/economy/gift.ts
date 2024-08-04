@@ -18,7 +18,7 @@ export default new Command({
         {
           name: 'amount',
           description: 'ギフトする金額',
-          type: ApplicationCommandOptionType.Number,
+          type: ApplicationCommandOptionType.Integer,
           required: true,
         },
         {
@@ -68,7 +68,7 @@ export default new Command({
       switch (interaction.options.getSubcommand()) {
         case 'create':
           const create_gift = await giftManager.create(
-            interaction.options.getNumber('amount', true),
+            interaction.options.getInteger('amount', true),
             interaction.options.getString('method', true),
             interaction.options.getUser('user')?.id
           );
@@ -85,7 +85,7 @@ export default new Command({
                 footer: footer(),
               },
             ],
-            ephemeral: true
+            ephemeral: true,
           });
           break;
         case 'use':

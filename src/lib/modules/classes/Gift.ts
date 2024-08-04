@@ -28,7 +28,7 @@ class Gift {
       return {
         success: false,
         message:
-          "口座残高を上回る金額を指定することはできません。\nギフトを作成するには10%の手数料を支払う必要があります",
+          '口座残高を上回る金額を指定することはできません。\nギフトを作成するには10%の手数料を支払う必要があります',
       };
     }
 
@@ -42,7 +42,7 @@ class Gift {
 
       await gift.save();
 
-      await economy.removeFromBank(amount * 1.1);
+      await economy.removeFromBank(Math.round(amount * 1.1));
 
       return {
         success: true,
@@ -58,7 +58,7 @@ class Gift {
         };
       }
 
-      await economy.removeFromBank(amount * 1.1);
+      await economy.removeFromBank(Math.round(amount * 1.1));
 
       const targetUUID = new UUID(target);
 

@@ -17,7 +17,7 @@ export default new Command({
         {
           name: 'amount',
           description: '入金する金額',
-          type: ApplicationCommandOptionType.Number,
+          type: ApplicationCommandOptionType.Integer,
           required: true,
         },
       ],
@@ -47,7 +47,7 @@ export default new Command({
 
       switch (interaction.options.getSubcommand()) {
         case 'deposit':
-          const dep_amount = interaction.options.getNumber('amount', true);
+          const dep_amount = interaction.options.getInteger('amount', true);
           if (wallet < dep_amount) {
             return await Error.create(
               '所持残高を上回る金額を指定することはできません'
@@ -70,7 +70,7 @@ export default new Command({
 
           break;
         case 'withdraw':
-          const with_amount = interaction.options.getNumber('amount', true);
+          const with_amount = interaction.options.getInteger('amount', true);
           if (wallet < with_amount) {
             return await Error.create(
               '口座残高を上回る金額を指定することはできません'

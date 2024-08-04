@@ -19,7 +19,7 @@ export default new Command({
         {
           name: 'amount',
           description: '賭ける金額',
-          type: ApplicationCommandOptionType.Number,
+          type: ApplicationCommandOptionType.Integer,
           required: true,
         },
         {
@@ -48,7 +48,7 @@ export default new Command({
         case 'guess':
           const wallet = await economy.getWallet();
 
-          const bet = interaction.options.getNumber('amount', true);
+          const bet = interaction.options.getInteger('amount', true);
           const prediction = interaction.options.getNumber('prediction', true);
           const answer = random([1, 2, 3]);
 
