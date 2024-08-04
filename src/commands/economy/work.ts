@@ -24,13 +24,22 @@ export default new Command({
         const timeDifference = now.getTime() - last_used.getTime();
         const minutesDifference = timeDifference / (1000 * 60);
 
+        const next_available_date = new Date(
+          last_used.getTime() + 15 * 60 * 1000
+        );
+        const next_available_timestamp = Math.floor(
+          next_available_date.getTime() / 1000
+        );
+
         if (minutesDifference < 15) {
-          await Error.create('このコマンドは15分に1回のみ実行できます');
+          await Error.create(
+            'このコマンドは<t:${next_available_timestamp}:R>に実行できます'
+          );
           return;
         }
       }
 
-      const amount = Math.floor(Math.random() * 1000) + 300;
+      const amount = Math.floor(Math.random() * 1000) + 500;
       await economy.addToWallet(amount);
 
       await cooltime.setCooltime(await uuid.getUUID(), 'work');
@@ -39,7 +48,7 @@ export default new Command({
         embeds: [
           {
             title: 'コインを獲得しました',
-            description: `+${amount}コイン`,
+            description: `+${amount}コイン\n残高: ${await economy.getWallet()}コイン`,
             color: Colors.Green,
             footer: footer(),
           },

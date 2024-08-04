@@ -67,7 +67,7 @@ export default new Command({
               embeds: [
                 {
                   title: '勝利',
-                  description: `+${bet + Math.round(bet * 2.5)}コイン`,
+                  description: `+${bet + Math.round(bet * 2.5)}コイン\n\n残高: ${await economy.getWallet()}コイン`,
                   color: Colors.Green,
                   footer: footer(),
                 },
@@ -79,7 +79,7 @@ export default new Command({
               embeds: [
                 {
                   title: '敗北',
-                  description: `あなたの数字: ${prediction}\nディーラーの数字${answer}\n-${bet}コイン`,
+                  description: `あなたの数字: ${prediction}\nディーラーの数字${answer}\n-${bet}コイン\n\n残高: ${await economy.getWallet()}コイン`,
                   color: Colors.Grey,
                   footer: footer(),
                 },
