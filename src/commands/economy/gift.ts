@@ -85,6 +85,7 @@ export default new Command({
                 footer: footer(),
               },
             ],
+            ephemeral: true
           });
           break;
         case 'use':
