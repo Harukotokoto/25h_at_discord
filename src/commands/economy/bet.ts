@@ -64,13 +64,13 @@ export default new Command({
 
           if (prediction === answer) {
             const multiplier = random([1.5, 1.5, 1.5, 2, 2, 2.5, 3 ])
-            await economy.addToWallet(Math.round(bet * 2.5));
+            await economy.addToWallet(Math.round(bet * multiplier));
 
             await interaction.followUp({
               embeds: [
                 {
                   title: '勝利',
-                  description: `+${Math.round(bet * 2.5)}コイン\n\n残高: ${await economy.getWallet()}コイン`,
+                  description: `+${Math.round(bet * multiplier)}コイン\n\n残高: ${await economy.getWallet()}コイン`,
                   color: Colors.Green,
                   footer: footer(),
                 },
