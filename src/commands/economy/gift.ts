@@ -51,7 +51,6 @@ export default new Command({
           type: ApplicationCommandOptionType.String,
           required: true,
           minLength: 8,
-          maxLength: 8,
         },
       ],
     },
