@@ -30,7 +30,7 @@ export default new Command({
         {
           name: 'amount',
           description: '出金する金額',
-          type: ApplicationCommandOptionType.Number,
+          type: ApplicationCommandOptionType.Integer,
           required: true,
         },
       ],
