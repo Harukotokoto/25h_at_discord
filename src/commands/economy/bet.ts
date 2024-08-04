@@ -63,13 +63,13 @@ export default new Command({
           await economy.removeFromWallet(bet);
 
           if (prediction === answer) {
-            await economy.addToWallet(bet + Math.round(bet * 2.5));
+            await economy.addToWallet(Math.round(bet * 2.5));
 
             await interaction.followUp({
               embeds: [
                 {
                   title: '勝利',
-                  description: `+${bet + Math.round(bet * 2.5)}コイン\n\n残高: ${await economy.getWallet()}コイン`,
+                  description: `+${Math.round(bet * 2.5)}コイン\n\n残高: ${await economy.getWallet()}コイン`,
                   color: Colors.Green,
                   footer: footer(),
                 },
