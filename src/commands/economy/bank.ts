@@ -49,7 +49,7 @@ export default new Command({
         case 'deposit':
           const dep_amount = interaction.options.getNumber('amount', true);
           if (wallet < dep_amount) {
-            await Error.create('指定された金額のコインを所持していません');
+            return await Error.create('指定された金額のコインを所持していません');
           }
 
           await economy.removeFromWallet(dep_amount);
@@ -70,7 +70,7 @@ export default new Command({
         case 'withdraw':
           const with_amount = interaction.options.getNumber('amount', true);
           if (wallet < with_amount) {
-            await Error.create(
+            return await Error.create(
               '指定された金額のコインが口座に存在していません'
             );
           }
