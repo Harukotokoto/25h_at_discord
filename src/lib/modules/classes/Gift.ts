@@ -107,7 +107,9 @@ class Gift {
     const economy = new Economy(this.uuid);
     await economy.addToBank(amount);
 
-    if (!gift.Special) gift.deleteOne()
+    if (!gift.Special) {
+      gift_model.deleteOne({ Code: code })
+    }
 
     return {
       success: true,
