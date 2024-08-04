@@ -4,6 +4,7 @@ import { gift_model } from '../../models/gift';
 import { createRandomID } from '../../utils/createRandomID';
 import { client } from '../../../index';
 import economy from '../../../commands/economy/economy';
+import { received_gifts_model } from '../../models/received_gifts';
 
 class Gift {
   private readonly uuid: string;
@@ -108,13 +109,40 @@ class Gift {
     await economy.addToBank(amount);
 
     if (!gift.Special) {
-      await gift_model.deleteOne({ Code: code })
-    }
+      await gift_model.deleteOne({ Code: code });
 
-    return {
-      success: true,
-      message: `${user.displayName}(${user.tag})から${amount}コインのギフトを受け取りました\n\n口座残高: ${await economy.getBank()}コイン`,
-    };
+      return {
+        success: true,
+        message: `${user.displayName}(${user.tag})から${amount}コインのギフトを受け取りました\n\n口座残高: ${await economy.getBank()}コイン`,
+      };
+    } else {
+      const received_gifts = await received_gifts_model.findOne({
+        UUID: this.uuid,
+      });
+
+      if (!received_gifts) {
+        await received_gifts_model.create({
+          ReceivedGifts: [code],
+          UUID: this.uuid,
+        });
+      } else {
+        if (
+          received_gifts.ReceivedGifts.find((used_code) => code === used_code)
+        ) {
+          return {
+            success: false,
+            message: 'このギフトコードは既に使用済みです',
+          };
+        }
+        received_gifts.ReceivedGifts.push(code);
+        await received_gifts.save();
+
+        return {
+          success: true,
+          message: `${amount}コインのスペシャルギフトを受け取りました\n\n口座残高: ${await economy.getBank()}コイン`,
+        };
+      }
+    }
   }
 
   private static async getGift(code: string) {
