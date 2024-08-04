@@ -106,6 +106,8 @@ class Gift {
     const economy = new Economy(this.uuid);
     await economy.addToBank(amount);
 
+    if (!gift.Special) gift.deleteOne()
+
     return {
       success: true,
       message: `${user.displayName}(${user.tag})から${amount}コインのギフトを受け取りました\n\n口座残高: ${await economy.getBank()}コイン`,

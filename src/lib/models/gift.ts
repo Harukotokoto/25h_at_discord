@@ -15,6 +15,10 @@ const gift_model = model(
       type: String,
       required: true,
     },
+    Special: {
+      type: Boolean,
+      required: true,
+    }
   })
 );
 
