@@ -84,7 +84,7 @@ export default new Command({
           await interaction.followUp({
             embeds: [
               {
-                title: '銀行口座から出金しましたしました',
+                title: '銀行口座から出金しました',
                 description: `口座残高: ${await economy.getBank()}コイン`,
                 color: Colors.Green,
                 footer: footer(),

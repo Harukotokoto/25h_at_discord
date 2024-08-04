@@ -149,11 +149,6 @@ class Gift {
         };
       }
     }
-
-    return {
-      success: false,
-      message: '不明なエラーが発生しました',
-    };
   }
 
   private static async getGift(code: string) {
