@@ -106,11 +106,10 @@ class Gift {
     }
 
     const economy = new Economy(this.uuid);
-  
 
     if (!gift.Special) {
       await gift_model.deleteOne({ Code: code });
-await economy.addToBank(amount);
+      await economy.addToBank(amount);
       return {
         success: true,
         message: `${user.displayName}(${user.tag})から${amount}コインのギフトを受け取りました\n\n口座残高: ${await economy.getBank()}コイン`,
@@ -125,7 +124,7 @@ await economy.addToBank(amount);
           ReceivedGifts: [code],
           UUID: this.uuid,
         });
-await economy.addToBank(amount);
+        await economy.addToBank(amount);
         return {
           success: true,
           message: `${amount}コインのスペシャルギフトを受け取りました\n\n口座残高: ${await economy.getBank()}コイン`,
@@ -142,7 +141,7 @@ await economy.addToBank(amount);
 
         received_gifts.ReceivedGifts.push(code);
         await received_gifts.save();
-await economy.addToBank(amount);
+        await economy.addToBank(amount);
         return {
           success: true,
           message: `${amount}コインのスペシャルギフトを受け取りました\n\n口座残高: ${await economy.getBank()}コイン`,
