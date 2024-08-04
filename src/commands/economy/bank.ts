@@ -44,6 +44,7 @@ export default new Command({
       const Error = new CommandError(interaction);
 
       const wallet = await economy.getWallet();
+      const bank = await economy.getBank();
 
       switch (interaction.options.getSubcommand()) {
         case 'deposit':
@@ -71,7 +72,7 @@ export default new Command({
           break;
         case 'withdraw':
           const with_amount = interaction.options.getInteger('amount', true);
-          if (wallet < with_amount) {
+          if (bank < with_amount) {
             return await Error.create(
               '口座残高を上回る金額を指定することはできません'
             );
