@@ -9,6 +9,7 @@ import { footer } from '../../lib/utils/embed';
 export default new Command({
   name: 'gift',
   description: 'ギフトに関するコマンド',
+  ephemeral: true,
   options: [
     {
       name: 'create',
@@ -85,7 +86,6 @@ export default new Command({
                 footer: footer(),
               },
             ],
-            ephemeral: true,
           });
           break;
         case 'use':
