@@ -108,7 +108,7 @@ class Gift {
     await economy.addToBank(amount);
 
     if (!gift.Special) {
-      gift_model.deleteOne({ Code: code })
+      await gift_model.deleteOne({ Code: code })
     }
 
     return {
