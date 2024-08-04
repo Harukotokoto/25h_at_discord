@@ -33,7 +33,7 @@ export default new Command({
 
         if (minutesDifference < 15) {
           await Error.create(
-            'このコマンドは<t:${next_available_timestamp}:R>に実行できます'
+            `このコマンドは<t:${next_available_timestamp}:R>に実行できます`
           );
           return;
         }
