@@ -63,6 +63,8 @@ export default new Command({
           await economy.removeFromWallet(bet);
 
           if (prediction === answer) {
+            await economy.addToWallet(bet + Math.round(bet * 2.5));
+
             await interaction.followUp({
               embeds: [
                 {
@@ -73,7 +75,6 @@ export default new Command({
                 },
               ],
             });
-            await economy.addToWallet(bet + Math.round(bet * 2.5));
           } else {
             await interaction.followUp({
               embeds: [
