@@ -58,7 +58,7 @@ class Gift {
 
       await economy.removeFromBank(amount * 1.1);
 
-      const targetUUID = new UUID(target)
+      const targetUUID = new UUID(target);
 
       const targetEconomy = new Economy(await targetUUID.getUUID());
       await targetEconomy.addToBank(amount);
@@ -76,4 +76,4 @@ class Gift {
   }
 }
 
-export { Gift }
+export { Gift };

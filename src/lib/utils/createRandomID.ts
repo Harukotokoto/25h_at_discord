@@ -8,4 +8,4 @@ const createRandomID = (length: number) => {
   return id;
 };
 
-export { createRandomID }
+export { createRandomID };

@@ -49,7 +49,9 @@ export default new Command({
         case 'deposit':
           const dep_amount = interaction.options.getNumber('amount', true);
           if (wallet < dep_amount) {
-            return await Error.create('所持残高を上回る金額を指定することはできません');
+            return await Error.create(
+              '所持残高を上回る金額を指定することはできません'
+            );
           }
 
           await economy.removeFromWallet(dep_amount);
