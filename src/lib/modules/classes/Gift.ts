@@ -2,6 +2,8 @@ import { UUID } from './UUID';
 import { Economy } from './Economy';
 import { gift_model } from '../../models/gift';
 import { createRandomID } from '../../utils/createRandomID';
+import { client } from '../../../index';
+import economy from '../../../commands/economy/economy';
 
 class Gift {
   private readonly uuid: string;
@@ -73,6 +75,45 @@ class Gift {
       success: false,
       message: '無効なメソッドです',
     };
+  }
+
+  public async use(code: string) {
+    const gift = await Gift.getGift(code);
+    if (!gift) {
+      return {
+        success: false,
+        message: '無効なギフトです',
+      };
+    }
+
+    const amount = gift.Amount;
+    const user_id = await UUID.getUser(gift.CreatedBy);
+    if (!user_id) {
+      return {
+        success: false,
+        message: '送り主が無効です',
+      };
+    }
+
+    const user = client.users.cache.get(user_id);
+    if (!user) {
+      return {
+        success: false,
+        message: '送り主が無効です',
+      };
+    }
+
+    const economy = new Economy(this.uuid);
+    await economy.addToBank(amount);
+
+    return {
+      success: true,
+      message: `${user.displayName}(${user.tag})から${amount}コインのギフトを受け取りました\n\n口座残高: ${await economy.getBank()}コイン`,
+    };
+  }
+
+  private static async getGift(code: string) {
+    return gift_model.findOne({ Code: code });
   }
 }
 

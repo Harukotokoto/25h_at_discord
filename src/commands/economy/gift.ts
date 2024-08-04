@@ -39,6 +39,21 @@ export default new Command({
         },
       ],
     },
+    {
+      name: 'use',
+      description: 'ギフトコードを使用します',
+      type: ApplicationCommandOptionType.Subcommand,
+      options: [
+        {
+          name: 'code',
+          description: 'ギフトコード',
+          type: ApplicationCommandOptionType.String,
+          required: true,
+          minLength: 8,
+          maxLength: 8,
+        },
+      ],
+    },
   ],
   execute: {
     interaction: async ({ client, interaction }) => {
@@ -48,28 +63,49 @@ export default new Command({
 
       const Error = new CommandError(interaction);
 
+      const giftManager = new Gift(await uuid.getUUID());
+
       switch (interaction.options.getSubcommand()) {
         case 'create':
-          const giftManager = new Gift(await uuid.getUUID());
-          const gift = await giftManager.create(
+          const create_gift = await giftManager.create(
             interaction.options.getNumber('amount', true),
             interaction.options.getString('method', true),
             interaction.options.getUser('user')?.id
           );
 
-          if (!gift.success) {
-            return await Error.create(gift.message);
+          if (!create_gift.success) {
+            return await Error.create(create_gift.message);
           }
 
           await interaction.followUp({
             embeds: [
               {
-                description: gift.message,
+                description: create_gift.message,
                 color: Colors.Green,
                 footer: footer(),
               },
             ],
           });
+          break;
+        case 'use':
+          const use_gift = await giftManager.use(
+            interaction.options.getString('code', true)
+          );
+
+          if (!use_gift.success) {
+            return await Error.create(use_gift.message);
+          }
+
+          await interaction.followUp({
+            embeds: [
+              {
+                description: use_gift.message,
+                color: Colors.Gold,
+                footer: footer(),
+              },
+            ],
+          });
+          break;
       }
     },
   },

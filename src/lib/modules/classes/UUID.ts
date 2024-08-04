@@ -24,7 +24,7 @@ class UUID {
     return newData.UUID;
   }
 
-  public static async getUser(uuid: string): Promise<String | null> {
+  public static async getUser(uuid: string): Promise<string | null> {
     const data = await uuid_model.findOne({ UUID: uuid });
     if (!data) return null;
 
