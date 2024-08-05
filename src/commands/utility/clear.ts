@@ -12,6 +12,7 @@ import { CommandError } from '../../lib/modules/classes/CommandError';
 export default new Command({
   name: 'clear',
   description: 'チャンネル内のメッセージをパージします',
+  requiredPermissions: ["ManageGuild", "ManageMessages"],
   options: [
     {
       name: 'count',
