@@ -66,6 +66,13 @@ export default new Command({
 
       switch (interaction.options.getSubcommand()) {
         case 'create':
+          if (
+            interaction.options.getUser('user') &&
+            interaction.options.getUser('user')?.bot
+          ) {
+            await Error.create('Botにギフトすることはできません');
+          }
+
           const create_gift = await giftManager.create(
             interaction.options.getInteger('amount', true),
             interaction.options.getString('method', true),
