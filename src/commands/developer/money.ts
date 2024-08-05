@@ -71,7 +71,7 @@ export default new Command({
   execute: {
     interaction: async ({ client, interaction }) => {
       const user = interaction.options.getUser('user', true);
-      const uuid = new UUID(interaction.user.id);
+      const uuid = new UUID(user.id);
       const economy = new Economy(await uuid.getUUID());
 
       const amount = interaction.options.getInteger('amount', true);
