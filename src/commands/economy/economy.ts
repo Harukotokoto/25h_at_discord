@@ -58,21 +58,24 @@ export default new Command({
           break;
         case 'leaderboard':
           const leaderboard = await Economy.createLeaderboard(10);
+          const formatted_leaderboard = await Promise.all(
+            leaderboard.map(async (data) => {
+              const user_id = await UUID.getUser(data.UUID);
+              if (!user_id) return null;
+
+              const user = client.users.cache.get(user_id);
+              if (!user) return null;
+
+              return `${user.displayName}(${user.tag}) - ${data.Wallet + data.Bank}コイン`;
+            })
+          );
 
           await interaction.followUp({
             embeds: [
               {
                 title: 'コインの所持量ランキング',
-                description: leaderboard
-                  .map(async (data) => {
-                    const user_id = await UUID.getUser(data.UUID);
-                    if (!user_id) return;
-
-                    const user = client.users.cache.get(user_id);
-                    if (!user) return;
-
-                    return `${user.displayName}(${user.tag}) - ${data.Wallet + data.Bank}コイン`;
-                  })
+                description: formatted_leaderboard
+                  .filter((data) => data !== null)
                   .join('\n'),
               },
             ],
