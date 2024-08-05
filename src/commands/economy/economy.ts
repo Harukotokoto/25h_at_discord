@@ -81,6 +81,8 @@ export default new Command({
                 description: formatted_leaderboard
                   .filter((data) => data !== null)
                   .join('\n'),
+                color: Colors.Blue,
+                footer: footer(),
               },
             ],
           });
