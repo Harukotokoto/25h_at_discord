@@ -9,4 +9,5 @@
 # 関連リンク
 
 [Discord at 25:00 - Support(サポートサーバー)](https://discord.gg/ASNkQ2ap7p)
+
 [語るんです！(一般公開コミュニティ)](https://discord.gg/Hg72H58uuw)
