@@ -50,7 +50,7 @@ export default new Command({
 
           const amount = interaction.options.getString('amount', true);
           let bet;
-          if (amount.toLowerCase() === "all") {
+          if (amount.toLowerCase() === 'all') {
             bet = wallet;
           } else {
             bet = parseInt(amount);
