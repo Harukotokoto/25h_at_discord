@@ -144,11 +144,12 @@ class Economy {
   }
 
   public static async createLeaderboard(length: number) {
-    const allLevels = await economy_model
+    const allBalances = await economy_model
       .find()
       .select('-_id UUID Wallet Bank');
 
-    return allLevels
+    return allBalances
+      .filter((data) => data.Wallet + data.Bank > 0)
       .sort((a, b) => {
         return b.Wallet + b.Bank - (a.Wallet + a.Bank);
       })

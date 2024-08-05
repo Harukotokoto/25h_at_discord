@@ -69,7 +69,7 @@ export default new Command({
               const user = await client.users.fetch(user_id);
 
               return escDiscordFormat(
-                `${user.displayName}(${user.tag}) - ${data.Wallet + data.Bank}コイン`
+                `1. ${user.displayName}(${user.tag}) - ${data.Wallet + data.Bank}コイン`
               );
             })
           );
