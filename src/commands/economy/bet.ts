@@ -18,8 +18,8 @@ export default new Command({
       options: [
         {
           name: 'amount',
-          description: '賭ける金額',
-          type: ApplicationCommandOptionType.Integer,
+          description: '賭ける金額(Allで全ベット)',
+          type: ApplicationCommandOptionType.String,
           required: true,
         },
         {
@@ -48,7 +48,18 @@ export default new Command({
         case 'guess':
           const wallet = await economy.getWallet();
 
-          const bet = interaction.options.getInteger('amount', true);
+          const amount = interaction.options.getString('amount', true);
+          let bet;
+          if (amount.toLowerCase() === "all") {
+            bet = wallet;
+          } else {
+            bet = parseInt(amount);
+          }
+
+          if (isNaN(bet) || !Number.isInteger(bet)) {
+            await Error.create('有効な金額を入力してください');
+          }
+
           const prediction = interaction.options.getNumber('prediction', true);
           const answer = random([1, 2, 3]);
 
