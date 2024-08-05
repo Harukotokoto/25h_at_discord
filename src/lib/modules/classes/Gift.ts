@@ -25,11 +25,10 @@ class Gift {
 
     const bank = await economy.getBank();
 
-    if (bank < amount * 1.1) {
+    if (bank < Math.round(amount * 1.1)) {
       return {
         success: false,
-        message:
-          '口座残高を上回る金額を指定することはできません。\nギフトを作成するには10%の手数料を支払う必要があります',
+        message: `口座残高を上回る金額を指定することはできません。\nギフトを作成するには10%の手数料を含む金額(${Math.round(amount * 1.1)}コイン)を支払う必要があります。`,
       };
     }
 

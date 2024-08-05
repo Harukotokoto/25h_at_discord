@@ -57,9 +57,8 @@ export default new Command({
   ],
   execute: {
     interaction: async ({ client, interaction }) => {
-      const user = interaction.options.getUser('user') || interaction.user;
+      const user = interaction.user;
       const uuid = new UUID(user.id);
-      const economy = new Economy(await uuid.getUUID());
 
       const Error = new CommandError(interaction);
 
