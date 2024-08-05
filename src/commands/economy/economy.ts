@@ -20,6 +20,11 @@ export default new Command({
         },
       ],
     },
+    {
+      name: 'leaderboard',
+      description: 'リーダーボードを表示します',
+      type: ApplicationCommandOptionType.Subcommand,
+    },
   ],
   execute: {
     interaction: async ({ client, interaction }) => {
@@ -50,6 +55,29 @@ export default new Command({
               },
             ],
           });
+          break;
+        case 'leaderboard':
+          const leaderboard = await Economy.createLeaderboard(10);
+
+          await interaction.followUp({
+            embeds: [
+              {
+                title: 'コインの所持量ランキング',
+                description: leaderboard
+                  .map(async (data) => {
+                    const user_id = await UUID.getUser(data.UUID);
+                    if (!user_id) return;
+
+                    const user = client.users.cache.get(user_id);
+                    if (!user) return;
+
+                    return `${user.displayName}(${user.tag}) - ${data.Wallet + data.Bank}コイン`;
+                  })
+                  .join('\n'),
+              },
+            ],
+          });
+
           break;
       }
     },

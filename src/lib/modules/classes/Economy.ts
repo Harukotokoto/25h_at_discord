@@ -143,6 +143,18 @@ class Economy {
     return true;
   }
 
+  public static async createLeaderboard(length: number) {
+    const allLevels = await economy_model
+      .find()
+      .select('-_id UUID Wallet Bank');
+
+    return allLevels
+      .sort((a, b) => {
+        return b.Wallet + b.Bank - (a.Wallet + a.Bank);
+      })
+      .slice(0, length);
+  }
+
   private async getData() {
     return economy_model.findOne({ UUID: this.uuid });
   }
