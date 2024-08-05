@@ -3,6 +3,7 @@ import { ApplicationCommandOptionType, Colors } from 'discord.js';
 import { UUID } from '../../lib/modules/classes/UUID';
 import { Economy } from '../../lib/modules/classes/Economy';
 import { footer } from '../../lib/utils/embed';
+import { escDiscordFormat } from '../../lib/utils/escDiscordFormat';
 
 export default new Command({
   name: 'economy',
@@ -57,16 +58,19 @@ export default new Command({
           });
           break;
         case 'leaderboard':
-          const leaderboard = await Economy.createLeaderboard(10);
+          const leaderboard = await Economy.createLeaderboard(15);
           const formatted_leaderboard = await Promise.all(
             leaderboard.map(async (data) => {
               const user_id = await UUID.getUser(data.UUID);
-              if (!user_id) return null;
+              if (!user_id) return;
 
-              const user = client.users.cache.get(user_id);
-              if (!user) return null;
+              console.log(user_id);
 
-              return `${user.displayName}(${user.tag}) - ${data.Wallet + data.Bank}コイン`;
+              const user = await client.users.fetch(user_id);
+
+              return escDiscordFormat(
+                `${user.displayName}(${user.tag}) - ${data.Wallet + data.Bank}コイン`
+              );
             })
           );
 
