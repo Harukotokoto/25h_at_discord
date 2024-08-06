@@ -11,16 +11,11 @@ export default new Event('messageCreate', async (message) => {
       message.embeds[0]?.description?.match(/表示順をアップしたよ/) ||
       message.embeds[0]?.description?.match(/Bump done/)
     ) {
-      const uuid = new UUID(message.author.id);
-      const economy = new Economy(await uuid.getUUID());
-
-      await economy.addToBank(1000);
-
       await message.channel.send({
         embeds: [
           {
             title: 'Bumpしてくれてありがとね！',
-            description: `2時間後にお知らせするね！\n-# Bump報酬 +1000コイン`,
+            description: `2時間後にお知らせするね！`,
             color: Colors.Blue,
             footer: footer(),
           },
@@ -33,7 +28,7 @@ export default new Event('messageCreate', async (message) => {
             {
               title: 'Bumpの時間です！',
               description:
-                '</bump:947088344167366698>で表示順位を上げよう！\n-# Bumpすることでコインを獲得できます',
+                '</bump:947088344167366698>で表示順位を上げよう！\n',
               color: Colors.Blue,
               footer: footer(),
             },
