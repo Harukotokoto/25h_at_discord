@@ -9,10 +9,10 @@ import { client } from '../../index';
 export default new Event('ready', async () => {
   const status = '1197050561376296991';
   const ws_status = '1198538046769987624';
-  const uptime_status = '1198538870510338118';
+  const uptime_status = '1270334014930030643';
   const ram_status = '1198538953381392414';
   const cpu_status = '1198538987938263061';
-  const version_status = '1198539042208354374';
+  const version_status = '1270334067576934432';
 
   const Updater = new StatusUpdater('🔹：[state]');
 
