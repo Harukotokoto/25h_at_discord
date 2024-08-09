@@ -27,8 +27,7 @@ export default new Event('messageCreate', async (message) => {
           embeds: [
             {
               title: 'Bumpの時間です！',
-              description:
-                '</bump:947088344167366698>で表示順位を上げよう！\n',
+              description: '</bump:947088344167366698>で表示順位を上げよう！\n',
               color: Colors.Blue,
               footer: footer(),
             },

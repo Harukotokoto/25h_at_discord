@@ -4,11 +4,15 @@ import {
   ChannelType,
   Colors,
   ComponentType,
+  OverwriteType,
   PermissionsBitField,
   TextInputStyle,
 } from 'discord.js';
 import { footer } from '../../lib/utils/embed';
 import { ticket_setup_model } from '../../lib/models/ticket_setup';
+import { Ticket } from '../../lib/modules/classes/Ticket';
+
+const ticket = new Ticket();
 
 export default new Event('interactionCreate', async (interaction) => {
   if (interaction.isButton()) {
@@ -52,98 +56,39 @@ export default new Event('interactionCreate', async (interaction) => {
     }
 
     if (interaction.customId === 'ticket_close') {
-      await interaction.reply({
-        content: '5秒後にチケットを削除します',
+      const reply = await interaction.reply({
+        content: '5秒後にチケットを閉じます',
       });
 
       setTimeout(async () => {
-        await interaction.channel?.delete();
+        await ticket.close(interaction);
+        await reply.delete();
       }, 5000);
+    }
+
+    if (interaction.customId === 'reopen-ticket') {
+      await ticket.reopen(interaction);
+    }
+
+    if (interaction.customId === 'write-logs') {
+      await ticket.writeLogs(interaction);
+    }
+
+    if (interaction.customId === 'delete-ticket') {
+      await ticket.deleteChannel(interaction);
     }
   }
 
   if (interaction.isModalSubmit()) {
     if (interaction.customId.startsWith('ticket_modal')) {
-      const topic = interaction.fields.getTextInputValue('topic');
-      const issue = interaction.fields.getTextInputValue('issue');
+      const newChannel = await ticket.create(interaction);
 
-      const messageId = interaction.customId.split(/-/g)[1];
-
-      const ticket = await ticket_setup_model.findOne({
-        MessageID: messageId,
-      });
-
-      if (!ticket) return;
-
-      const staff_role = interaction.guild?.roles.cache.get(ticket.StaffRoleID);
-
-      if (!staff_role) return;
-
-      const channel = await interaction.guild?.channels.create({
-        name: `${interaction.user.username}-ticket`,
-        type: ChannelType.GuildText,
-        parent: ticket.Category,
-        permissionOverwrites: [
-          {
-            id: interaction.guild?.id,
-            deny: [PermissionsBitField.Flags.ViewChannel],
-          },
-          {
-            id: interaction.user.id,
-            allow: [PermissionsBitField.Flags.ViewChannel],
-          },
-          {
-            id: staff_role.id,
-            allow: [PermissionsBitField.Flags.ViewChannel],
-          },
-        ],
-      });
-
-      await channel?.send({
-        content: `${staff_role.toString()}`,
-        embeds: [
-          {
-            title: 'チケットを作成しました',
-            description:
-              '```\nチケットを作成しました\nスタッフの対応までお待ちください\n```',
-            fields: [
-              {
-                name: '発行者',
-                value: interaction.user.toString(),
-              },
-              {
-                name: 'タイトル',
-                value: topic,
-              },
-              {
-                name: '問題',
-                value: issue,
-              },
-            ],
-            footer: footer(),
-            color: Colors.Blue,
-          },
-        ],
-        components: [
-          {
-            type: ComponentType.ActionRow,
-            components: [
-              {
-                type: ComponentType.Button,
-                label: 'チケットを閉じる',
-                customId: 'ticket_close',
-                style: ButtonStyle.Secondary,
-              },
-            ],
-          },
-        ],
-        allowedMentions: {
-          parse: ['roles'],
-        },
-      });
+      if (!newChannel) {
+        return;
+      }
 
       await interaction.reply({
-        content: `チケットを作成しました ${channel?.toString()}`,
+        content: `チケットを作成しました <#${newChannel}>`,
         ephemeral: true,
       });
     }

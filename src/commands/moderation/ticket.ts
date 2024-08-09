@@ -9,6 +9,8 @@ import {
 import { footer } from '../../lib/utils/embed';
 import { randomUUID } from 'node:crypto';
 import { ticket_setup_model } from '../../lib/models/ticket_setup';
+import { Ticket } from '../../lib/modules/classes/Ticket';
+import { CommandError } from '../../lib/modules/classes/CommandError';
 
 export default new Command({
   name: 'ticket',
@@ -40,14 +42,24 @@ export default new Command({
     interaction: async ({ client, interaction }) => {
       switch (interaction.options.getSubcommand()) {
         case 'setup':
-          await ticket_setup_model.create({
-            MessageID: (await interaction.fetchReply()).id,
-            Category: interaction.options.getChannel('category', true, [
-              ChannelType.GuildCategory,
-            ]).id,
-            TicketID: randomUUID(),
-            StaffRoleID: interaction.options.getRole('staff', true).id,
-          });
+          const ticket = new Ticket();
+
+          const message = await interaction.fetchReply();
+          const category = interaction.options.getChannel('category', true, [
+            ChannelType.GuildCategory,
+          ]);
+          const staffRole = interaction.options.getRole('staff', true);
+
+          const panelData = await ticket.setup(
+            message.id,
+            category.id,
+            staffRole.id
+          );
+
+          const Error = new CommandError(interaction);
+          if (!panelData) {
+            return await Error.create();
+          }
 
           await interaction.followUp({
             embeds: [

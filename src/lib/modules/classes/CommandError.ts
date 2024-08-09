@@ -13,7 +13,7 @@ export class CommandError {
     this.parent = parent;
   }
 
-  public async create(message: string, ErrorType?: ErrorTypes) {
+  public async create(message?: string, ErrorType?: ErrorTypes) {
     if (this.parent instanceof CommandInteraction) {
       await this.parent.followUp({
         embeds: [
@@ -22,7 +22,9 @@ export class CommandError {
               ErrorType === ErrorTypes.Error
                 ? 'エラーが発生しました'
                 : undefined,
-            description: message,
+            description:
+              message ||
+              '不明なエラーが発生しました\n\nサポートサーバーでエラーを報告することができます\nhttps://discord.gg/ASNkQ2ap7p',
             color: ErrorType || Colors.Red,
             footer: footer(),
           },
@@ -36,7 +38,9 @@ export class CommandError {
               ErrorType === ErrorTypes.Error
                 ? 'エラーが発生しました'
                 : undefined,
-            description: message,
+            description:
+              message ||
+              '不明なエラーが発生しました\n\nサポートサーバーでエラーを報告することができます\nhttps://discord.gg/ASNkQ2ap7p',
             color: ErrorType || Colors.Red,
             footer: footer(),
           },
