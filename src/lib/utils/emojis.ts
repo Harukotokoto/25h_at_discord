@@ -19,6 +19,6 @@ export const Voice = '<:25D_Voice:1284131621263511612>';
 export const Empty_LeftG = '<:25D_Empty_LEFT:1284129695637569577>';
 export const Empty_InnerG = '<:25D_Empty_MIDDLE:1284129872616226859>';
 export const Empty_RightG = '<:25D_Empty_RIGHT:1284129832287866900>';
-export const Full_LeftG = '<:25D_Full_LEFT:1284129648552312883>';
+export const Full_LeftG = '<:25D_Full_LEFT:1284135023045382196>';
 export const Full_InnerG = '<:25D_Full_MIDDLE:1284129762222149663>';
 export const Full_RightG = '<:25D_Full_RIGHT:1284129795042574336>';
