@@ -1,10 +1,10 @@
 {
-  "name": "25h_at_discord",
+  "name": "synpase",
   "version": "1.0.0",
-  "description": "25時、ディスコードで。",
+  "description": "Fork from https://github.com/Harukotokoto/25h_at_discord",
   "main": "./dist/index.js",
-  "repository": "git@github.com:RenaOfficial/25h_at_discord.git",
-  "author": "https://github.com/RenaOfficial",
+  "repository": "https://github.com/anymore-me/synapse",
+  "author": "https://github.com/anymore-me",
   "license": "MIT",
   "scripts": {
     "build": "tsc -p .",
