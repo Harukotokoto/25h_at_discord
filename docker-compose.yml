@@ -1,0 +1,12 @@
+services:
+  synapse:
+    build: .
+    environment:
+      - CLIENT_TOKEN=${CLIENT_TOKEN}
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - DATABASE_CONNECTION_URI=${DATABASE_CONNECTION_URI}
+      - VOIDS_API=${VOIDS_API}
+    volumes:
+      - ./logs:/usr/src/app/logs
+    restart: unless-stopped
